@@ -8,7 +8,7 @@
     tools:context=".Register1Activity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgVBack"
         android:layout_width="24dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_back_arrow"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.182" />
+        app:layout_constraintGuide_percent="0.25" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,8 +68,52 @@
         app:layout_constraintBottom_toTopOf="@+id/glBottom"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/text_h1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="My name is..."
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toTopOf="@+id/glMiddleBottom"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/text_input_layout"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtInFirstName"
+            style="@style/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter your first name"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/text_input_layout"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtInLastName"
+            style="@style/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter your last name"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

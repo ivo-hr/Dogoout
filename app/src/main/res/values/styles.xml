@@ -1,11 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="button_fill" parent="android:style/Widget.Button">
+
+    <!-- This style is used for buttons with filled background -->
+    <style name="button_fill" parent="android:Widget.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:background">@drawable/bg_button_fill</item>
         <item name="android:textStyle">bold</item>
         <item name="android:letterSpacing">0.12</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
+
+    <!-- This style is used for buttons with no background  (just border) -->
+    <style name="button_empty" parent="android:Widget.Button">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:background">@drawable/bg_button_empty</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- This style is used for radio buttons (they look like buttons with no background) -->
+    <style name="radio_button" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:background">@drawable/change_background_radio_button</item>
+        <item name="android:textColor">@drawable/change_text_color_checked</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <!-- This style is used for radio buttons (they look like regular radio buttons) -->
+    <style name="radio_button_circle" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:drawableStart">@drawable/change_background_radio_button_circle</item>
+        <item name="android:textColor">@drawable/change_text_color_enabled</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+    <!-- This style is used for checkboxes -->
+    <style name="check_box" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:drawableStart">@drawable/change_background_checkbox</item>
+        <item name="android:textColor">@drawable/change_text_color_enabled</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+
+    <!-- This style is used for h1 (title) text -->
+    <style name="text_h1" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.12</item>
+    </style>
+
+    <!-- This style is used for normal text -->
+    <style name="text" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- This layout style is used for normal inputs (this is border around the input) -->
+    <style name="text_input_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/lightText</item>
+        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeColor">@color/lightText</item>
+        <item name="endIconTint">@color/lightText</item>
+        <item name="startIconTint">@color/lightText</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="paddingTopNoTitle">20dp</item>
+        <item name="paddingBottomNoButtons">20dp</item>
+        <item name="endIconMode">clear_text</item>
+    </style>
+
+    <!-- This layout style is used for large inputs (this is border around the input) -->
+    <style name="text_input_layout_large" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/lightText</item>
+        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:layout_height">180dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textAlignment">textStart</item>
+
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeColor">@color/lightText</item>
+        <item name="endIconTint">@color/lightText</item>
+        <item name="startIconTint">@color/lightText</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="paddingTopNoTitle">20dp</item>
+        <item name="paddingBottomNoButtons">20dp</item>
+    </style>
+
+    <!-- This style is used for standard inputs where user enters text -->
+    <style name="text_input" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <!-- This layout style is used for combo box inputs (this is border around the combo box) -->
+    <style name="combo_box_input_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:textColorHint">@color/lightText</item>
+        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeColor">@color/lightText</item>
+        <item name="endIconTint">@color/lightText</item>
+        <item name="startIconTint">@color/lightText</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="paddingTopNoTitle">20dp</item>
+        <item name="paddingBottomNoButtons">20dp</item>
+    </style>
+
+    <!-- This style is used for combo box input where user selects something -->
+    <style name="combo_box_input" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textColorHint">@color/primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:inputType">none</item>
+    </style>
+
+
 </resources>

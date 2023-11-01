@@ -8,7 +8,7 @@
     tools:context=".Register3Activity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgVBack"
         android:layout_width="24dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_back_arrow"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.182" />
+        app:layout_constraintGuide_percent="0.25" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,8 +68,48 @@
         app:layout_constraintBottom_toTopOf="@+id/glBottom"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/text_h1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="I am a..."
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toTopOf="@+id/glMiddleBottom"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <RadioButton
+            android:id="@+id/rbtnMale"
+            style="@style/radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@android:color/transparent"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/rbtnOther"
+            style="@style/radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@android:color/transparent"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            style="@style/radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@android:color/transparent"
+            android:text="Other" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

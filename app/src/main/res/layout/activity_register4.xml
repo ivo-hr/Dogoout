@@ -8,7 +8,7 @@
     tools:context=".Register4Activity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgVBack"
         android:layout_width="24dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_back_arrow"
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.182" />
+        app:layout_constraintGuide_percent="0.25" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,8 +68,73 @@
         app:layout_constraintBottom_toTopOf="@+id/glBottom"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+
+    <TextView
+        android:id="@+id/textView17"
+        style="@style/text_h1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add at least 2 photos to continue..."
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toTopOf="@+id/glMiddleBottom"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
+
+    <ImageView
+        android:id="@+id/imgVImage1"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_image_view"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <ImageView
+        android:id="@+id/imgVImage2"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_image_view"
+        app:layout_constraintEnd_toStartOf="@+id/imgVImage3"
+        app:layout_constraintStart_toEndOf="@+id/imgVImage1"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <ImageView
+        android:id="@+id/imgVImage3"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_image_view"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <ImageView
+        android:id="@+id/imgVAdd1"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="@+id/imgVImage1"
+        app:layout_constraintEnd_toEndOf="@+id/imgVImage1"
+        app:srcCompat="@drawable/ic_add" />
+
+    <ImageView
+        android:id="@+id/imgVAdd2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgVImage2"
+        app:layout_constraintEnd_toEndOf="@+id/imgVImage2"
+        app:srcCompat="@drawable/ic_add" />
+
+    <ImageView
+        android:id="@+id/imgVAdd3"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgVImage3"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:srcCompat="@drawable/ic_add" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
