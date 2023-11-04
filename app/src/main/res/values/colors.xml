@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary">#331B2F</color>
+    <color name="primary2">#A6809F</color>
+    <color name="text">#1E263C</color>
+    <color name="lightText" override="true">#B9BAC8</color>
+    <color name="mtrl_textinput_default_box_stroke_color" override="true">@color/lightText</color>
 </resources>
