@@ -1,6 +1,10 @@
 package com.example.dogoout.domain.user;
 
+import com.example.dogoout.domain.dog.Dog;
+
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * The `User` class represents a user entity in the application.
@@ -8,8 +12,9 @@ import java.time.LocalDate;
  *
  * This class includes methods to access and modify the user's attributes.
  */
-public class UserImpl implements User {
+public class UserImpl implements User, Serializable {
 
+    private String id;
     private String firstname;
     private String surname;
     private String email;
@@ -22,6 +27,12 @@ public class UserImpl implements User {
     private String promptAnswer;
     private int preferenceDogOwner;
     private int preferenceSex;
+    private ArrayList<Dog> dogs;
+
+    /**
+     * Constructs a new empty `User`.
+     */
+    public UserImpl() {};
 
     /**
      * Constructs a new `User` object with the given attributes.
@@ -39,7 +50,8 @@ public class UserImpl implements User {
      * @param preferenceDogOwner The user's preference for dog ownership.
      * @param preferenceSex    The user's preference for the opposite sex.
      */
-    public UserImpl(String firstname, String surname, String email, String country, LocalDate birthDate, String password, String gender, String description, int promptId, String promptAnswer, int preferenceDogOwner, int preferenceSex) {
+    public UserImpl(String id, String firstname, String surname, String email, String country, LocalDate birthDate, String password, String gender, String description, int promptId, String promptAnswer, int preferenceDogOwner, int preferenceSex, ArrayList<Dog> dogs) {
+        this.id = id;
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
@@ -52,6 +64,27 @@ public class UserImpl implements User {
         this.promptAnswer = promptAnswer;
         this.preferenceDogOwner = preferenceDogOwner;
         this.preferenceSex = preferenceSex;
+        this.dogs = dogs;
+    }
+
+    /**
+     * Retrieves the user's id.
+     *
+     * @return The user's id.
+     */
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the user's id.
+     *
+     * @param id The new id for the user.
+     */
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -292,5 +325,25 @@ public class UserImpl implements User {
     @Override
     public void setPreferenceSex(int preferenceSex) {
         this.preferenceSex = preferenceSex;
+    }
+
+    /**
+     * Retrieves the list of dogs associated with this user.
+     *
+     * @return An ArrayList of Dog objects representing the dogs owned or associated with this user.
+     */
+    @Override
+    public ArrayList<Dog> getDogs() {
+        return dogs;
+    }
+
+    /**
+     * Sets the list of dogs associated with this user.
+     *
+     * @param dogs An ArrayList of Dog objects to be associated with this user.
+     */
+    @Override
+    public void setDogs(ArrayList<Dog> dogs) {
+        this.dogs = dogs;
     }
 }

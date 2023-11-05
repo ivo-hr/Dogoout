@@ -1,8 +1,26 @@
 package com.example.dogoout.domain.user;
 
+import com.example.dogoout.domain.dog.Dog;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public interface User {
+
+    /**
+     * Retrieves the user's id.
+     *
+     * @return The user's id.
+     */
+    String getId();
+
+    /**
+     * Sets the user's id.
+     *
+     * @param id The new id for the user.
+     */
+    void setId(String id);
+
     /**
      * Retrieves the user's first name.
      *
@@ -170,4 +188,18 @@ public interface User {
      * @param preferenceSex The new preference for the opposite sex for the user.
      */
     void setPreferenceSex(int preferenceSex);
+
+    /**
+     * Retrieves the list of dogs associated with this user.
+     *
+     * @return An ArrayList of Dog objects representing the dogs owned or associated with this user.
+     */
+     ArrayList<Dog> getDogs();
+
+    /**
+     * Sets the list of dogs associated with this user.
+     *
+     * @param dogs An ArrayList of Dog objects to be associated with this user.
+     */
+    void setDogs(ArrayList<Dog> dogs);
 }

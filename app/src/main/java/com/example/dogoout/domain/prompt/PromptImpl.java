@@ -1,16 +1,22 @@
 package com.example.dogoout.domain.prompt;
 
+import java.io.Serializable;
+
 /**
  * The `Prompt` class represents a prompt entity in the application.
  * Prompts are used to provide questions for the user to respond.
  *
  * This class includes methods to access and modify the prompt's attributes.
  */
-public class PromptImpl implements Prompt {
+public class PromptImpl implements Prompt, Serializable {
 
-
-    private int id;
+    private String id;
     private String prompt;
+
+    /**
+     * Constructs a new empty `Prompt` object.
+     */
+    public PromptImpl() {};
 
     /**
      * Constructs a new `Prompt` object with the given identifier and prompt text.
@@ -18,7 +24,7 @@ public class PromptImpl implements Prompt {
      * @param id     The unique identifier of the prompt.
      * @param prompt The text of the prompt.
      */
-    public PromptImpl(int id, String prompt) {
+    public PromptImpl(String id, String prompt) {
         this.id = id;
         this.prompt = prompt;
     }
@@ -29,7 +35,7 @@ public class PromptImpl implements Prompt {
      * @return The unique identifier of the prompt.
      */
     @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -39,7 +45,7 @@ public class PromptImpl implements Prompt {
      * @param id The new unique identifier for the prompt.
      */
     @Override
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

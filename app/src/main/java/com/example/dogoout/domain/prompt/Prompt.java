@@ -6,14 +6,14 @@ public interface Prompt {
      *
      * @return The unique identifier of the prompt.
      */
-    int getId();
+    String getId();
 
     /**
      * Sets the unique identifier of the prompt.
      *
      * @param id The new unique identifier for the prompt.
      */
-    void setId(int id);
+    void setId(String id);
 
     /**
      * Retrieves the text of the prompt.
