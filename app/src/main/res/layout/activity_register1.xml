@@ -37,7 +37,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.25" />
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glBottom"
         android:layout_width="wrap_content"
@@ -59,17 +58,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnNext"
-        style="@style/button_fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        app:layout_constraintBottom_toTopOf="@+id/glBottom"
-        app:layout_constraintEnd_toStartOf="@+id/glRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeft" />
-
     <TextView
         android:id="@+id/textView"
         style="@style/text_h1"
@@ -82,7 +70,7 @@
         app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/textInputLayout1"
         style="@style/text_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -100,11 +88,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
         style="@style/text_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtInLastName"
@@ -115,5 +104,16 @@
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNext"
+        style="@style/button_fill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

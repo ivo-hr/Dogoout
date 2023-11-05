@@ -37,7 +37,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.25" />
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glBottom"
         android:layout_width="wrap_content"
@@ -59,17 +58,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnNext"
-        style="@style/button_fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        app:layout_constraintBottom_toTopOf="@+id/glBottom"
-        app:layout_constraintEnd_toStartOf="@+id/glRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeft" />
-
     <TextView
         android:id="@+id/textView2"
         style="@style/text_h1"
@@ -80,9 +68,10 @@
         app:layout_constraintStart_toStartOf="@+id/glLeft"
         app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <!--<com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/text_input_layout"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
@@ -98,6 +87,17 @@
             android:inputType="date" />
 
     </com.google.android.material.textfield.TextInputLayout>
+-->
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"/>
 
     <TextView
         android:id="@+id/textView3"
@@ -108,25 +108,36 @@
         android:text="I am from..."
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cbxLayout"
-        style="@style/combo_box_input_layout"
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/actxtVCountry"
+        style="@style/combo_box_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:ccpDialog_showPhoneCode="false"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_defaultNameCode="IRL"
+        app:ccp_showFlag="true"
+        app:ccp_showFullName="true"
+        app:ccp_showNameCode="true"
+        app:ccp_showPhoneCode="false"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        />
 
-        <AutoCompleteTextView
-            android:id="@+id/actxtVCountry"
-            style="@style/combo_box_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Select country" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNext"
+        style="@style/button_fill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
