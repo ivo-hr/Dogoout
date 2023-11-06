@@ -81,6 +81,7 @@
         app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
@@ -96,7 +97,7 @@
             android:text="Male" />
 
         <RadioButton
-            android:id="@+id/rbtnOther"
+            android:id="@+id/rbtnFemale"
             style="@style/radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +105,7 @@
             android:text="Female" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/rbtnOther"
             style="@style/radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
