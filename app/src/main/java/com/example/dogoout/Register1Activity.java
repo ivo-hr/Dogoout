@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Register1Activity extends AppCompatActivity {
+
     ImageView previousScreenBtn;
     Button nextScreenBtn;
     EditText txtInFirstName;
@@ -32,10 +33,10 @@ public class Register1Activity extends AppCompatActivity {
                 finish();
             }
         });
-        nextScreenBtn.setOnClickListener(new View.OnClickListener(){
+        nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isValidTextInputLayout1() && isValidTextInputLayout2()) {
+                if (isValidTextInputLayout() & isValidTextInputLayout1()) {
                     Intent intent = new Intent(getApplicationContext(), Register2Activity.class);
                     intent.putExtra("firstName", txtInFirstName.getText().toString());
                     intent.putExtra("lastName", txtInLastName.getText().toString());
@@ -45,9 +46,9 @@ public class Register1Activity extends AppCompatActivity {
         });
     }
 
-    protected boolean isValidTextInputLayout1() {
+    protected boolean isValidTextInputLayout() {
         // Get the text input layout
-        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout1);
+        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
         if (!txtInFirstName.getText().toString().isEmpty()) {
             // is its not empty its okay
@@ -56,13 +57,13 @@ public class Register1Activity extends AppCompatActivity {
         }
         // set the error and error message
         txtInFirstName.getText().clear();
-        txtInFirstName.requestFocus();
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
     }
-    protected boolean isValidTextInputLayout2() {
+
+    protected boolean isValidTextInputLayout1() {
         // Get the text input layout
-        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout2);
+        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout1);
         // Check if the edit text is empty
         if (!txtInLastName.getText().toString().isEmpty()) {
             // is its not empty its okay
@@ -71,7 +72,6 @@ public class Register1Activity extends AppCompatActivity {
         }
         // set the error and error message
         txtInLastName.getText().clear();
-        txtInLastName.requestFocus();
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
     }

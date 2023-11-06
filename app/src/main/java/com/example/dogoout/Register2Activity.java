@@ -32,7 +32,7 @@ public class Register2Activity extends AppCompatActivity {
                 finish();
             }
         });
-        nextScreenBtn.setOnClickListener(new View.OnClickListener(){
+        nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int day = datePicker.getDayOfMonth();
@@ -41,7 +41,7 @@ public class Register2Activity extends AppCompatActivity {
                 String birthday = String.format("%d%02d%02d", year, month, day);
 
                 Intent intent = new Intent(getApplicationContext(), Register3Activity.class);
-                intent.putExtra("birthday",birthday);
+                intent.putExtra("birthday", birthday);
                 intent.putExtra("country", actxtVCountry.getSelectedCountryName());
                 startActivity(intent);
             }

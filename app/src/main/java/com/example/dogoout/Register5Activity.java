@@ -25,7 +25,7 @@ public class Register5Activity extends AppCompatActivity {
                 finish();
             }
         });
-        nextScreenBtn.setOnClickListener(new View.OnClickListener(){
+        nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Register6Activity.class);

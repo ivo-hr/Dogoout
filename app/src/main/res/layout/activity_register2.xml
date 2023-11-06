@@ -58,6 +58,17 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnNext"
+        style="@style/button_fill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+
     <TextView
         android:id="@+id/textView2"
         style="@style/text_h1"
@@ -92,12 +103,12 @@
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
         android:calendarViewShown="false"
+        android:datePickerMode="spinner"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView3"
@@ -118,7 +129,7 @@
         android:layout_marginTop="20dp"
         app:ccpDialog_showPhoneCode="false"
         app:ccp_autoDetectCountry="true"
-        app:ccp_defaultNameCode="IRL"
+        app:ccp_defaultNameCode="IE"
         app:ccp_showFlag="true"
         app:ccp_showFullName="true"
         app:ccp_showNameCode="true"
@@ -126,18 +137,6 @@
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnNext"
-        style="@style/button_fill"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        app:layout_constraintBottom_toTopOf="@+id/glBottom"
-        app:layout_constraintEnd_toStartOf="@+id/glRight"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
