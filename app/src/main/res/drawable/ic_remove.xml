@@ -5,18 +5,9 @@
     android:viewportWidth="24.0"
     android:viewportHeight="24.0">
 
-    <path android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM17,13L7,13v-2h10v2z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:gradientRadius="60"
-                android:type="radial">
-                <item
-                    android:color="@color/primary"
-                    android:offset="0" />
-                <item
-                    android:color="@color/primary2"
-                    android:offset="1" />
-            </gradient>
-        </aapt:attr>
-    </path>
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM17,13L7,13v-2h10v2z"
+        android:strokeWidth="1"
+        android:strokeColor="@color/white" />
 </vector>

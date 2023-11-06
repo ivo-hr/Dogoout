@@ -55,4 +55,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
 
     implementation("com.hbb20:ccp:2.6.0")
+
+    // Image Picker Library
+    implementation("com.github.dhaval2404:imagepicker:2.1")
 }
