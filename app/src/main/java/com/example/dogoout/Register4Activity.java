@@ -22,7 +22,6 @@ public class Register4Activity extends AppCompatActivity {
     // DECLARE COMPONENTS
     ImageView previousScreenBtn;
     Button nextScreenBtn;
-
     ImageView imgVAdd1, imgVAdd2, imgVAdd3;
     ImageView imgVImage1, imgVImage2, imgVImage3;
 
@@ -57,13 +56,14 @@ public class Register4Activity extends AppCompatActivity {
 
         previousScreenBtn.setOnClickListener(view -> finish());
 
-
-        ArrayList<ImageView> imageViews = new ArrayList<>();
-        imageViews.add(imgVImage1);
-        imageViews.add(imgVImage2);
-        imageViews.add(imgVImage3);
-
         nextScreenBtn.setOnClickListener(view -> {
+            // Create an array list of image views
+            ArrayList<ImageView> imageViews = new ArrayList<>();
+            imageViews.add(imgVImage1);
+            imageViews.add(imgVImage2);
+            imageViews.add(imgVImage3);
+
+            // Count the number of uploaded images
             int uploadedImages = 0;
             for (ImageView imageView : imageViews) {
                 if (imageView.getDrawable() != null)
@@ -84,6 +84,7 @@ public class Register4Activity extends AppCompatActivity {
 
             // TODO: collect data from the inputs
 
+            // Go to the next screen
             Intent intent = new Intent(getApplicationContext(), Register5Activity.class);
             startActivity(intent);
         });
