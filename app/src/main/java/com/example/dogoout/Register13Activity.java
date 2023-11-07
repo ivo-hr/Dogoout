@@ -66,15 +66,12 @@ public class Register13Activity extends AppCompatActivity {
             CharSequence cs = (CharSequence) txtInEmail.getText().toString();
             matcher = pattern.matcher(cs);
             if(matcher.matches()!=true) {
-
                 textInputLayout.setError("Invalid email.");
-                textInputLayout.requestFocus();
                 return false;
             }
 
             // is its not empty its okay
             textInputLayout.setError(null);
-            textInputLayout.setErrorEnabled(false);
             return true;
         }
 
@@ -100,12 +97,10 @@ public class Register13Activity extends AppCompatActivity {
 
             if (matcher.matches()!=true){
                 textInputLayout.setError("Your password is too weak.");
-                textInputLayout.requestFocus();
                 return false;
             }
             // is its not empty its okay
             textInputLayout.setError(null);
-            textInputLayout.setErrorEnabled(false);
             return true;
         }
         // set the error and error message
@@ -123,13 +118,11 @@ public class Register13Activity extends AppCompatActivity {
             if (!txtInPassword.getText().toString().equals(txtInConfirmPassword.getText().toString())) {
 
                 textInputLayout.setError("Password and Confirm Password do not match.");
-                textInputLayout.requestFocus();
                 return false;
             }
 
             // is its not empty its okay
             textInputLayout.setError(null);
-            textInputLayout.setErrorEnabled(false);
             return true;
         }
         // set the error and error message

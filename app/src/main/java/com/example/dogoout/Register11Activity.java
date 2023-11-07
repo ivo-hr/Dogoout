@@ -49,7 +49,7 @@ public class Register11Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (isValidAnswerTxtPromptDog() && isValidTxtPromptDog()) {
+                if (isValidAnswerTxtPromptDog() & isValidTxtPromptDog()) {
                     Intent intent = new Intent(getApplicationContext(), Register12Activity.class);
                     startActivity(intent);
                 }
@@ -63,11 +63,11 @@ public class Register11Activity extends AppCompatActivity {
         // Check if the edit text is empty
         if (!textPromptDogAnswer.getText().toString().isEmpty()) {
             // is its not empty its okay
-            textInputLayout.setErrorEnabled(false);
+            textInputLayout.setError(null);
             return true;
         }
         // set the error and error message
-        textPromptDogAnswer.clearComposingText();
+        textPromptDogAnswer.setText("");
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
     }

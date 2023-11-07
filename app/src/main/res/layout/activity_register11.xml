@@ -82,6 +82,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cbxLayout"
+        android:layout_height="wrap_content"
         style="@style/combo_box_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -92,13 +93,14 @@
             android:id="@+id/actxtDogPrompt"
             style="@style/combo_box_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:hint="Select prompt" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
+        android:layout_height="wrap_content"
         style="@style/text_input_layout_large"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -109,7 +111,7 @@
             android:id="@+id/txtInDogPromptAnswer"
             style="@style/text_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="180dp"
             android:gravity="top"
             android:hint="Answer"
             android:inputType="textMultiLine"
