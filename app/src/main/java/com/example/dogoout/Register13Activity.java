@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Register13Activtiy extends AppCompatActivity {
+public class Register13Activity extends AppCompatActivity {
     ImageView previousScreenBtn;
     Button nextScreenBtn;
     EditText txtInEmail;
@@ -95,7 +95,7 @@ public class Register13Activtiy extends AppCompatActivity {
     protected boolean arePasswordTheSame() {
 
         if (!txtInPassword.getText().toString().equals(txtInConfirmPassword.getText().toString())) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Register13Activtiy.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(Register13Activity.this);
             builder.setTitle("Error");
             builder.setMessage("Password and Confirm Password do not match. Please make sure both fields have the same value.");
             builder.setPositiveButton("OK", null);

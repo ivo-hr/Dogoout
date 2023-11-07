@@ -16,7 +16,7 @@
             android:name=".Register14Activity"
             android:exported="false" />
         <activity
-            android:name=".Register13Activtiy"
+            android:name=".Register13Activity"
             android:exported="false" />
         <activity
             android:name=".Register12Activity"

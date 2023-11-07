@@ -28,7 +28,7 @@ public class Register12Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Register13Activtiy.class);
+                Intent intent = new Intent(getApplicationContext(), Register13Activity.class);
                 startActivity(intent);
             }
         });
