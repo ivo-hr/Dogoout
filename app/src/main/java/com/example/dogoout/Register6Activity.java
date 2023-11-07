@@ -55,7 +55,7 @@ public class Register6Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (isValidAnswerTxtPrompt() && isValidTxtPrompt()) {
+                if (isValidAnswerTxtPrompt() & isValidTxtPrompt()) {
                     Intent intent = new Intent(getApplicationContext(), Register7Activity.class);
                     startActivity(intent);
                 }
@@ -69,7 +69,7 @@ public class Register6Activity extends AppCompatActivity {
         // Check if the edit text is empty
         if (!answerTxtPrompt.getText().toString().isEmpty()) {
             // is its not empty its okay
-            textInputLayout.setErrorEnabled(false);
+            textInputLayout.setError(null);
             return true;
         }
         // set the error and error message
