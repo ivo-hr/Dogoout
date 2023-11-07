@@ -82,6 +82,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
+        android:layout_height="wrap_content"
         style="@style/text_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -92,7 +93,7 @@
             android:id="@+id/txtInEmail"
             style="@style/text_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:hint="Enter your email"
             android:inputType="textEmailAddress" />
 
@@ -105,12 +106,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="My password will be..."
+
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout1"
+        android:layout_height="wrap_content"
         style="@style/text_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -121,7 +124,7 @@
             android:id="@+id/txtInPassword"
             style="@style/text_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:hint="Enter your password"
             android:inputType="textPassword" />
 
@@ -129,6 +132,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
+        android:layout_height="wrap_content"
         style="@style/text_input_layout"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
@@ -139,7 +143,7 @@
             android:id="@+id/txtInConfirmPassword"
             style="@style/text_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:hint="Confirm your password"
             android:inputType="textPassword" />
 
