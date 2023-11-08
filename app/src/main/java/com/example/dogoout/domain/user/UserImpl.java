@@ -1,6 +1,9 @@
 package com.example.dogoout.domain.user;
 
+import android.graphics.drawable.Drawable;
+
 import com.example.dogoout.domain.dog.Dog;
+import com.example.dogoout.domain.preference.Preference;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,9 +27,9 @@ public class UserImpl implements User, Serializable {
     private String gender;
     private String description;
     private int promptId;
+    private ArrayList<Drawable> photosUser;
     private String promptAnswer;
-    private int preferenceDogOwner;
-    private int preferenceSex;
+    private Preference preferenceUser;
     private ArrayList<Dog> dogs;
 
     /**
@@ -34,23 +37,7 @@ public class UserImpl implements User, Serializable {
      */
     public UserImpl() {};
 
-    /**
-     * Constructs a new `User` object with the given attributes.
-     *
-     * @param firstname        The user's first name.
-     * @param surname          The user's surname.
-     * @param email            The user's email address.
-     * @param country          The user's country of residence.
-     * @param birthDate        The user's date of birth.
-     * @param password         The user's password for authentication.
-     * @param gender           The user's gender.
-     * @param description      A description or bio of the user.
-     * @param promptId         The unique identifier of the user's security prompt.
-     * @param promptAnswer     The user's answer to the security prompt.
-     * @param preferenceDogOwner The user's preference for dog ownership.
-     * @param preferenceSex    The user's preference for the opposite sex.
-     */
-    public UserImpl(String id, String firstname, String surname, String email, String country, LocalDate birthDate, String password, String gender, String description, int promptId, String promptAnswer, int preferenceDogOwner, int preferenceSex, ArrayList<Dog> dogs) {
+    public UserImpl(String id, String firstname, String surname, String email, String country, LocalDate birthDate, String password, String gender, String description, int promptId, ArrayList<Drawable> photosUser, String promptAnswer, Preference preferenceUser, ArrayList<Dog> dogs) {
         this.id = id;
         this.firstname = firstname;
         this.surname = surname;
@@ -61,9 +48,9 @@ public class UserImpl implements User, Serializable {
         this.gender = gender;
         this.description = description;
         this.promptId = promptId;
+        this.photosUser = photosUser;
         this.promptAnswer = promptAnswer;
-        this.preferenceDogOwner = preferenceDogOwner;
-        this.preferenceSex = preferenceSex;
+        this.preferenceUser = preferenceUser;
         this.dogs = dogs;
     }
 
@@ -288,43 +275,23 @@ public class UserImpl implements User, Serializable {
     }
 
     /**
-     * Retrieves the user's preference for dog ownership.
+     * Retrieves the user's preference.
      *
-     * @return The user's preference for dog ownership.
+     * @return The user's preference.
      */
     @Override
-    public int getPreferenceDogOwner() {
-        return preferenceDogOwner;
+    public Preference getPreference() {
+        return preferenceUser;
     }
 
     /**
-     * Sets the user's preference for dog ownership.
+     * Sets the user's preference.
      *
-     * @param preferenceDogOwner The new preference for dog ownership for the user.
+     * @param preferenceUser The new preference for for the user.
      */
     @Override
-    public void setPreferenceDogOwner(int preferenceDogOwner) {
-        this.preferenceDogOwner = preferenceDogOwner;
-    }
-
-    /**
-     * Retrieves the user's preference for the opposite sex.
-     *
-     * @return The user's preference for the opposite sex.
-     */
-    @Override
-    public int getPreferenceSex() {
-        return preferenceSex;
-    }
-
-    /**
-     * Sets the user's preference for the opposite sex.
-     *
-     * @param preferenceSex The new preference for the opposite sex for the user.
-     */
-    @Override
-    public void setPreferenceSex(int preferenceSex) {
-        this.preferenceSex = preferenceSex;
+    public void setPreferenceSex(Preference preferenceUser) {
+        this.preferenceUser = preferenceUser;
     }
 
     /**
@@ -345,5 +312,15 @@ public class UserImpl implements User, Serializable {
     @Override
     public void setDogs(ArrayList<Dog> dogs) {
         this.dogs = dogs;
+    }
+
+    @Override
+    public ArrayList<Drawable> getPhotosUser() {
+        return photosUser;
+    }
+
+    @Override
+    public void setPhotosUser(ArrayList<Drawable> photosUser) {
+        this.photosUser = photosUser;
     }
 }

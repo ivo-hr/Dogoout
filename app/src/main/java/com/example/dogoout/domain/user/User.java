@@ -1,6 +1,9 @@
 package com.example.dogoout.domain.user;
 
+import android.graphics.drawable.Drawable;
+
 import com.example.dogoout.domain.dog.Dog;
+import com.example.dogoout.domain.preference.Preference;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -162,34 +165,6 @@ public interface User {
     void setPromptAnswer(String promptAnswer);
 
     /**
-     * Retrieves the user's preference for dog ownership.
-     *
-     * @return The user's preference for dog ownership.
-     */
-    int getPreferenceDogOwner();
-
-    /**
-     * Sets the user's preference for dog ownership.
-     *
-     * @param preferenceDogOwner The new preference for dog ownership for the user.
-     */
-    void setPreferenceDogOwner(int preferenceDogOwner);
-
-    /**
-     * Retrieves the user's preference for the opposite sex.
-     *
-     * @return The user's preference for the opposite sex.
-     */
-    int getPreferenceSex();
-
-    /**
-     * Sets the user's preference for the opposite sex.
-     *
-     * @param preferenceSex The new preference for the opposite sex for the user.
-     */
-    void setPreferenceSex(int preferenceSex);
-
-    /**
      * Retrieves the list of dogs associated with this user.
      *
      * @return An ArrayList of Dog objects representing the dogs owned or associated with this user.
@@ -202,4 +177,22 @@ public interface User {
      * @param dogs An ArrayList of Dog objects to be associated with this user.
      */
     void setDogs(ArrayList<Dog> dogs);
+
+    ArrayList<Drawable> getPhotosUser();
+
+    void setPhotosUser(ArrayList<Drawable> photosUser);
+
+    /**
+     * Retrieves the user's preference.
+     *
+     * @return The user's preference.
+     */
+    Preference getPreference();
+
+    /**
+     * Sets the user's preference.
+     *
+     * @param preferenceUser The new preference for for the user.
+     */
+    void setPreferenceSex(Preference preferenceUser);
 }

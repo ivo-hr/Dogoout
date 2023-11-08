@@ -1,6 +1,9 @@
 package com.example.dogoout.domain.user;
 
+import android.graphics.drawable.Drawable;
+
 import com.example.dogoout.domain.dog.Dog;
+import com.example.dogoout.domain.preference.Preference;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,9 +22,9 @@ public class UserBuilder {
     private String gender;
     private String description;
     private int promptId;
+    private ArrayList<Drawable> photosUser;
     private String promptAnswer;
-    private int preferenceDogOwner;
-    private int preferenceSex;
+    private Preference userPreference;
     private ArrayList<Dog> dogs;
 
     /**
@@ -152,24 +155,24 @@ public class UserBuilder {
     }
 
     /**
-     * Set the user's preference for dog ownership.
+     * Set the user's photos.
      *
-     * @param preferenceDogOwner The new preference for dog ownership for the user.
+     * @param photosUser The photos for the user.
      * @return The UserBuilder instance for method chaining.
      */
-    public UserBuilder withPreferenceDogOwner(int preferenceDogOwner) {
-        this.preferenceDogOwner = preferenceDogOwner;
+    public UserBuilder withPromptAnswer(ArrayList<Drawable> photosUser) {
+        this.photosUser = photosUser;
         return this;
     }
 
     /**
-     * Set the user's preference for the opposite sex.
+     * Set the user's preference.
      *
-     * @param preferenceSex The new preference for the opposite sex for the user.
+     * @param preference The new preference for the user.
      * @return The UserBuilder instance for method chaining.
      */
-    public UserBuilder withPreferenceSex(int preferenceSex) {
-        this.preferenceSex = preferenceSex;
+    public UserBuilder withPreference(Preference preference) {
+        this.userPreference = preference;
         return this;
     }
 
@@ -190,6 +193,6 @@ public class UserBuilder {
      * @return The constructed `UserImpl` object.
      */
     public UserImpl build() {
-        return new UserImpl(id, firstname, surname, email, country, birthDate, password, gender, description, promptId, promptAnswer, preferenceDogOwner, preferenceSex, dogs);
+        return new UserImpl(id, firstname, surname, email, country, birthDate, password, gender, description, promptId, photosUser, promptAnswer, userPreference , dogs);
     }
 }
