@@ -11,20 +11,6 @@ import java.util.ArrayList;
 public interface User {
 
     /**
-     * Retrieves the user's id.
-     *
-     * @return The user's id.
-     */
-    String getId();
-
-    /**
-     * Sets the user's id.
-     *
-     * @param id The new id for the user.
-     */
-    void setId(String id);
-
-    /**
      * Retrieves the user's first name.
      *
      * @return The user's first name.
@@ -95,20 +81,6 @@ public interface User {
     void setBirthDate(LocalDate birthDate);
 
     /**
-     * Retrieves the user's password for authentication.
-     *
-     * @return The user's password.
-     */
-    String getPassword();
-
-    /**
-     * Sets the user's password for authentication.
-     *
-     * @param password The new password for the user.
-     */
-    void setPassword(String password);
-
-    /**
      * Retrieves the user's gender.
      *
      * @return The user's gender.
@@ -137,18 +109,18 @@ public interface User {
     void setDescription(String description);
 
     /**
-     * Retrieves the unique identifier of the user's security prompt.
+     * Retrieves the user's prompt.
      *
-     * @return The unique identifier of the security prompt.
+     * @return The user's prompt.
      */
-    int getPromptId();
+    String getPrompt();
 
     /**
-     * Sets the unique identifier of the user's security prompt.
+     * Sets the user's prompt.
      *
-     * @param promptId The new security prompt identifier for the user.
+     * @param prompt The new  prompt for the user.
      */
-    void setPromptId(int promptId);
+    void setPrompt(String prompt);
 
     /**
      * Retrieves the user's answer to the security prompt.
@@ -169,7 +141,7 @@ public interface User {
      *
      * @return An ArrayList of Dog objects representing the dogs owned or associated with this user.
      */
-     ArrayList<Dog> getDogs();
+    ArrayList<Dog> getDogs();
 
     /**
      * Sets the list of dogs associated with this user.

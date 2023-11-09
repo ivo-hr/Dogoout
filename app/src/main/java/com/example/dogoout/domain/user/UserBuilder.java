@@ -12,16 +12,14 @@ import java.util.ArrayList;
  * The `UserBuilder` class is used to construct instances of the `UserImpl` class with various attributes.
  */
 public class UserBuilder {
-    private String id;
     private String firstname;
     private String surname;
     private String email;
     private String country;
     private LocalDate birthDate;
-    private String password;
     private String gender;
     private String description;
-    private int promptId;
+    private String prompt;
     private ArrayList<Drawable> photosUser;
     private String promptAnswer;
     private Preference userPreference;
@@ -31,17 +29,6 @@ public class UserBuilder {
      * Constructs a new `UserBuilder`.
      */
     public UserBuilder() {
-    }
-
-    /**
-     * Set the user's id.
-     *
-     * @param id The new id for the user.
-     * @return The UserBuilder instance for method chaining.
-     */
-    public UserBuilder withId(String id) {
-        this.id = id;
-        return this;
     }
 
     /**
@@ -99,16 +86,6 @@ public class UserBuilder {
         return this;
     }
 
-    /**
-     * Set the user's password for authentication.
-     *
-     * @param password The new password for the user.
-     * @return The UserBuilder instance for method chaining.
-     */
-    public UserBuilder withPassword(String password) {
-        this.password = password;
-        return this;
-    }
 
     /**
      * Set the user's gender.
@@ -133,13 +110,13 @@ public class UserBuilder {
     }
 
     /**
-     * Set the unique identifier of the user's security prompt.
+     * Set the the user's  prompt.
      *
-     * @param promptId The new security prompt identifier for the user.
+     * @param prompt The new prompt for the user.
      * @return The UserBuilder instance for method chaining.
      */
-    public UserBuilder withPromptId(int promptId) {
-        this.promptId = promptId;
+    public UserBuilder withPromptId(String prompt) {
+        this.prompt = prompt;
         return this;
     }
 
@@ -193,6 +170,6 @@ public class UserBuilder {
      * @return The constructed `UserImpl` object.
      */
     public UserImpl build() {
-        return new UserImpl(id, firstname, surname, email, country, birthDate, password, gender, description, promptId, photosUser, promptAnswer, userPreference , dogs);
+        return new UserImpl(firstname, surname, email, country, birthDate, gender, description, prompt, photosUser, promptAnswer, userPreference , dogs);
     }
 }

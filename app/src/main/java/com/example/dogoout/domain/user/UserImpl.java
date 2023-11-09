@@ -12,21 +12,19 @@ import java.util.ArrayList;
 /**
  * The `User` class represents a user entity in the application.
  * Users have various attributes and preferences related to their profiles.
- *
+ * <p>
  * This class includes methods to access and modify the user's attributes.
  */
 public class UserImpl implements User, Serializable {
 
-    private String id;
     private String firstname;
     private String surname;
     private String email;
     private String country;
     private LocalDate birthDate;
-    private String password;
     private String gender;
     private String description;
-    private int promptId;
+    private String prompt;
     private ArrayList<Drawable> photosUser;
     private String promptAnswer;
     private Preference preferenceUser;
@@ -35,43 +33,24 @@ public class UserImpl implements User, Serializable {
     /**
      * Constructs a new empty `User`.
      */
-    public UserImpl() {};
+    public UserImpl() {
+    }
 
-    public UserImpl(String id, String firstname, String surname, String email, String country, LocalDate birthDate, String password, String gender, String description, int promptId, ArrayList<Drawable> photosUser, String promptAnswer, Preference preferenceUser, ArrayList<Dog> dogs) {
-        this.id = id;
+    ;
+
+    public UserImpl(String firstname, String surname, String email, String country, LocalDate birthDate, String gender, String description, String prompt, ArrayList<Drawable> photosUser, String promptAnswer, Preference preferenceUser, ArrayList<Dog> dogs) {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
         this.country = country;
         this.birthDate = birthDate;
-        this.password = password;
         this.gender = gender;
         this.description = description;
-        this.promptId = promptId;
+        this.prompt = prompt;
         this.photosUser = photosUser;
         this.promptAnswer = promptAnswer;
         this.preferenceUser = preferenceUser;
         this.dogs = dogs;
-    }
-
-    /**
-     * Retrieves the user's id.
-     *
-     * @return The user's id.
-     */
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the user's id.
-     *
-     * @param id The new id for the user.
-     */
-    @Override
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -174,25 +153,6 @@ public class UserImpl implements User, Serializable {
         this.birthDate = birthDate;
     }
 
-    /**
-     * Retrieves the user's password for authentication.
-     *
-     * @return The user's password.
-     */
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Sets the user's password for authentication.
-     *
-     * @param password The new password for the user.
-     */
-    @Override
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /**
      * Retrieves the user's gender.
@@ -235,23 +195,23 @@ public class UserImpl implements User, Serializable {
     }
 
     /**
-     * Retrieves the unique identifier of the user's security prompt.
+     * Retrieves the user's prompt.
      *
-     * @return The unique identifier of the security prompt.
+     * @return The user's prompt.
      */
     @Override
-    public int getPromptId() {
-        return promptId;
+    public String getPrompt() {
+        return prompt;
     }
 
     /**
-     * Sets the unique identifier of the user's security prompt.
+     * Sets the user's prompt.
      *
-     * @param promptId The new security prompt identifier for the user.
+     * @param prompt The new  prompt for the user.
      */
     @Override
-    public void setPromptId(int promptId) {
-        this.promptId = promptId;
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
     }
 
     /**
