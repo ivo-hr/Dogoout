@@ -1,5 +1,7 @@
 package com.example.dogoout.domain.dog;
 
+import android.graphics.drawable.Drawable;
+
 import com.example.dogoout.domain.characteristic.Characteristic;
 
 import java.io.Serializable;
@@ -10,59 +12,37 @@ import java.util.ArrayList;
  */
 public class DogImpl implements Dog, Serializable {
 
-    private String id;
     private String name;
     private String breed;
-    private int yearOfBirth;
-    private String promptId;
+    private String prompt;
     private String promptAnswer;
-    private ArrayList<Characteristic> characteristics;
+    private ArrayList<String> characteristics;
+    private ArrayList<Drawable> photosDog;
 
     /**
      * Constructs a new `Dog` with default values.
      */
-    public DogImpl() {}
+    public DogImpl() {
+    }
 
     /**
      * Constructs a new `Dog` with the given attributes.
      *
-     * @param id The unique identifier for the dog.
-     * @param name The name of the dog.
-     * @param breed The breed of the dog.
-     * @param yearOfBirth The year of birth of the dog.
-     * @param promptId The unique identifier of the dog's prompt.
-     * @param promptAnswer The dog's answer to the prompt.
+     * @param name            The name of the dog.
+     * @param breed           The breed of the dog.
+     * @param prompt          The dog's prompt.
+     * @param promptAnswer    The dog's answer to the prompt.
      * @param characteristics The list of characteristics or traits associated with the dog.
      */
-    public DogImpl(String id, String name, String breed, int yearOfBirth, String promptId, String promptAnswer, ArrayList<Characteristic> characteristics) {
-        this.id = id;
+    public DogImpl(String name, String breed, String prompt, String promptAnswer, ArrayList<String> characteristics, ArrayList<Drawable> photosDog) {
         this.name = name;
         this.breed = breed;
-        this.yearOfBirth = yearOfBirth;
-        this.promptId = promptId;
+        this.prompt = prompt;
         this.promptAnswer = promptAnswer;
         this.characteristics = characteristics;
+        this.photosDog = photosDog;
     }
 
-    /**
-     * Retrieves the unique identifier for the dog.
-     *
-     * @return The unique identifier for the dog.
-     */
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the unique identifier for the dog.
-     *
-     * @param id The new unique identifier for the dog.
-     */
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     /**
      * Retrieves the name of the dog.
@@ -104,44 +84,25 @@ public class DogImpl implements Dog, Serializable {
         this.breed = breed;
     }
 
+
     /**
-     * Retrieves the year of birth of the dog.
+     * Retrieves the dog's prompt.
      *
-     * @return The year of birth of the dog.
+     * @return The prompt.
      */
     @Override
-    public int getYearOfBirth() {
-        return yearOfBirth;
+    public String getPrompt() {
+        return prompt;
     }
 
     /**
-     * Sets the year of birth of the dog.
+     * Sets the dog's prompt.
      *
-     * @param yearOfBirth The new year of birth for the dog.
+     * @param prompt The new prompt for the dog.
      */
     @Override
-    public void setYearOfBirth(int yearOfBirth) {
-        this.yearOfBirth = yearOfBirth;
-    }
-
-    /**
-     * Retrieves the unique identifier of the dog's prompt.
-     *
-     * @return The unique identifier of the prompt.
-     */
-    @Override
-    public String getPromptId() {
-        return promptId;
-    }
-
-    /**
-     * Sets the unique identifier of the dog's prompt.
-     *
-     * @param promptId The new prompt id for the dog.
-     */
-    @Override
-    public void setPromptId(String promptId) {
-        this.promptId = promptId;
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
     }
 
     /**
@@ -170,7 +131,7 @@ public class DogImpl implements Dog, Serializable {
      * @return An ArrayList of Characteristic objects representing the dog's characteristics.
      */
     @Override
-    public ArrayList<Characteristic> getCharacteristics() {
+    public ArrayList<String> getCharacteristics() {
         return characteristics;
     }
 
@@ -180,7 +141,27 @@ public class DogImpl implements Dog, Serializable {
      * @param characteristics An ArrayList of Characteristic objects to be associated with the dog.
      */
     @Override
-    public void setCharacteristics(ArrayList<Characteristic> characteristics) {
+    public void setCharacteristics(ArrayList<String> characteristics) {
         this.characteristics = characteristics;
+    }
+
+    /**
+     * Retrieves the list of photos associated with the dog.
+     *
+     * @return An ArrayList of Drawable objects representing the dog's photos.
+     */
+    @Override
+    public ArrayList<Drawable> getPhotosDog() {
+        return photosDog;
+    }
+
+    /**
+     * Sets the list of photos associated with the dog.
+     *
+     * @param photosDog An ArrayList of Drawable objects to be associated with the dog.
+     */
+    @Override
+    public void setPhotosDog(ArrayList<Drawable> photosDog) {
+        this.photosDog = photosDog;
     }
 }

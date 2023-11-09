@@ -1,23 +1,12 @@
 package com.example.dogoout.domain.dog;
 
+import android.graphics.drawable.Drawable;
+
 import com.example.dogoout.domain.characteristic.Characteristic;
 
 import java.util.ArrayList;
 
 public interface Dog {
-    /**
-     * Retrieves the unique identifier for the dog.
-     *
-     * @return The unique identifier for the dog.
-     */
-    String getId();
-
-    /**
-     * Sets the unique identifier for the dog.
-     *
-     * @param id The new unique identifier for the dog.
-     */
-    void setId(String id);
 
     /**
      * Retrieves the name of the dog.
@@ -47,33 +36,20 @@ public interface Dog {
      */
     void setBreed(String breed);
 
-    /**
-     * Retrieves the year of birth of the dog.
-     *
-     * @return The year of birth of the dog.
-     */
-    int getYearOfBirth();
 
     /**
-     * Sets the year of birth of the dog.
+     * Retrieves the dog's prompt.
      *
-     * @param yearOfBirth The new year of birth for the dog.
+     * @return The prompt of the dog.
      */
-    void setYearOfBirth(int yearOfBirth);
+    String getPrompt();
 
     /**
-     * Retrieves the unique identifier of the dog's prompt.
+     * Sets the dog's prompt.
      *
-     * @return The unique identifier of the prompt.
+     * @param prompt The new prompt for the dog.
      */
-    String getPromptId();
-
-    /**
-     * Sets the unique identifier of the dog's prompt.
-     *
-     * @param promptId The new prompt id for the dog.
-     */
-    void setPromptId(String promptId);
+    void setPrompt(String prompt);
 
     /**
      * Retrieves the dog's answer to the prompt.
@@ -94,12 +70,26 @@ public interface Dog {
      *
      * @return An ArrayList of Characteristic objects representing the dog's characteristics.
      */
-    ArrayList<Characteristic> getCharacteristics();
+    ArrayList<String> getCharacteristics();
 
     /**
      * Sets the list of characteristics associated with the dog.
      *
      * @param characteristics An ArrayList of Characteristic objects to be associated with the dog.
      */
-    void setCharacteristics(ArrayList<Characteristic> characteristics);
+    void setCharacteristics(ArrayList<String> characteristics);
+
+    /**
+     * Retrieves the list of photos associated with the dog.
+     *
+     * @return An ArrayList of Photo objects representing the dog's photos.
+     */
+    ArrayList<Drawable> getPhotosDog();
+
+    /**
+     * Sets the list of photos associated with the dog.
+     *
+     * @param photos An ArrayList of Photo objects to be associated with the dog.
+     */
+    void setPhotosDog(ArrayList<Drawable> photos);
 }
