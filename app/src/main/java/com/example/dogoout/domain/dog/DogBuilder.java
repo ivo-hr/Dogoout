@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import com.example.dogoout.domain.characteristic.Characteristic;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ public class DogBuilder {
     private String prompt;
     private String promptAnswer;
     private ArrayList<String> characteristics;
-    private ArrayList<Drawable> photosDog;
+    private ArrayList<URI> photosDog;
 
     /**
      * Constructs a new `DogBuilder`.
@@ -86,7 +87,7 @@ public class DogBuilder {
      * @param photosDog The new list of photos for the dog.
      * @return The DogBuilder instance for method chaining.
      */
-    public DogBuilder withPhotosDog(ArrayList<Drawable> photosDog) {
+    public DogBuilder withPhotosDog(ArrayList<URI> photosDog) {
         this.photosDog = photosDog;
         return this;
     }

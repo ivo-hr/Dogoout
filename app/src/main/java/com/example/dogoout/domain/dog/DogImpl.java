@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import com.example.dogoout.domain.characteristic.Characteristic;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,7 @@ public class DogImpl implements Dog, Serializable {
     private String prompt;
     private String promptAnswer;
     private ArrayList<String> characteristics;
-    private ArrayList<Drawable> photosDog;
+    private ArrayList<URI> photosDog;
 
     /**
      * Constructs a new `Dog` with default values.
@@ -34,7 +35,7 @@ public class DogImpl implements Dog, Serializable {
      * @param promptAnswer    The dog's answer to the prompt.
      * @param characteristics The list of characteristics or traits associated with the dog.
      */
-    public DogImpl(String name, String breed, String prompt, String promptAnswer, ArrayList<String> characteristics, ArrayList<Drawable> photosDog) {
+    public DogImpl(String name, String breed, String prompt, String promptAnswer, ArrayList<String> characteristics, ArrayList<URI> photosDog) {
         this.name = name;
         this.breed = breed;
         this.prompt = prompt;
@@ -151,7 +152,7 @@ public class DogImpl implements Dog, Serializable {
      * @return An ArrayList of Drawable objects representing the dog's photos.
      */
     @Override
-    public ArrayList<Drawable> getPhotosDog() {
+    public ArrayList<URI> getPhotosDog() {
         return photosDog;
     }
 
@@ -161,7 +162,7 @@ public class DogImpl implements Dog, Serializable {
      * @param photosDog An ArrayList of Drawable objects to be associated with the dog.
      */
     @Override
-    public void setPhotosDog(ArrayList<Drawable> photosDog) {
+    public void setPhotosDog(ArrayList<URI> photosDog) {
         this.photosDog = photosDog;
     }
 }

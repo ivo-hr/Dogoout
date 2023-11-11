@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import com.example.dogoout.domain.characteristic.Characteristic;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 public interface Dog {
@@ -84,12 +85,12 @@ public interface Dog {
      *
      * @return An ArrayList of Photo objects representing the dog's photos.
      */
-    ArrayList<Drawable> getPhotosDog();
+    ArrayList<URI> getPhotosDog();
 
     /**
      * Sets the list of photos associated with the dog.
      *
      * @param photos An ArrayList of Photo objects to be associated with the dog.
      */
-    void setPhotosDog(ArrayList<Drawable> photos);
+    void setPhotosDog(ArrayList<URI> photos);
 }
