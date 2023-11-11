@@ -28,11 +28,6 @@ public class Register5Activity extends AppCompatActivity {
         nextScreenBtn = findViewById(R.id.btnNext);
         txtInDescription = findViewById(R.id.txtInDescription);
 
-        // get the builder from the previous activity
-        Intent intent = getIntent();
-        UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
-        // log the builder
-        Log.d("USER_BUILDER", userBuilder.toString());
 
         previousScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,9 +38,25 @@ public class Register5Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // check if user filled out the description field
                 if (isValidTextInputLayout()) {
-                    Intent intent = new Intent(getApplicationContext(), Register6Activity.class);
-                    startActivity(intent);
+
+                    // get the description from the edit text
+                    String description = txtInDescription.getText().toString().trim();
+
+                    // get the user builder from the previous activity
+                    Intent intent = getIntent();
+                    UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+
+                    // add the description to the user builder
+                    userBuilder = userBuilder.withDescription(description);
+
+                    // create a new intent to go to the next activity
+                    Intent intentNextActivity = new Intent(Register5Activity.this, Register6Activity.class);
+                    // add the user builder to the intent
+                    intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+                    // go to the next activity
+                    startActivity(intentNextActivity);
                 }
             }
         });

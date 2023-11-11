@@ -32,7 +32,7 @@ public class Register8Activity extends AppCompatActivity {
         txtInDogName = findViewById(R.id.txtInDogName);
         acTxtVBreed = findViewById(R.id.actxtVBreed);
 
-
+        // TODO: Adding dog breeds to the arraylist
         arrayListDogBreed.add("Labrador");
         arrayListDogBreed.add("Beagle");
         arrayListDogBreed.add("Australian Shepherd");
