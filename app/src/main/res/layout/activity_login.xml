@@ -128,13 +128,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/txtVRogister"
+        app:layout_constraintBottom_toTopOf="@+id/txtVRegister"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glLeft" />
 
     <TextView
-        android:id="@+id/txtVRogister"
+        android:id="@+id/txtVRegister"
         style="@style/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
