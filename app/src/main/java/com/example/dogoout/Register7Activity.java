@@ -4,10 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+
+
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.user.UserBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Register7Activity extends AppCompatActivity {
 
@@ -26,6 +32,9 @@ public class Register7Activity extends AppCompatActivity {
         numPNumberOfDogs.setMaxValue(3);
         numPNumberOfDogs.setMinValue(0);
 
+        //Grab user builder from previous activity
+        UserBuilder userBuilder = (UserBuilder) getIntent().getSerializableExtra(Constants.USER_BUILDER_TAG);
+        Log.d("USER_BUILDER", userBuilder.toString());
         previousScreenBtn = findViewById(R.id.imgVBack);
 
         nextScreenBtn = findViewById(R.id.btnNext);

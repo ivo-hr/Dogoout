@@ -70,9 +70,22 @@ public class Register6Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isValidAnswerTxtPrompt() & isValidTxtPrompt()) {
-                    Intent intent = new Intent(getApplicationContext(), Register7Activity.class);
-                    startActivity(intent);
+                if (isValidAnswerTxtPrompt() && isValidTxtPrompt()) {
+
+                    //Save the prompt
+                    String prompt = promptTxt.getText().toString().trim();
+                    //Save the answer to the prompt
+                    String answer = answerTxtPrompt.getText().toString().trim();
+
+                    //Add prompt and answer to the user builder
+                    Intent intent = getIntent();
+                    UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+                    userBuilder = userBuilder.withPrompt(prompt);
+                    userBuilder = userBuilder.withPromptAnswer(answer);
+                    //Go to the next activity with the user builder
+                    Intent nextIntent = new Intent(getApplicationContext(), Register7Activity.class);
+                    nextIntent.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+                    startActivity(nextIntent);
                 }
             }
         });
