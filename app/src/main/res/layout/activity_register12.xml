@@ -81,7 +81,7 @@
         app:layout_constraintTop_toTopOf="@+id/glMiddleBottom" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/humanPreference"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -129,12 +129,13 @@
     </RadioGroup>
 
     <RadioGroup
+        android:id="@+id/dogPreference"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+        app:layout_constraintTop_toBottomOf="@+id/humanPreference">
 
         <RadioButton
             android:id="@+id/rbtnDogOwners"

@@ -5,17 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 
 public class Register3Activity extends AppCompatActivity {
@@ -31,7 +28,7 @@ public class Register3Activity extends AppCompatActivity {
 
         previousScreenBtn = findViewById(R.id.imgVBack);
         nextScreenBtn = findViewById(R.id.btnNext);
-        radioGroup = findViewById(R.id.radioGroup);
+        radioGroup = findViewById(R.id.humanPreference);
         previousScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
