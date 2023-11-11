@@ -76,9 +76,6 @@ public class Register11Activity extends AppCompatActivity {
                 int numberOfDogs = intentPreviousActivity.getIntExtra(Constants.NUMBER_OF_DOGS_TAG, 0);
 
 
-                Log.d("DOG_BUILDER", dogBuilder.toString());
-
-
                 // Build the dog, add it to the userBuilder and reduce the number of dogs
                 Dog dog = dogBuilder.build();
                 userBuilder = userBuilder.withDog(dog);
@@ -93,7 +90,7 @@ public class Register11Activity extends AppCompatActivity {
                     startActivity(intentNextActivity);
                 } else {
                     // if there are more dogs to register, go to the dog registration activity
-                    intentNextActivity = new Intent(getApplicationContext(), Register12Activity.class);
+                    intentNextActivity = new Intent(getApplicationContext(), Register8Activity.class);
                     intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
                     intentNextActivity.putExtra(Constants.NUMBER_OF_DOGS_TAG, numberOfDogs);
                     startActivity(intentNextActivity);
