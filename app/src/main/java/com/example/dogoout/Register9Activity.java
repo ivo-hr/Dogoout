@@ -11,9 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.dog.DogBuilder;
+import com.example.dogoout.domain.user.UserBuilder;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Register9Activity extends AppCompatActivity {
 
@@ -23,10 +28,16 @@ public class Register9Activity extends AppCompatActivity {
     ImageView imgVAdd1, imgVAdd2, imgVAdd3;
     ImageView imgVDogImage1, imgVDogImage2, imgVDogImage3;
 
+    // DECLARE VARIABLES
+    URI[] imagesUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register9);
+
+        // INITIALIZE VARIABLES
+        imagesUri = new URI[3];
 
         // INITIALIZE COMPONENTS
         imgVAdd1 = findViewById(R.id.imgVAdd1);
@@ -62,30 +73,28 @@ public class Register9Activity extends AppCompatActivity {
             imageViews.add(imgVDogImage2);
             imageViews.add(imgVDogImage3);
 
-            // Count the number of uploaded images
-            int uploadedImages = 0;
-            for (ImageView imageView : imageViews) {
-                if (imageView.getDrawable() != null)
-                    uploadedImages++;
-            }
+            // Check if the user uploaded at least 1 imagesUri
+            imagesUri = Arrays.stream(imagesUri)
+                    .filter(uri -> uri != null)
+                    .toArray(URI[]::new);
 
-            // Check if the user uploaded at least 1 image1
-            if (uploadedImages < 1) {
-                // Display an error with alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(Register9Activity.this);
-                builder.setTitle("Error");
-                builder.setMessage("Please upload at least 1 image");
-                builder.setPositiveButton("OK", null);
-                builder.show();
-
+            ArrayList<URI> imagesUri = new ArrayList<>(Arrays.asList(this.imagesUri));
+            if (imagesUri.size() < 1) {
+                displayErrorMessage("Error", "You must upload at least 2 images.");
                 return;
             }
 
-            // TODO: collect data from the inputs
+            // Get the dog builder from the previous activity
+            Intent intent = getIntent();
+            DogBuilder dogBuilder = (DogBuilder) intent.getSerializableExtra(Constants.DOG_BUILDER_TAG);
 
-            // Go to the next screen
-            Intent intent = new Intent(getApplicationContext(), Register10Activity.class);
-            startActivity(intent);
+            // Add the imagesUri to the DogBuilder
+            dogBuilder = dogBuilder.withPhotosDog(imagesUri);
+
+            // Add the builder to the intent and pass it to the next activity
+            Intent intentNextActivity = new Intent(getApplicationContext(), Register5Activity.class);
+            intentNextActivity.putExtra(Constants.DOG_BUILDER_TAG, dogBuilder);
+            startActivity(intentNextActivity);
         });
     }
 
@@ -99,7 +108,8 @@ public class Register9Activity extends AppCompatActivity {
                     .maxResultSize(1080, 1080)        //Final image resolution will be less than 1080 x 1080
                     .start(requestCode);
         } else {
-            // Remove the image from the image view and replace the add button with an add button
+            // Remove the image from the image view and replace the remove button with an add button
+            imagesUri[requestCode - 1] = null;
             imageView.setImageResource(0);
             addImageView.setImageResource(R.drawable.ic_add);
         }
@@ -109,32 +119,45 @@ public class Register9Activity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (resultCode != RESULT_OK)
+            return;
+
+        try {
+
             Uri uri = data.getData();
             switch (requestCode) {
                 case 1:
                     // Set the image in ImageView and replace the add button with a remove button
                     imgVDogImage1.setImageURI(uri);
+                    imagesUri[requestCode - 1] = new URI(uri.toString());
                     imgVAdd1.setImageResource(R.drawable.ic_remove);
                     break;
                 case 2:
                     // Set the image in ImageView and replace the add button with a remove button
                     imgVDogImage2.setImageURI(uri);
+                    imagesUri[requestCode - 1] = new URI(uri.toString());
                     imgVAdd2.setImageResource(R.drawable.ic_remove);
                     break;
                 case 3:
                     // Set the image in ImageView and replace the add button with a remove button
                     imgVDogImage3.setImageURI(uri);
+                    imagesUri[requestCode - 1] = new URI(uri.toString());
                     imgVAdd3.setImageResource(R.drawable.ic_remove);
                     break;
             }
-        } else {
-            // Display an error with alert dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(Register9Activity.this);
-            builder.setTitle("Error");
-            builder.setMessage("Something went wrong");
-            builder.setPositiveButton("OK", null);
-            builder.show();
+
+        } catch (Exception e) {
+            displayErrorMessage("Error", "Something went wrong. Try again.");
         }
+
+    }
+
+    private void displayErrorMessage(String title, String message) {
+        // Display an error with alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 }

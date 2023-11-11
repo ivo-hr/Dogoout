@@ -4,13 +4,14 @@ import android.graphics.drawable.Drawable;
 
 import com.example.dogoout.domain.characteristic.Characteristic;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
 
 /**
  * The `DogBuilder` class is used to construct instances of the `Dog` class with various attributes.
  */
-public class DogBuilder {
+public class DogBuilder implements Serializable {
     private String name;
     private String breed;
     private String prompt;

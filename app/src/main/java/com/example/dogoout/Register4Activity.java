@@ -155,7 +155,7 @@ public class Register4Activity extends AppCompatActivity {
 
     private void displayErrorMessage(String title, String message) {
         // Display an error with alert dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(Register4Activity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setPositiveButton("OK", null);
