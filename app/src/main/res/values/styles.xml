@@ -63,6 +63,14 @@
         <item name="android:letterSpacing">0.12</item>
     </style>
 
+    <!-- This style is used for h4 text (purple color) -->
+    <style name="text_h4_purple" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:color">@color/primary</item>
+    </style>
+
     <!-- This style is used for normal text -->
     <style name="text" parent="android:Widget.TextView">
         <item name="android:textColor">@color/text</item>
