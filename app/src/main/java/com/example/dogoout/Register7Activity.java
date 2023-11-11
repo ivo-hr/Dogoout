@@ -32,28 +32,30 @@ public class Register7Activity extends AppCompatActivity {
         numPNumberOfDogs.setMaxValue(3);
         numPNumberOfDogs.setMinValue(0);
 
-        //Grab user builder from previous activity
-        UserBuilder userBuilder = (UserBuilder) getIntent().getSerializableExtra(Constants.USER_BUILDER_TAG);
-        Log.d("USER_BUILDER", userBuilder.toString());
-        previousScreenBtn = findViewById(R.id.imgVBack);
-
         nextScreenBtn = findViewById(R.id.btnNext);
 
         // SET ON CLICK LISTENERS
         previousScreenBtn.setOnClickListener(view -> finish());
         nextScreenBtn.setOnClickListener(view -> {
-            Intent intent;
 
-            if (numPNumberOfDogs.getValue() == 0) {
-                // If the user has no dogs, go to the email verification screen
-                intent = new Intent(getApplicationContext(), Register14Activity.class);
+            // Get the user builder from the previous screen
+            Intent intentPreviousActivity = getIntent();
+            UserBuilder userBuilder = (UserBuilder) intentPreviousActivity.getSerializableExtra(Constants.USER_BUILDER_TAG);
+
+            Intent intentNextActivity;
+            int numberOfDogs = numPNumberOfDogs.getValue();
+            if (numberOfDogs == 0) {
+                // If the user has no dogs, go to the user preferences screen
+                intentNextActivity = new Intent(getApplicationContext(), Register12Activity.class);
+                intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
             } else {
                 // If the user has dogs, go to the dog data screen
-                // TODO: send the number of dogs to the next screen and current data
-                intent = new Intent(getApplicationContext(), Register8Activity.class);
+                intentNextActivity = new Intent(getApplicationContext(), Register8Activity.class);
+                intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+                intentNextActivity.putExtra(Constants.NUMBER_OF_DOGS_TAG, numberOfDogs);
             }
 
-            startActivity(intent);
+            startActivity(intentNextActivity);
         });
     }
 }
