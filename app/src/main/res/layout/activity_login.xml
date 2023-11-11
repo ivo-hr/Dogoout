@@ -126,10 +126,21 @@
         style="@style/button_fill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintBottom_toTopOf="@+id/txtVRogister"
         app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft" />
+
+    <TextView
+        android:id="@+id/txtVRogister"
+        style="@style/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_have_account"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
         app:layout_constraintStart_toStartOf="@+id/glLeft" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
