@@ -1,17 +1,20 @@
 package com.example.dogoout.domain.user;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.preference.Preference;
 
+import java.io.Serializable;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
  * The `UserBuilder` class is used to construct instances of the `UserImpl` class with various attributes.
  */
-public class UserBuilder {
+public class UserBuilder implements Serializable {
     private String firstname;
     private String surname;
     private String email;
@@ -20,7 +23,7 @@ public class UserBuilder {
     private String gender;
     private String description;
     private String prompt;
-    private ArrayList<Drawable> photosUser;
+    private ArrayList<URI> photosUser;
     private String promptAnswer;
     private Preference userPreference;
     private ArrayList<Dog> dogs;
@@ -115,7 +118,7 @@ public class UserBuilder {
      * @param prompt The new prompt for the user.
      * @return The UserBuilder instance for method chaining.
      */
-    public UserBuilder withPromptId(String prompt) {
+    public UserBuilder withPrompt(String prompt) {
         this.prompt = prompt;
         return this;
     }
@@ -137,7 +140,7 @@ public class UserBuilder {
      * @param photosUser The photos for the user.
      * @return The UserBuilder instance for method chaining.
      */
-    public UserBuilder withPromptAnswer(ArrayList<Drawable> photosUser) {
+    public UserBuilder withPhotosUser(ArrayList<URI> photosUser) {
         this.photosUser = photosUser;
         return this;
     }
@@ -170,6 +173,24 @@ public class UserBuilder {
      * @return The constructed `UserImpl` object.
      */
     public UserImpl build() {
-        return new UserImpl(firstname, surname, email, country, birthDate, gender, description, prompt, photosUser, promptAnswer, userPreference , dogs);
+        return new UserImpl(firstname, surname, email, country, birthDate, gender, description, prompt, photosUser, promptAnswer, userPreference, dogs);
+    }
+
+    @Override
+    public String toString() {
+        return "UserBuilder{" +
+                "firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", description='" + description + '\'' +
+                ", prompt='" + prompt + '\'' +
+                ", photosUser=" + photosUser +
+                ", promptAnswer='" + promptAnswer + '\'' +
+                ", userPreference=" + userPreference +
+                ", dogs=" + dogs +
+                '}';
     }
 }

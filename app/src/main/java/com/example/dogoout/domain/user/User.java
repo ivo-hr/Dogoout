@@ -1,10 +1,12 @@
 package com.example.dogoout.domain.user;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.preference.Preference;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -150,9 +152,9 @@ public interface User {
      */
     void setDogs(ArrayList<Dog> dogs);
 
-    ArrayList<Drawable> getPhotosUser();
+    ArrayList<URI> getPhotosUser();
 
-    void setPhotosUser(ArrayList<Drawable> photosUser);
+    void setPhotosUser(ArrayList<URI> photosUser);
 
     /**
      * Retrieves the user's preference.

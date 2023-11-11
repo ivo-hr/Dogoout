@@ -1,11 +1,13 @@
 package com.example.dogoout.domain.user;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.preference.Preference;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -25,7 +27,7 @@ public class UserImpl implements User, Serializable {
     private String gender;
     private String description;
     private String prompt;
-    private ArrayList<Drawable> photosUser;
+    private ArrayList<URI> photosUser;
     private String promptAnswer;
     private Preference preferenceUser;
     private ArrayList<Dog> dogs;
@@ -38,7 +40,7 @@ public class UserImpl implements User, Serializable {
 
     ;
 
-    public UserImpl(String firstname, String surname, String email, String country, LocalDate birthDate, String gender, String description, String prompt, ArrayList<Drawable> photosUser, String promptAnswer, Preference preferenceUser, ArrayList<Dog> dogs) {
+    public UserImpl(String firstname, String surname, String email, String country, LocalDate birthDate, String gender, String description, String prompt, ArrayList<URI> photosUser, String promptAnswer, Preference preferenceUser, ArrayList<Dog> dogs) {
         this.firstname = firstname;
         this.surname = surname;
         this.email = email;
@@ -275,12 +277,12 @@ public class UserImpl implements User, Serializable {
     }
 
     @Override
-    public ArrayList<Drawable> getPhotosUser() {
+    public ArrayList<URI> getPhotosUser() {
         return photosUser;
     }
 
     @Override
-    public void setPhotosUser(ArrayList<Drawable> photosUser) {
+    public void setPhotosUser(ArrayList<URI> photosUser) {
         this.photosUser = photosUser;
     }
 }

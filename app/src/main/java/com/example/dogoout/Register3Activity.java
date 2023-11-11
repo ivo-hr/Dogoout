@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -38,10 +42,24 @@ public class Register3Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidRadioGroup()) {
-                    Intent intent = new Intent(getApplicationContext(), Register4Activity.class);
-                    startActivity(intent);
-                }
-                else {
+                    // Get the builder from the previous activity
+                    Intent intent = getIntent();
+                    UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+
+                    // Add the gender to the UserBuilder
+                    if (radioGroup.getCheckedRadioButtonId() == R.id.rbtnMale) {
+                        userBuilder = userBuilder.withGender("MALE");
+                    } else if (radioGroup.getCheckedRadioButtonId() == R.id.rbtnFemale) {
+                        userBuilder = userBuilder.withGender("FEMALE");
+                    } else {
+                        userBuilder = userBuilder.withGender("OTHER");
+                    }
+
+                    // Add the builder to the intent and pass it to the next activity
+                    Intent intentNextActivity = new Intent(getApplicationContext(), Register4Activity.class);
+                    intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+                    startActivity(intentNextActivity);
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Register3Activity.this);
                     builder.setTitle("Error");
                     builder.setMessage("Please select gender");

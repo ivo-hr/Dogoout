@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Register1Activity extends AppCompatActivity {
@@ -37,9 +39,19 @@ public class Register1Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidTextInputLayout() & isValidTextInputLayout1()) {
+                    // Get the text from the edit text
+                    String firstName = txtInFirstName.getText().toString().trim();
+                    String lastName = txtInLastName.getText().toString().trim();
+
+                    // Create Builder with the data (firstName, lastName)
+                    UserBuilder userBuilder
+                            = new UserBuilder()
+                            .withFirstname(firstName)
+                            .withSurname(lastName);
+
+                    // Add the builder to the intent and pass it to the next activity
                     Intent intent = new Intent(getApplicationContext(), Register2Activity.class);
-                    intent.putExtra("firstName", txtInFirstName.getText().toString());
-                    intent.putExtra("lastName", txtInLastName.getText().toString());
+                    intent.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
                     startActivity(intent);
                 }
             }
@@ -50,7 +62,7 @@ public class Register1Activity extends AppCompatActivity {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
-        if (!txtInFirstName.getText().toString().isEmpty()) {
+        if (!txtInFirstName.getText().toString().trim().isEmpty()) {
             // is its not empty its okay
             textInputLayout.setErrorEnabled(false);
             return true;
@@ -65,7 +77,7 @@ public class Register1Activity extends AppCompatActivity {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout1);
         // Check if the edit text is empty
-        if (!txtInLastName.getText().toString().isEmpty()) {
+        if (!txtInLastName.getText().toString().trim().isEmpty()) {
             // is its not empty its okay
             textInputLayout.setErrorEnabled(false);
             return true;

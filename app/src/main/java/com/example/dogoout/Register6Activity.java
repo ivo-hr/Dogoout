@@ -22,7 +22,7 @@ public class Register6Activity extends AppCompatActivity {
     AutoCompleteTextView promptTxt;
     TextView answerTxtPrompt;
 
-    ArrayList<String> arrayList = new ArrayList<>();
+    ArrayList<String> prompts = new ArrayList<>();
 
     //AutoCompleteTextView autoCompleteTextView;
 
@@ -37,12 +37,24 @@ public class Register6Activity extends AppCompatActivity {
         promptTxt = findViewById(R.id.actxtPrompt);
         answerTxtPrompt = findViewById(R.id.txtInPromptAnswer);
 
-        arrayList.add("Prompt N°1");
-        arrayList.add("Prompt N°2");
-        arrayList.add("Prompt N°3");
+        // Adding prompts to the arraylist
+        prompts.add("If your dog wrote your bio, what would they say?");
+        prompts.add("Best dog-friendly date idea you can think of?");
+        prompts.add("Describe the perfect day with your dog.");
+        prompts.add("Share a heartwarming or funny dog story.");
+        prompts.add("Sum up your bond with your dog in 3 words.");
+        prompts.add("If your dog picked your date, what traits would they choose?");
+        prompts.add("Your go-to trick to make your dog's tail wag?");
+        prompts.add("Share a time your dog made you laugh out loud.");
+        prompts.add("How did you and your dog become a duo?");
+        prompts.add("Your dog's favorite treat and do they get spoiled?");
+        prompts.add("If your dog chose a song to describe you, what would it be?");
+        prompts.add("Most adventurous thing you've done with your dog?");
+        prompts.add("Photo of your dog's favorite spot and why it's special.");
+        prompts.add("Key lesson learned from being a dog parent?");
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, arrayList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, prompts);
         promptTxt.setAdapter(adapter);
 
 
@@ -52,7 +64,7 @@ public class Register6Activity extends AppCompatActivity {
                 finish();
             }
         });
-        nextScreenBtn.setOnClickListener(new View.OnClickListener(){
+        nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidAnswerTxtPrompt() & isValidTxtPrompt()) {

@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Register5Activity extends AppCompatActivity {
@@ -24,6 +27,13 @@ public class Register5Activity extends AppCompatActivity {
         previousScreenBtn = findViewById(R.id.imgVBack);
         nextScreenBtn = findViewById(R.id.btnNext);
         txtInDescription = findViewById(R.id.txtInDescription);
+
+        // get the builder from the previous activity
+        Intent intent = getIntent();
+        UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+        // log the builder
+        Log.d("USER_BUILDER", userBuilder.toString());
+
         previousScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
