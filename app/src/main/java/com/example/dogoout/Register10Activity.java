@@ -68,8 +68,12 @@ public class Register10Activity extends AppCompatActivity {
         cbxIntelligent,
         cbxInquisitive};
 
+        //Check if more than 5 checkboxes are checked
+        int maxCheckboxes = 5;
+        
         for (CheckBox checkbox : allCheckboxes) {
             checkbox.setOnCheckedChangeListener(new MyCheckBoxChangeListener());
+
         }
 
         previousScreenBtn.setOnClickListener(new View.OnClickListener() {

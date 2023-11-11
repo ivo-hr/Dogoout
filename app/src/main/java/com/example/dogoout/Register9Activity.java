@@ -87,13 +87,19 @@ public class Register9Activity extends AppCompatActivity {
             // Get the dog builder from the previous activity
             Intent intent = getIntent();
             DogBuilder dogBuilder = (DogBuilder) intent.getSerializableExtra(Constants.DOG_BUILDER_TAG);
+            //Get the user builder from the previous activity to pass it to the next activity
+            UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+            //Get the number of dogs from the previous activity to pass it to the next activity
+            int numberOfDogs = intent.getIntExtra(Constants.NUMBER_OF_DOGS_TAG, 0);
 
             // Add the imagesUri to the DogBuilder
             dogBuilder = dogBuilder.withPhotosDog(imagesUri);
 
             // Add the builder to the intent and pass it to the next activity
-            Intent intentNextActivity = new Intent(getApplicationContext(), Register5Activity.class);
+            Intent intentNextActivity = new Intent(getApplicationContext(), Register10Activity.class);
             intentNextActivity.putExtra(Constants.DOG_BUILDER_TAG, dogBuilder);
+            intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+            intentNextActivity.putExtra(Constants.NUMBER_OF_DOGS_TAG, numberOfDogs);
             startActivity(intentNextActivity);
         });
     }

@@ -11,9 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.dog.Dog;
+import com.example.dogoout.domain.user.UserBuilder;
+import com.example.dogoout.domain.dog.DogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Register8Activity extends AppCompatActivity {
     ImageView previousScreenBtn;
@@ -36,6 +41,31 @@ public class Register8Activity extends AppCompatActivity {
         arrayListDogBreed.add("Labrador");
         arrayListDogBreed.add("Beagle");
         arrayListDogBreed.add("Australian Shepherd");
+        arrayListDogBreed.add("Poodle");
+        arrayListDogBreed.add("German Shepherd");
+        arrayListDogBreed.add("Golden Retriever");
+        arrayListDogBreed.add("Bulldog");
+        arrayListDogBreed.add("Pug");
+        arrayListDogBreed.add("Yorkshire Terrier");
+        arrayListDogBreed.add("Boxer");
+        arrayListDogBreed.add("Dachshund");
+        arrayListDogBreed.add("Siberian Husky");
+        arrayListDogBreed.add("Great Dane");
+        arrayListDogBreed.add("Doberman Pinscher");
+        arrayListDogBreed.add("Corgi");
+        arrayListDogBreed.add("Shih Tzu");
+        arrayListDogBreed.add("Rottweiler");
+        arrayListDogBreed.add("French Bulldog");
+        arrayListDogBreed.add("Pomeranian");
+        arrayListDogBreed.add("American Staffordshire Terrier");
+        arrayListDogBreed.add("Border Collie");
+
+        //order alphabetically
+        Collections.sort(arrayListDogBreed);
+
+        arrayListDogBreed.add("Other...");
+
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, arrayListDogBreed);
         acTxtVBreed.setAdapter(adapter);
@@ -51,8 +81,28 @@ public class Register8Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidDogName() & isValidDogBreed()) {
-                    Intent intent = new Intent(getApplicationContext(), Register9Activity.class);
-                    startActivity(intent);
+
+                    //Save prompt and answer
+                    String dogName = txtInDogName.getText().toString().trim();
+                    String dogBreed = acTxtVBreed.getText().toString().trim();
+
+                    //Pass through the user builder
+                    Intent intent = getIntent();
+                    UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+
+                    int numberOfDogs = intent.getIntExtra(Constants.NUMBER_OF_DOGS_TAG, 0);
+
+                    //Add dog name and breed to the dog builder
+                    DogBuilder dogBuilder = new DogBuilder();
+                    dogBuilder = dogBuilder.withName(dogName);
+                    dogBuilder = dogBuilder.withBreed(dogBreed);
+
+                    //Send the dog builder and user builder to the next activity
+                    Intent nextIntent = new Intent(getApplicationContext(), Register9Activity.class);
+                    nextIntent.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+                    nextIntent.putExtra(Constants.DOG_BUILDER_TAG, dogBuilder);
+                    nextIntent.putExtra(Constants.NUMBER_OF_DOGS_TAG, numberOfDogs);
+                    startActivity(nextIntent);
                 }
             }
         });
@@ -62,7 +112,7 @@ public class Register8Activity extends AppCompatActivity {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
-        if (!txtInDogName.getText().toString().isEmpty()) {
+        if (!txtInDogName.getText().toString().trim().isEmpty()) {
             // is its not empty its okay
             textInputLayout.setError(null);
             return true;
