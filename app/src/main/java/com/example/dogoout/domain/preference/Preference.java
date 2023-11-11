@@ -1,6 +1,7 @@
 package com.example.dogoout.domain.preference;
 
-public class Preference {
+import java.io.Serializable;
+public class Preference implements Serializable{
 
     private String sexPreference;
     private String dogOwnerPreference;
