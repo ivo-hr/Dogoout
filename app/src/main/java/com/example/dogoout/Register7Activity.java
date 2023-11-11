@@ -27,15 +27,19 @@ public class Register7Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register7);
 
+
         // INITIALIZE COMPONENTS
         numPNumberOfDogs = findViewById(R.id.numPNumberOfDogs);
         numPNumberOfDogs.setMaxValue(3);
         numPNumberOfDogs.setMinValue(0);
 
+        previousScreenBtn = findViewById(R.id.imgVBack);
+
         nextScreenBtn = findViewById(R.id.btnNext);
 
         // SET ON CLICK LISTENERS
         previousScreenBtn.setOnClickListener(view -> finish());
+
         nextScreenBtn.setOnClickListener(view -> {
 
             // Get the user builder from the previous screen
