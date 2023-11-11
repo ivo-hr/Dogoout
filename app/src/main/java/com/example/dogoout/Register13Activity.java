@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.regex.Matcher;
@@ -37,20 +39,27 @@ public class Register13Activity extends AppCompatActivity {
         txtInEmail = findViewById(R.id.txtInEmail);
         txtInPassword = findViewById(R.id.txtInPassword);
         txtInConfirmPassword = findViewById(R.id.txtInConfirmPassword);
-        previousScreenBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        nextScreenBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                if (isValidTextInputEmail() & isValidTextInputPassword() & isValidTextInputConfirmPassword()) {
 
-                    Intent intent = new Intent(getApplicationContext(), Register14Activity.class);
-                    startActivity(intent);
-                }
+        previousScreenBtn.setOnClickListener(view -> finish());
+
+        nextScreenBtn.setOnClickListener(view -> {
+            if (isValidTextInputEmail() && isValidTextInputPassword() && isValidTextInputConfirmPassword()) {
+                // Get the email and password
+                String email = txtInEmail.getText().toString().trim();
+                String password = txtInPassword.getText().toString().trim();
+
+                // Get the intent from the previous activity
+                Intent intent = getIntent();
+                // Get the user builder from the intent and add the email to it
+                UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
+                userBuilder = userBuilder.withEmail(email);
+
+                // Add the email, password and user builder to the intent
+                Intent intentNextActivity = new Intent(getApplicationContext(), Register14Activity.class);
+                intentNextActivity.putExtra(Constants.EMAIL_TAG, email);
+                intentNextActivity.putExtra(Constants.PASSWORD_TAG, password);
+                intentNextActivity.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
+                startActivity(intentNextActivity);
             }
         });
     }
@@ -60,12 +69,14 @@ public class Register13Activity extends AppCompatActivity {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
-        if (!txtInEmail.getText().toString().isEmpty()) {
+        String email = txtInEmail.getText().toString().trim();
+        if (!email.isEmpty()) {
 
             pattern = Pattern.compile(EMAIL_PATTERN);
             CharSequence cs = (CharSequence) txtInEmail.getText().toString();
             matcher = pattern.matcher(cs);
-            if(matcher.matches()!=true) {
+
+            if (matcher.matches() != true) {
                 textInputLayout.setError("Invalid email.");
                 return false;
             }
@@ -85,9 +96,8 @@ public class Register13Activity extends AppCompatActivity {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout1);
 
-        String password = txtInPassword.getText().toString();
-
         // Check if the edit text is empty
+        String password = txtInPassword.getText().toString().trim();
         if (!password.isEmpty()) {
 
             pattern = Pattern.compile(PASSWORD_PATTERN);
@@ -95,10 +105,11 @@ public class Register13Activity extends AppCompatActivity {
             matcher = pattern.matcher(cs);
 
 
-            if (matcher.matches()!=true){
+            if (matcher.matches() != true) {
                 textInputLayout.setError("Your password is too weak.");
                 return false;
             }
+
             // is its not empty its okay
             textInputLayout.setError(null);
             return true;
@@ -113,10 +124,10 @@ public class Register13Activity extends AppCompatActivity {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout2);
         // Check if the edit text is empty
-        if (!txtInConfirmPassword.getText().toString().isEmpty()) {
+        String confirmPassword = txtInConfirmPassword.getText().toString().trim();
+        if (!confirmPassword.isEmpty()) {
 
             if (!txtInPassword.getText().toString().equals(txtInConfirmPassword.getText().toString())) {
-
                 textInputLayout.setError("Password and Confirm Password do not match.");
                 return false;
             }

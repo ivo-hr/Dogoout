@@ -1,9 +1,5 @@
 package com.example.dogoout.domain.dog;
 
-import android.graphics.drawable.Drawable;
-
-import com.example.dogoout.domain.characteristic.Characteristic;
-
 import java.net.URI;
 import java.util.ArrayList;
 

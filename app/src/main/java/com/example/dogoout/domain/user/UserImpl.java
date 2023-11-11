@@ -38,8 +38,21 @@ public class UserImpl implements User, Serializable {
     public UserImpl() {
     }
 
-    ;
 
+    /**
+     * @param firstname      The first name of the user.
+     * @param surname        The surname of the user.
+     * @param email          The email address of the user.
+     * @param country        The country of residence of the user.
+     * @param birthDate      The date of birth of the user.
+     * @param gender         The gender of the user.
+     * @param description    The description or bio of the user.
+     * @param prompt         The prompt of the user.
+     * @param photosUser     The photo URIs of the user.
+     * @param promptAnswer   The answer to the prompt of the user.
+     * @param preferenceUser The preference of the user.
+     * @param dogs           The list of dogs associated with the user.
+     */
     public UserImpl(String firstname, String surname, String email, String country, LocalDate birthDate, String gender, String description, String prompt, ArrayList<URI> photosUser, String promptAnswer, Preference preferenceUser, ArrayList<Dog> dogs) {
         this.firstname = firstname;
         this.surname = surname;
@@ -276,13 +289,41 @@ public class UserImpl implements User, Serializable {
         this.dogs = dogs;
     }
 
+    /**
+     * Retrieves the user's photos.
+     *
+     * @return The user's photos.
+     */
     @Override
     public ArrayList<URI> getPhotosUser() {
         return photosUser;
     }
 
+    /**
+     * Sets the user's photos.
+     *
+     * @param photosUser The new photos for the user.
+     */
     @Override
     public void setPhotosUser(ArrayList<URI> photosUser) {
         this.photosUser = photosUser;
+    }
+
+    @Override
+    public String toString() {
+        return "UserImpl{" +
+                "firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender='" + gender + '\'' +
+                ", description='" + description + '\'' +
+                ", prompt='" + prompt + '\'' +
+                ", photosUser=" + photosUser +
+                ", promptAnswer='" + promptAnswer + '\'' +
+                ", preferenceUser=" + preferenceUser +
+                ", dogs=" + dogs +
+                '}';
     }
 }

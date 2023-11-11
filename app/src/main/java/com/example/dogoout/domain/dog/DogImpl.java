@@ -1,8 +1,5 @@
 package com.example.dogoout.domain.dog;
 
-import android.graphics.drawable.Drawable;
-
-import com.example.dogoout.domain.characteristic.Characteristic;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -34,6 +31,7 @@ public class DogImpl implements Dog, Serializable {
      * @param prompt          The dog's prompt.
      * @param promptAnswer    The dog's answer to the prompt.
      * @param characteristics The list of characteristics or traits associated with the dog.
+     * @param photosDog       The list of photo URIS associated with the dog.
      */
     public DogImpl(String name, String breed, String prompt, String promptAnswer, ArrayList<String> characteristics, ArrayList<URI> photosDog) {
         this.name = name;
@@ -164,5 +162,17 @@ public class DogImpl implements Dog, Serializable {
     @Override
     public void setPhotosDog(ArrayList<URI> photosDog) {
         this.photosDog = photosDog;
+    }
+
+    @Override
+    public String toString() {
+        return "DogImpl{" +
+                "name='" + name + '\'' +
+                ", breed='" + breed + '\'' +
+                ", prompt='" + prompt + '\'' +
+                ", promptAnswer='" + promptAnswer + '\'' +
+                ", characteristics=" + characteristics +
+                ", photosDog=" + photosDog +
+                '}';
     }
 }
