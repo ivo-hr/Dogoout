@@ -55,7 +55,7 @@ public class DogBuilder implements Serializable {
      * @param prompt The new prompt for the dog.
      * @return The DogBuilder instance for method chaining.
      */
-    public DogBuilder withPromptId(String prompt) {
+    public DogBuilder withPrompt(String prompt) {
         this.prompt = prompt;
         return this;
     }
@@ -101,6 +101,18 @@ public class DogBuilder implements Serializable {
      */
     public Dog build() {
         return new DogImpl(name, breed, prompt, promptAnswer, characteristics, photosDog);
+    }
+
+    @Override
+    public String toString() {
+        return "DogBuilder{" +
+                "name='" + name + '\'' +
+                ", breed='" + breed + '\'' +
+                ", prompt='" + prompt + '\'' +
+                ", promptAnswer='" + promptAnswer + '\'' +
+                ", characteristics=" + characteristics +
+                ", photosDog=" + photosDog +
+                '}';
     }
 }
 

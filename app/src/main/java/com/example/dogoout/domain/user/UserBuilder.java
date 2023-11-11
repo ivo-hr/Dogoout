@@ -26,7 +26,7 @@ public class UserBuilder implements Serializable {
     private ArrayList<URI> photosUser;
     private String promptAnswer;
     private Preference userPreference;
-    private ArrayList<Dog> dogs;
+    private ArrayList<Dog> dogs = new ArrayList<>();
 
     /**
      * Constructs a new `UserBuilder`.
@@ -157,13 +157,13 @@ public class UserBuilder implements Serializable {
     }
 
     /**
-     * Set the user's list of dogs.
+     * Set the user's dog to the list of dogs.
      *
-     * @param dogs The list of dogs.
+     * @param dog list of dogs.
      * @return The UserBuilder instance for method chaining.
      */
-    public UserBuilder withDogs(ArrayList<Dog> dogs) {
-        this.dogs = dogs;
+    public UserBuilder withDog(Dog dog) {
+        this.dogs.add(dog);
         return this;
     }
 
