@@ -1,14 +1,21 @@
 package com.example.dogoout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
@@ -23,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     //Initialize login button and register textview
     Button loginButton;
     TextView registerTextView;
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +59,26 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             //Check if email and password are valid
             if (isValidTextInputEmail() && isValidTextInputPassword()) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Error");
+                builder.setMessage("Your email or password is incorrect");
+                builder.setPositiveButton("OK", null);
                 //Start main activity
-                Intent nextIntent = new Intent(LoginActivity.this, MainActivity.class);
-                //TODO: Perform login, auth, etc.
-                startActivity(nextIntent);
+                firebaseAuth.signInWithEmailAndPassword(emailEditText.getText().toString(),passEditText.getText().toString())
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                } else {
+                                    builder.show();
+                                    Log.w("LoginActivity", "signInWithEmail:failure", task.getException());
+
+                                }
+                            }
+                        });
             }
         });
 

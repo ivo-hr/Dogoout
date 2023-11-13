@@ -7,32 +7,32 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.text.SimpleDateFormat;
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Register14Activity extends AppCompatActivity {
 
@@ -47,6 +47,11 @@ public class Register14Activity extends AppCompatActivity {
     FirebaseUser currentUser;
 
     User userCreate;
+
+    Map<String, Object> user;
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
 
     @Override
@@ -80,12 +85,17 @@ public class Register14Activity extends AppCompatActivity {
             assert currentUser != null;
 
             currentUser.reload();
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             if (isEmailValid(currentUser)) {
 
 
                 userID = currentUser.getUid();
 
-                Map<String, Object> user = new HashMap<>();
+                user = new HashMap<>();
                 user.put("firstname", userCreate.getFirstname());
                 user.put("surname", userCreate.getSurname());
                 user.put("email", userCreate.getEmail());
@@ -94,7 +104,20 @@ public class Register14Activity extends AppCompatActivity {
                 user.put("gender", userCreate.getGender());
                 user.put("description", userCreate.getDescription());
                 user.put("prompt", userCreate.getPrompt());
-                user.put("photoUser", new ArrayList<>());
+                uploadPhotoAndGetID(userCreate.getPhotosUser(), new UploadCallback() {
+                    @Override
+                    public void onUploadComplete(ArrayList<String> arrayListIDPhotos) {
+                        user.put("photos",arrayListIDPhotos);
+                        Log.d(TAG, "Uploads complete: " + arrayListIDPhotos.toString());
+
+                    }
+
+                    @Override
+                    public void onUploadFailure(Exception exception) {
+                        // Handle upload failure
+                        Log.d(TAG, "Upload failed: " + exception.toString());
+                    }
+                });
                 user.put("promptAnswer", userCreate.getPromptAnswer());
                 user.put("userPreference", userCreate.getPreference());
                 user.put("dogs", userCreate.getDogs());
@@ -141,6 +164,42 @@ public class Register14Activity extends AppCompatActivity {
             return false;
         }
     }
+
+    public interface UploadCallback {
+
+        void onUploadComplete(ArrayList<String> arrayListIDPhotos);
+
+        void onUploadFailure(Exception exception);
+    }
+
+
+    protected void uploadPhotoAndGetID(ArrayList<URI> arrayListPhotos, UploadCallback callback) {
+
+        ArrayList<String> arrayListIDPhotos = new ArrayList<>();
+
+        AtomicInteger count = new AtomicInteger(arrayListPhotos.size());
+
+        for (URI uriPhotos : arrayListPhotos) {
+            Uri file = Uri.fromFile(new File(uriPhotos));
+            StorageReference imageRef = storageRef.child("images/" + file.getLastPathSegment());
+
+            UploadTask uploadTask = imageRef.putFile(file);
+
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    arrayListIDPhotos.add(uri.toString());
+                    count.decrementAndGet();
+
+                    if (count.get() == 0) {
+                        callback.onUploadComplete(arrayListIDPhotos);
+                    }
+                });
+            }).addOnFailureListener(exception -> {
+                callback.onUploadFailure(exception);
+            });
+        }
+    }
+
 
 
 }
