@@ -40,17 +40,12 @@ public class Register14Activity extends AppCompatActivity {
 
     //Declare complete reg button
     Button btnCompleteRegistration;
-
     FirebaseAuth firebaseAuth;
     FirebaseFirestore fStore;
     String userID;
-
     FirebaseUser currentUser;
-
     User userCreate;
-
     Map<String, Object> user;
-
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
 
@@ -74,8 +69,6 @@ public class Register14Activity extends AppCompatActivity {
 
             //Get the user builder from the intent
             UserBuilder userBuilder = (UserBuilder) getIntent().getSerializableExtra(Constants.USER_BUILDER_TAG);
-            String email = getIntent().getStringExtra(Constants.EMAIL_TAG);
-            String password = getIntent().getStringExtra(Constants.PASSWORD_TAG);
 
             userCreate = userBuilder.build();
 
@@ -92,8 +85,8 @@ public class Register14Activity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if (isEmailValid(currentUser)) {
 
+            if (isEmailValid(currentUser)) {
 
                 userID = currentUser.getUid();
 

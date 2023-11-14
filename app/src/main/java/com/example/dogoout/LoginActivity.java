@@ -26,11 +26,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailEditText;
     TextInputLayout passInput;
     EditText passEditText;
-
     //Initialize login button and register textview
     Button loginButton;
     TextView registerTextView;
-
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -65,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 builder.setMessage("Your email or password is incorrect");
                 builder.setPositiveButton("OK", null);
                 //Start main activity
-                firebaseAuth.signInWithEmailAndPassword(emailEditText.getText().toString(),passEditText.getText().toString())
+                firebaseAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passEditText.getText().toString())
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
