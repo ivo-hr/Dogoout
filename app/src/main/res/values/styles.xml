@@ -137,7 +137,7 @@
     <style name="combo_box_input_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="android:textColorHint">@color/lightText</item>
         <item name="android:layout_marginTop">18dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
 
@@ -156,6 +156,7 @@
 
     <!-- This style is used for combo box input where user selects something -->
     <style name="combo_box_input" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">3dp</item>
         <item name="android:textColor">@color/primary</item>
