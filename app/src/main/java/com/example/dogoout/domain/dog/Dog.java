@@ -89,4 +89,6 @@ public interface Dog {
      * @param photos An ArrayList of Photo objects to be associated with the dog.
      */
     void setPhotosDog(ArrayList<URI> photos);
+
+    void setPhotosDogString(ArrayList<String> arrayListIDPhotosDogs);
 }

@@ -3,6 +3,7 @@ package com.example.dogoout.domain.dog;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 /**
@@ -162,6 +163,21 @@ public class DogImpl implements Dog, Serializable {
     @Override
     public void setPhotosDog(ArrayList<URI> photosDog) {
         this.photosDog = photosDog;
+    }
+
+    @Override
+    public void setPhotosDogString(ArrayList<String> arrayListIDPhotosDogs) {
+        ArrayList<URI> arrayList = new ArrayList<>();
+        for (String string: arrayListIDPhotosDogs) {
+            URI uri = null;
+            try {
+                uri = new URI(string);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+            arrayList.add(uri);
+        }
+        setPhotosDog(arrayList);
     }
 
     @Override

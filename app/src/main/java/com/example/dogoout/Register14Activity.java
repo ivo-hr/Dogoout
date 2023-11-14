@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -85,6 +86,7 @@ public class Register14Activity extends AppCompatActivity {
             assert currentUser != null;
 
             currentUser.reload();
+
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
@@ -104,40 +106,59 @@ public class Register14Activity extends AppCompatActivity {
                 user.put("gender", userCreate.getGender());
                 user.put("description", userCreate.getDescription());
                 user.put("prompt", userCreate.getPrompt());
+                user.put("promptAnswer", userCreate.getPromptAnswer());
+                user.put("userPreference", userCreate.getPreference());
+
                 uploadPhotoAndGetID(userCreate.getPhotosUser(), new UploadCallback() {
                     @Override
                     public void onUploadComplete(ArrayList<String> arrayListIDPhotos) {
                         user.put("photos",arrayListIDPhotos);
                         Log.d(TAG, "Uploads complete: " + arrayListIDPhotos.toString());
 
-                    }
+                        for (Dog dog:userCreate.getDogs()) {
+                            uploadPhotoAndGetID(dog.getPhotosDog(), new UploadCallback() {
+                                @Override
+                                public void onUploadComplete(ArrayList<String> arrayListIDPhotosDogs) {
+                                    dog.setPhotosDogString(arrayListIDPhotosDogs);
+                                    Log.d(TAG, "Uploads complete: " + arrayListIDPhotosDogs.toString());
 
+                                    user.put("dogs", userCreate.getDogs());
+
+                                    DocumentReference documentReference = fStore.collection("users").document(userID);
+
+                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+
+                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            startActivity(intent);
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "onFailure: " + e.toString());
+                                        }
+                                    });
+
+                                }
+
+                                @Override
+                                public void onUploadFailure(Exception exception) {
+                                    // Handle upload failure
+                                    Log.d(TAG, "Upload failed: " + exception.toString());
+                                }
+                            });
+
+                        }
+
+                    }
                     @Override
                     public void onUploadFailure(Exception exception) {
-                        // Handle upload failure
                         Log.d(TAG, "Upload failed: " + exception.toString());
                     }
                 });
-                user.put("promptAnswer", userCreate.getPromptAnswer());
-                user.put("userPreference", userCreate.getPreference());
-                user.put("dogs", userCreate.getDogs());
-
-                DocumentReference documentReference = fStore.collection("users").document(userID);
-
-                documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: user Profile is created for " + userID);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e.toString());
-                    }
-                });
-
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
 
             }
 
