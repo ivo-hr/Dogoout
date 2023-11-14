@@ -1,4 +1,4 @@
-package com.example.dogoout;
+package com.example.dogoout.registration;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.example.dogoout.login.LoginActivity;
+import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.user.User;

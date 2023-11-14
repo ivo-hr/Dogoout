@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_medium"
-    tools:context=".Register4Activity">
+    tools:context=".registration.Register4Activity">
 
     <ImageView
         android:id="@+id/imgVBack"

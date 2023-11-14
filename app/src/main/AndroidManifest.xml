@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Dogoout"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,49 +22,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register14Activity"
+            android:name=".registration.Register14Activity"
             android:exported="false" />
         <activity
-            android:name=".Register13Activity"
+            android:name=".registration.Register13Activity"
             android:exported="false" />
         <activity
-            android:name=".Register12Activity"
+            android:name=".registration.Register12Activity"
             android:exported="false" />
         <activity
-            android:name=".Register11Activity"
+            android:name=".registration.Register11Activity"
             android:exported="false" />
         <activity
-            android:name=".Register10Activity"
+            android:name=".registration.Register10Activity"
             android:exported="false" />
         <activity
-            android:name=".Register9Activity"
+            android:name=".registration.Register9Activity"
             android:exported="false" />
         <activity
-            android:name=".Register8Activity"
+            android:name=".registration.Register8Activity"
             android:exported="false" />
         <activity
-            android:name=".Register7Activity"
+            android:name=".registration.Register7Activity"
             android:exported="false" />
         <activity
-            android:name=".Register6Activity"
+            android:name=".registration.Register6Activity"
             android:exported="false" />
         <activity
-            android:name=".Register5Activity"
+            android:name=".registration.Register5Activity"
             android:exported="false" />
         <activity
-            android:name=".Register4Activity"
+            android:name=".registration.Register4Activity"
             android:exported="false" />
         <activity
-            android:name=".Register3Activity"
+            android:name=".registration.Register3Activity"
             android:exported="false" />
         <activity
-            android:name=".Register2Activity"
+            android:name=".registration.Register2Activity"
             android:exported="false" />
         <activity
-            android:name=".Register1Activity"
+            android:name=".registration.Register1Activity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".mainscreen.MainActivity"
             android:exported="false"></activity>
 
         <meta-data

@@ -1,4 +1,4 @@
-package com.example.dogoout;
+package com.example.dogoout.registration;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
-import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.example.dogoout.domain.dog.DogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
