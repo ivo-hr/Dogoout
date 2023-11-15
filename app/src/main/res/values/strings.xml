@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Dogoout</string>
     <string name="dont_have_account"><font color="#666666">Don\'t have an account? </font> <font color="#331B2F"><b>Register</b></font></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
