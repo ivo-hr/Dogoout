@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(nextIntent);
         });
 
+        emailEditText.setText("david.cadez89@gmail.com");
+        passEditText.setText("Dublin123?");
+
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {
             //Check if email and password are valid
