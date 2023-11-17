@@ -84,7 +84,83 @@ public class MatchingFragment extends Fragment {
 
         User user = userBuilder.build();
 
-        ArrayList<User> users = new ArrayList<User>();
+        // User with No Dogs
+        UserBuilder userBuilderNoDogs = new UserBuilder()
+                .withBirthDate(LocalDate.of(1985, 5, 15))
+                .withCountry("Canada")
+                .withDescription("I work in IT and love outdoor activities.")
+                .withEmail("janedoe@example.com")
+                .withFirstname("Jane")
+                .withGender("FEMALE")
+                .withPhotosUser(photos)
+                .withSurname("Doe")
+                .withPrompt("What's your favorite outdoor activity?")
+                .withPromptAnswer("I enjoy hiking and camping.");
+
+        User userNoDogs = userBuilderNoDogs.build();
+
+// User with One Dog
+        DogBuilder dogBuilderOneDog = new DogBuilder()
+                .withBreed("Labrador Retriever")
+                .withCharacteristics(characteristics)
+                .withName("Charlie")
+                .withPhotosDog(dogPhotos)
+                .withPrompt("Share a funny story about me and my antics.")
+                .withPromptAnswer("Once, Charlie stole my neighbor's shoes and ran around the yard with them!");
+
+        UserBuilder userBuilderOneDog = new UserBuilder()
+                .withBirthDate(LocalDate.of(1990, 8, 20))
+                .withCountry("UK")
+                .withDescription("I'm a chef who loves cooking for my friends and family.")
+                .withDog(dogBuilderOneDog.build())
+                .withEmail("johnsmith@example.com")
+                .withFirstname("John")
+                .withGender("MALE")
+                .withPhotosUser(photos)
+                .withSurname("Smith")
+                .withPrompt("What's your dog's favorite treat?")
+                .withPromptAnswer("Charlie goes crazy for peanut butter treats!");
+
+        User userOneDog = userBuilderOneDog.build();
+
+// User with Two Dogs
+        DogBuilder dogBuilderTwoDogs1 = new DogBuilder()
+                .withBreed("Beagle")
+                .withCharacteristics(characteristics)
+                .withName("Rex")
+                .withPhotosDog(dogPhotos)
+                .withPrompt("What breed do you think I am, and what made you pawsitively choose me?")
+                .withPromptAnswer("beagle");
+
+        DogBuilder dogBuilderTwoDogs2 = new DogBuilder()
+                .withBreed("Dachshund")
+                .withCharacteristics(characteristics)
+                .withName("Bella")
+                .withPhotosDog(dogPhotos)
+                .withPrompt("Tell us about the first time you met me.")
+                .withPromptAnswer("I adopted Bella from a local shelter, and it was love at first sight.");
+
+        UserBuilder userBuilderTwoDogs = new UserBuilder()
+                .withBirthDate(LocalDate.of(1982, 3, 10))
+                .withCountry("Australia")
+                .withDescription("I'm a travel enthusiast who enjoys exploring new cultures.")
+                .withDog(dogBuilderTwoDogs1.build())
+                .withDog(dogBuilderTwoDogs2.build())
+                .withEmail("susanbrown@example.com")
+                .withFirstname("Susan")
+                .withGender("FEMALE")
+                .withPhotosUser(photos)
+                .withSurname("Brown")
+                .withPrompt("What's your favorite activity to do with your dogs?")
+                .withPromptAnswer("Bella and Rex love going on long walks in the park.");
+
+        User userTwoDogs = userBuilderTwoDogs.build();
+
+// Adding users to the ArrayList
+        ArrayList<User> users = new ArrayList<>();
+        users.add(userNoDogs);
+        users.add(userOneDog);
+        users.add(userTwoDogs);
         users.add(user);
 
         // END TEST DATA
@@ -96,7 +172,7 @@ public class MatchingFragment extends Fragment {
         t.add("Friendly");
 
         //choose your favorite adapter
-        ArrayAdapter cardAdapter = new ArrayAdapter(getActivity(), R.layout.card, R.id.txtVNameAge, t);
+        ArrayAdapter cardAdapter = new ArrayAdapter(getActivity(), R.layout.card, R.id.txtVNameAge, users);
 
         //set the listener and the adapter
         flingContainer.setAdapter(cardAdapter);
