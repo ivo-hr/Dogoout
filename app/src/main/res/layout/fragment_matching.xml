@@ -8,13 +8,17 @@
     tools:context=".mainscreen.MatchingFragment">
 
 
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Matching"
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/swpCrdAdapter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:max_visible="4"
+        app:min_adapter_stack="6"
+        app:rotation_degrees="16" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,12 +72,21 @@
     </style>
 
     <!-- This style is used for normal text -->
+    <style name="text_h3_black" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <!-- This style is used for normal text -->
     <style name="text" parent="android:Widget.TextView">
         <item name="android:textColor">@color/text</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.05</item>
     </style>
+
 
     <!-- This layout style is used for normal inputs (this is border around the input) -->
     <style name="text_input_layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
