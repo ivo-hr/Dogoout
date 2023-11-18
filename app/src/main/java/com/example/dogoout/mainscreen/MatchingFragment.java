@@ -36,7 +36,7 @@ public class MatchingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_matching, container, false);
 
         //add the view via xml or programmatically
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) view.findViewById(R.id.swpCrdAdapter);
+        SwipeFlingAdapterView flingContainer = view.findViewById(R.id.swpCrdAdapter);
 
         // START TEST DATA
         ArrayList<String> characteristics = new ArrayList<>();
@@ -47,6 +47,8 @@ public class MatchingFragment extends Fragment {
         ArrayList<URI> dogPhotos = new ArrayList<>();
         try {
             dogPhotos.add(new URI("https://firebasestorage.googleapis.com/v0/b/dogoout.appspot.com/o/images%2FIMG_20231114_093803904.jpg?alt=media&token=96be5b20-b156-480b-8fc9-49089e46a77c"));
+            dogPhotos.add(new URI("https://firebasestorage.googleapis.com/v0/b/dogoout.appspot.com/o/images%2FIMG_20231114_093857374.jpg?alt=media&token=266f20a7-557a-445f-92a4-f46a490a97ed"));
+            dogPhotos.add(new URI("https://firebasestorage.googleapis.com/v0/b/dogoout.appspot.com/o/images%2FIMG_20231114_093857374.jpg?alt=media&token=266f20a7-557a-445f-92a4-f46a490a97ed"));
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -261,7 +263,7 @@ public class MatchingFragment extends Fragment {
         User user8 = userBuilder8.build();
 
 
-// Adding users to the ArrayList
+        // Adding users to the ArrayList
         ArrayList<User> users = new ArrayList<>();
         users.add(userNoDogs);
         users.add(userOneDog);
@@ -286,7 +288,7 @@ public class MatchingFragment extends Fragment {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                users.remove(0);
+                Log.d("DOGS1", users.remove(0).getDogs().toString());
                 cardAdapter.notifyDataSetChanged();
             }
 
@@ -301,7 +303,6 @@ public class MatchingFragment extends Fragment {
             @Override
             public void onRightCardExit(Object dataObject) {
                 // TODO: add user to the interactions table
-
                 Toast.makeText(getActivity(), "Right!", Toast.LENGTH_SHORT).show();
             }
 

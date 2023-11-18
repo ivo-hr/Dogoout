@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.TextViewCompat;
+
 import com.example.dogoout.R;
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.user.User;
@@ -109,13 +111,22 @@ public class CardAdapter extends BaseAdapter {
     }
 
     public void displayUsersDogs(ArrayList<Dog> dogs, LinearLayout linLayoutContent, ExecutorService service) {
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        // Setting the layout parameters
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, 10, 0, 10);
+        LinearLayout.LayoutParams borderParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        borderParams.setMargins(0, 150, 0, 0);
+
 
         for (Dog dog : dogs) {
 
-            // Create a image view for the dog photo
+            // Create a new ImageView with 1st dog photo
             ImageView imgVDogPhoto1 = new ImageView(context);
-            imgVDogPhoto1.setLayoutParams(params);
+            imgVDogPhoto1.setLayoutParams(borderParams);
+            imgVDogPhoto1.setImageResource(R.drawable.ic_image);
+            imgVDogPhoto1.setAdjustViewBounds(true);
+            imgVDogPhoto1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
 
             // Download the 1st dog photo
             if (dog.getPhotosDog().size() >= 1) {
@@ -124,8 +135,73 @@ public class CardAdapter extends BaseAdapter {
                 imgVDogPhoto1.setVisibility(View.GONE);
             }
 
+            // Create a new TextView with the dog name
+            TextView txtVDogName = new TextView(context);
+            txtVDogName.setLayoutParams(params);
+            txtVDogName.setText(dog.getName() + " (" + dog.getBreed() + ")");
+            TextViewCompat.setTextAppearance(txtVDogName, R.style.text_h1);
 
+            // Create a new TextView with the dog characteristics
+            TextView txtVDogCharacteristics = new TextView(context);
+            txtVDogCharacteristics.setLayoutParams(params);
+            txtVDogCharacteristics.setText(dog.getCharacteristics().toString().replace("[", "").replace("]", ""));
+            TextViewCompat.setTextAppearance(txtVDogCharacteristics, R.style.text);
+
+            // Create linear layout for prompt and prompt answer
+            LinearLayout linLayoutPrompt = new LinearLayout(context);
+            linLayoutPrompt.setLayoutParams(params);
+            linLayoutPrompt.setOrientation(LinearLayout.VERTICAL);
+            linLayoutPrompt.setBackground(context.getDrawable(R.drawable.placeholder_pink));
+            linLayoutPrompt.setPadding(20, 20, 20, 20);
+            // Create a new TextView with the dog prompt
+            TextView txtVDogPrompt = new TextView(context);
+            txtVDogPrompt.setLayoutParams(params);
+            txtVDogPrompt.setText(dog.getPrompt());
+            TextViewCompat.setTextAppearance(txtVDogPrompt, R.style.text_h3_black);
+            // Create a new TextView with the dog prompt answer
+            TextView txtVDogPromptAnswer = new TextView(context);
+            txtVDogPromptAnswer.setLayoutParams(params);
+            txtVDogPromptAnswer.setText(dog.getPromptAnswer());
+            TextViewCompat.setTextAppearance(txtVDogPromptAnswer, R.style.text);
+            // Add prompt and prompt answer to the linear layout
+            linLayoutPrompt.addView(txtVDogPrompt);
+            linLayoutPrompt.addView(txtVDogPromptAnswer);
+
+            // Create a new ImageView with 2nd dog photo
+            ImageView imgVDogPhoto2 = new ImageView(context);
+            imgVDogPhoto2.setLayoutParams(params);
+            imgVDogPhoto2.setImageResource(R.drawable.ic_image);
+            imgVDogPhoto2.setAdjustViewBounds(true);
+            imgVDogPhoto2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            // Download the 2nd dog photo
+            if (dog.getPhotosDog().size() >= 2) {
+                downloadAndDisplayPhotos(service, dog.getPhotosDog().get(1).toString(), imgVDogPhoto2);
+            } else {
+                imgVDogPhoto2.setVisibility(View.GONE);
+            }
+
+            // Create a new ImageView with 3rd dog photo
+            ImageView imgVDogPhoto3 = new ImageView(context);
+            imgVDogPhoto3.setLayoutParams(params);
+            imgVDogPhoto3.setImageResource(R.drawable.ic_image);
+            imgVDogPhoto3.setAdjustViewBounds(true);
+            imgVDogPhoto3.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            // Download the 3rd dog photo
+            if (dog.getPhotosDog().size() >= 3) {
+                downloadAndDisplayPhotos(service, dog.getPhotosDog().get(2).toString(), imgVDogPhoto3);
+            } else {
+                imgVDogPhoto3.setVisibility(View.GONE);
+            }
+
+            // Display the dog data
             linLayoutContent.addView(imgVDogPhoto1);
+            linLayoutContent.addView(txtVDogName);
+            linLayoutContent.addView(txtVDogCharacteristics);
+            linLayoutContent.addView(linLayoutPrompt);
+            linLayoutContent.addView(imgVDogPhoto2);
+            linLayoutContent.addView(imgVDogPhoto3);
         }
     }
 
