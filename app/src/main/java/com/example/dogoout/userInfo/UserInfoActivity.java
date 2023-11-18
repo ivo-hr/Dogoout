@@ -1,20 +1,19 @@
-package com.example.dogoout.adapters;
+package com.example.dogoout.userInfo;
 
-import android.app.Activity;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 
 import com.example.dogoout.R;
+import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.networking.ReadImage;
@@ -24,54 +23,38 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CardAdapter extends BaseAdapter {
+public class UserInfoActivity extends AppCompatActivity {
 
-    Context context;
+    // DECLARING COMPONENTS
+    ImageView imgVUserPhoto1, imgVUserPhoto2, imgVUserPhoto3, imgVBack;
+    TextView txtVNameAge, txtVDescription, txtVUserPrompt, txtVUserPromptAnswer;
 
-    ArrayList<User> users;
-
+    // DECLARING VARIABLES
     ExecutorService service;
 
-    public CardAdapter(Context context, ArrayList<User> users) {
-        super();
-        this.context = context;
-        this.users = users;
-        // Create a thread pool with 10 threads
-        this.service = Executors.newFixedThreadPool(10);
-    }
-
     @Override
-    public int getCount() {
-        return users.size();
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_info);
 
-    @Override
-    public User getItem(int i) {
-        return users.get(i);
-    }
+        // ININTIALIZING VARIABLES
+        service = Executors.newFixedThreadPool(10);
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+        // Getting user from intent
+        User user = (User) getIntent().getSerializableExtra(Constants.USER_TAG);
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        User user = getItem(i);
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.card, viewGroup, false);
-        }
+        // ININTIALIZING COMPONENTS
+        LinearLayout linLayoutContent = findViewById(R.id.linLayoutContent);
 
-        LinearLayout linLayoutContent = view.findViewById(R.id.linLayoutContent);
+        imgVUserPhoto1 = findViewById(R.id.imgVUserPhoto1);
+        imgVUserPhoto2 = findViewById(R.id.imgVUserPhoto2);
+        imgVUserPhoto3 = findViewById(R.id.imgVUserPhoto3);
+        imgVBack = findViewById(R.id.imgVBack);
 
-        ImageView imgVUserPhoto1 = view.findViewById(R.id.imgVUserPhoto1);
-        ImageView imgVUserPhoto2 = view.findViewById(R.id.imgVUserPhoto2);
-        ImageView imgVUserPhoto3 = view.findViewById(R.id.imgVUserPhoto3);
-        TextView txtVNameAge = view.findViewById(R.id.txtVNameAge);
-        TextView txtVDescription = view.findViewById(R.id.txtVDescription);
-        TextView txtVUserPrompt = view.findViewById(R.id.txtVUserPrompt);
-        TextView txtVUserPromptAnswer = view.findViewById(R.id.txtVUserPromptAnswer);
-
+        txtVNameAge = findViewById(R.id.txtVNameAge);
+        txtVDescription = findViewById(R.id.txtVDescription);
+        txtVUserPrompt = findViewById(R.id.txtVUserPrompt);
+        txtVUserPromptAnswer = findViewById(R.id.txtVUserPromptAnswer);
 
         // Download the 1st user photo
         if (user.getPhotosUser().size() >= 1) {
@@ -105,11 +88,14 @@ public class CardAdapter extends BaseAdapter {
         txtVUserPrompt.setText(user.getPrompt());
         txtVUserPromptAnswer.setText(user.getPromptAnswer());
 
-        Log.d("DOGS", user.getDogs().toString());
-
+        // Display the user's dogs
         displayUsersDogs(user.getDogs(), linLayoutContent);
 
-        return view;
+
+        // SETTING ONCLICK LISTENERS
+        imgVBack.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     public void displayUsersDogs(ArrayList<Dog> dogs, LinearLayout linLayoutContent) {
@@ -123,7 +109,7 @@ public class CardAdapter extends BaseAdapter {
         for (Dog dog : dogs) {
 
             // Create a new ImageView with 1st dog photo
-            ImageView imgVDogPhoto1 = new ImageView(context);
+            ImageView imgVDogPhoto1 = new ImageView(this);
             imgVDogPhoto1.setLayoutParams(borderParams);
             imgVDogPhoto1.setImageResource(R.drawable.ic_image);
             imgVDogPhoto1.setAdjustViewBounds(true);
@@ -138,30 +124,30 @@ public class CardAdapter extends BaseAdapter {
             }
 
             // Create a new TextView with the dog name
-            TextView txtVDogName = new TextView(context);
+            TextView txtVDogName = new TextView(this);
             txtVDogName.setLayoutParams(params);
             txtVDogName.setText(dog.getName() + " (" + dog.getBreed() + ")");
             TextViewCompat.setTextAppearance(txtVDogName, R.style.text_h1);
 
             // Create a new TextView with the dog characteristics
-            TextView txtVDogCharacteristics = new TextView(context);
+            TextView txtVDogCharacteristics = new TextView(this);
             txtVDogCharacteristics.setLayoutParams(params);
             txtVDogCharacteristics.setText(dog.getCharacteristics().toString().replace("[", "").replace("]", ""));
             TextViewCompat.setTextAppearance(txtVDogCharacteristics, R.style.text);
 
             // Create linear layout for prompt and prompt answer
-            LinearLayout linLayoutPrompt = new LinearLayout(context);
+            LinearLayout linLayoutPrompt = new LinearLayout(this);
             linLayoutPrompt.setLayoutParams(params);
             linLayoutPrompt.setOrientation(LinearLayout.VERTICAL);
-            linLayoutPrompt.setBackground(context.getDrawable(R.drawable.placeholder_pink));
+            linLayoutPrompt.setBackground(this.getDrawable(R.drawable.placeholder_pink));
             linLayoutPrompt.setPadding(20, 20, 20, 20);
             // Create a new TextView with the dog prompt
-            TextView txtVDogPrompt = new TextView(context);
+            TextView txtVDogPrompt = new TextView(this);
             txtVDogPrompt.setLayoutParams(params);
             txtVDogPrompt.setText(dog.getPrompt());
             TextViewCompat.setTextAppearance(txtVDogPrompt, R.style.text_h3_black);
             // Create a new TextView with the dog prompt answer
-            TextView txtVDogPromptAnswer = new TextView(context);
+            TextView txtVDogPromptAnswer = new TextView(this);
             txtVDogPromptAnswer.setLayoutParams(params);
             txtVDogPromptAnswer.setText(dog.getPromptAnswer());
             TextViewCompat.setTextAppearance(txtVDogPromptAnswer, R.style.text);
@@ -170,7 +156,7 @@ public class CardAdapter extends BaseAdapter {
             linLayoutPrompt.addView(txtVDogPromptAnswer);
 
             // Create a new ImageView with 2nd dog photo
-            ImageView imgVDogPhoto2 = new ImageView(context);
+            ImageView imgVDogPhoto2 = new ImageView(this);
             imgVDogPhoto2.setLayoutParams(params);
             imgVDogPhoto2.setImageResource(R.drawable.ic_image);
             imgVDogPhoto2.setAdjustViewBounds(true);
@@ -184,7 +170,7 @@ public class CardAdapter extends BaseAdapter {
             }
 
             // Create a new ImageView with 3rd dog photo
-            ImageView imgVDogPhoto3 = new ImageView(context);
+            ImageView imgVDogPhoto3 = new ImageView(this);
             imgVDogPhoto3.setLayoutParams(params);
             imgVDogPhoto3.setImageResource(R.drawable.ic_image);
             imgVDogPhoto3.setAdjustViewBounds(true);
@@ -207,10 +193,11 @@ public class CardAdapter extends BaseAdapter {
         }
     }
 
+
     public void downloadAndDisplayPhotos(String url, ImageView imageView) {
         service.submit(() -> {
             Bitmap bitmap = ReadImage.readImage(url);
-            ((Activity) context).runOnUiThread((() -> {
+            runOnUiThread((() -> {
                 if (bitmap != null) {
                     // Display the image
                     imageView.setImageBitmap(bitmap);
@@ -219,4 +206,3 @@ public class CardAdapter extends BaseAdapter {
         });
     }
 }
-
