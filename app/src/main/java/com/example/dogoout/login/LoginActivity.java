@@ -1,9 +1,5 @@
 package com.example.dogoout.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +7,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.dogoout.mainscreen.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.dogoout.R;
+import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.user.User;
+import com.example.dogoout.domain.user.UserImpl;
+import com.example.dogoout.mainscreen.MainActivity;
 import com.example.dogoout.registration.Register1Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -72,8 +75,13 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    // TODO: get the user that is logged in (implement method getUserFromDatabase)
+                                    UserImpl user = (UserImpl) getUserFromDatabase();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra(Constants.USER_TAG, user);
+                                    startActivity(intent);
                                     finish();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                                 } else {
                                     builder.show();
                                     Log.w("LoginActivity", "signInWithEmail:failure", task.getException());
@@ -83,8 +91,12 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+    }
 
 
+    public User getUserFromDatabase() {
+        // TODO: get the user that is logged in
+        return null;
     }
 
     protected boolean isValidTextInputEmail() {
