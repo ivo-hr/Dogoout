@@ -100,7 +100,7 @@ public class MatchingFragment extends Fragment {
 
         User userNoDogs = userBuilderNoDogs.build();
 
-// User with One Dog
+        // User with One Dog
         DogBuilder dogBuilderOneDog = new DogBuilder()
                 .withBreed("Labrador Retriever")
                 .withCharacteristics(characteristics)
@@ -124,7 +124,7 @@ public class MatchingFragment extends Fragment {
 
         User userOneDog = userBuilderOneDog.build();
 
-// User with Two Dogs
+        // User with Two Dogs
         DogBuilder dogBuilderTwoDogs1 = new DogBuilder()
                 .withBreed("Beagle")
                 .withCharacteristics(characteristics)
@@ -157,124 +157,17 @@ public class MatchingFragment extends Fragment {
 
         User userTwoDogs = userBuilderTwoDogs.build();
 
-        // User 5
-        DogBuilder dogBuilder5 = new DogBuilder()
-                .withBreed("Poodle")
-                .withCharacteristics(characteristics)
-                .withName("Fluffy")
-                .withPhotosDog(dogPhotos)
-                .withPrompt("What's my favorite trick, and how did I learn it?")
-                .withPromptAnswer("Fluffy's favorite trick is rolling over, and we taught him using positive reinforcement.");
-
-        UserBuilder userBuilder5 = new UserBuilder()
-                .withBirthDate(LocalDate.of(1993, 7, 8))
-                .withCountry("Germany")
-                .withDescription("I'm a software engineer who enjoys coding and playing video games.")
-                .withDog(dogBuilder5.build())
-                .withEmail("lisa.meyer@example.com")
-                .withFirstname("Lisa")
-                .withGender("FEMALE")
-                .withPhotosUser(photos)
-                .withSurname("Meyer")
-                .withPrompt("What's your idea of a perfect weekend?")
-                .withPromptAnswer("A perfect weekend for me involves coding projects, gaming, and quality time with Fluffy.");
-
-        User user5 = userBuilder5.build();
-
-// User 6
-        DogBuilder dogBuilder6 = new DogBuilder()
-                .withBreed("Siberian Husky")
-                .withCharacteristics(characteristics)
-                .withName("Luna")
-                .withPhotosDog(dogPhotos)
-                .withPrompt("Share a memorable adventure you've had with me.")
-                .withPromptAnswer("Luna and I once went on a camping trip, and she loved howling along with the night sounds.");
-
-        UserBuilder userBuilder6 = new UserBuilder()
-                .withBirthDate(LocalDate.of(1988, 12, 20))
-                .withCountry("USA")
-                .withDescription("I'm a graphic designer with a passion for outdoor activities.")
-                .withDog(dogBuilder6.build())
-                .withEmail("david.smith@example.com")
-                .withFirstname("David")
-                .withGender("MALE")
-                .withPhotosUser(photos)
-                .withSurname("Smith")
-                .withPrompt("What's your favorite season, and how do you and Luna enjoy it?")
-                .withPromptAnswer("My favorite season is winter, and Luna and I enjoy sledding and playing in the snow.");
-
-        User user6 = userBuilder6.build();
-
-// User 7 (No Dogs)
-        UserBuilder userBuilderNoDogs2 = new UserBuilder()
-                .withBirthDate(LocalDate.of(1995, 3, 15))
-                .withCountry("France")
-                .withDescription("I'm a student studying environmental science and photography.")
-                .withEmail("alex.jones@example.com")
-                .withFirstname("Alex")
-                .withGender("NON_BINARY")
-                .withPhotosUser(photos)
-                .withSurname("Jones")
-                .withPrompt("Share a hobby or interest that you're passionate about.")
-                .withPromptAnswer("I'm passionate about nature photography and spend my weekends exploring and capturing beautiful landscapes.");
-
-        User userNoDogs2 = userBuilderNoDogs2.build();
-
-        // User 8 with Three Dogs
-        DogBuilder dogBuilder8_1 = new DogBuilder()
-                .withBreed("German Shepherd")
-                .withCharacteristics(characteristics)
-                .withName("Rocky")
-                .withPhotosDog(dogPhotos)
-                .withPrompt("What's the most challenging trick Rocky has learned?")
-                .withPromptAnswer("Rocky learned to balance treats on his nose, and it took some time, but he mastered it!");
-
-        DogBuilder dogBuilder8_2 = new DogBuilder()
-                .withBreed("Shih Tzu")
-                .withCharacteristics(characteristics)
-                .withName("Coco")
-                .withPhotosDog(dogPhotos)
-                .withPrompt("Share a funny or quirky habit that Coco has.")
-                .withPromptAnswer("Coco has a habit of barking at her own reflection in the mirror, thinking it's another dog!");
-
-        DogBuilder dogBuilder8_3 = new DogBuilder()
-                .withBreed("Border Collie")
-                .withCharacteristics(characteristics)
-                .withName("Milo")
-                .withPhotosDog(dogPhotos)
-                .withPrompt("What's the most impressive thing Milo has done?")
-                .withPromptAnswer("Milo once learned a new trick just by watching a YouTube video!");
-
-        UserBuilder userBuilder8 = new UserBuilder()
-                .withBirthDate(LocalDate.of(1980, 6, 25))
-                .withCountry("Canada")
-                .withDescription("I'm a veterinarian who loves spending time with my three amazing dogs.")
-                .withDog(dogBuilder8_1.build())
-                .withDog(dogBuilder8_2.build())
-                .withDog(dogBuilder8_3.build())
-                .withEmail("vetperson@example.com")
-                .withFirstname("Alexandra")
-                .withGender("FEMALE")
-                .withPhotosUser(photos)
-                .withSurname("Peterson")
-                .withPrompt("What's the best part about being a pet owner?")
-                .withPromptAnswer("The unconditional love and joy my dogs bring into my life every day.");
-
-        User user8 = userBuilder8.build();
-
 
         // Adding users to the ArrayList
         ArrayList<User> users = new ArrayList<>();
         users.add(userNoDogs);
         users.add(userOneDog);
         users.add(userTwoDogs);
-        users.add(user);
-        users.add(user5);
-        users.add(user6);
-        users.add(userNoDogs2);
-        users.add(user8);
 
         // END TEST DATA
+
+        // TODO: Get users from DB here (list of idk... 5 users) and store them in the ArrayList
+        // TODO: Firstly check if there are any users under interaction table
 
 
         //choose your favorite adapter
@@ -286,6 +179,7 @@ public class MatchingFragment extends Fragment {
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
+                // TODO: remove user from the ArrayList (from index 0)
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 Log.d("DOGS1", users.remove(0).getDogs().toString());
@@ -294,6 +188,7 @@ public class MatchingFragment extends Fragment {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
+                // TODO: do nothing here
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
@@ -308,7 +203,7 @@ public class MatchingFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // TODO:  Ask for more data from DB here
+                // TODO:  Ask for more data from DB (another 5 users) here and store it in the ArrayList
                 users.add(user);
 
                 cardAdapter.notifyDataSetChanged();
