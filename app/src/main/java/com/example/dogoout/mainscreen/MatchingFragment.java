@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -276,16 +275,12 @@ public class MatchingFragment extends Fragment {
         // END TEST DATA
 
 
-        ArrayList<String> t = new ArrayList<>();
-        t.add("Playful");
-        t.add("Loyal");
-        t.add("Friendly");
-
         //choose your favorite adapter
-        ArrayAdapter cardAdapter = new ArrayAdapter(getActivity(), R.layout.card, R.id.txtVNameAge, users);
+        CardAdapter cardAdapter = new CardAdapter(getActivity(), users);
 
         //set the listener and the adapter
         flingContainer.setAdapter(cardAdapter);
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -324,7 +319,6 @@ public class MatchingFragment extends Fragment {
             public void onScroll(float v) {
             }
         });
-
 
         return view;
     }
