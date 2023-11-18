@@ -8,13 +8,202 @@
     tools:context=".mainscreen.SettingsFragment">
 
 
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/actxtVCountry"
+        style="@style/combo_box_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:ccpDialog_showPhoneCode="false"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_defaultNameCode="IE"
+        app:ccp_showFlag="true"
+        app:ccp_showFullName="true"
+        app:ccp_showNameCode="true"
+        app:ccp_showPhoneCode="false"
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <RadioGroup
+        android:id="@+id/dogPreference"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintTop_toBottomOf="@+id/textView24">
+
+        <RadioButton
+            android:id="@+id/rbtnDogOwners"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:checked="true"
+            android:text="Dog owners" />
+
+        <RadioButton
+            android:id="@+id/rbtnDogLovers"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:text="Dog lovers" />
+
+        <RadioButton
+            android:id="@+id/rbtnEveryoneDogOwnersLovers"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:text="Everyone" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/humanPreference"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/glRight"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2"
+        app:layout_constraintTop_toBottomOf="@+id/textView24">
+
+        <RadioButton
+            android:id="@+id/rbtnMen"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:checked="true"
+            android:text="Men" />
+
+        <RadioButton
+            android:id="@+id/rbtnWomen"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:text="Women" />
+
+        <RadioButton
+            android:id="@+id/rbtnOther"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:text="Other" />
+
+        <RadioButton
+            android:id="@+id/rbtnEveryoneSex"
+            style="@style/radio_button_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-5dp"
+            android:text="Everyone" />
+
+    </RadioGroup>
+
     <TextView
         android:id="@+id/textView23"
+        style="@style/text_h1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2"
+        app:layout_constraintTop_toTopOf="@+id/glTop2" />
+
+    <TextView
+        android:id="@+id/textView24"
+        style="@style/text_h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Preference:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/textView25"
+        style="@style/text_h1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Country:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2"
+        app:layout_constraintTop_toBottomOf="@+id/humanPreference" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glBottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glLeft2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glRight2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteAccountBut"
+        style="@style/button_fill"
+        android:layout_width="244dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#FF0000"
+        android:backgroundTintMode="add"
+        android:text="delete account"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/glBottom2"
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logoutBut"
+        style="@style/button_fill"
+        android:layout_width="244dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="128dp"
+        android:backgroundTint="#131313"
+        android:backgroundTintMode="add"
+        android:text="log out"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/deleteAccountBut"
+        app:layout_constraintEnd_toStartOf="@+id/glRight2"
+        app:layout_constraintStart_toStartOf="@+id/glLeft2"
+        app:layout_constraintTop_toBottomOf="@+id/actxtVCountry" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
