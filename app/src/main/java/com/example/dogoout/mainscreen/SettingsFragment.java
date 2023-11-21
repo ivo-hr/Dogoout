@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.dogoout.R;
-
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
@@ -23,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hbb20.CountryCodePicker;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 
 
 public class SettingsFragment extends Fragment {
@@ -48,6 +46,7 @@ public class SettingsFragment extends Fragment {
     androidx.appcompat.widget.AppCompatButton saveBtn;
 
     int deleteCount = 0;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -60,7 +59,8 @@ public class SettingsFragment extends Fragment {
         View settingsView = inflater.inflate(R.layout.fragment_settings, container, false);
 
 
-        //TODO: Grab the current user from the intent
+        //Grab the current user from the intent
+        User userFromIntent = (User) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
 
 
         // T E S T   D A T A
@@ -134,7 +134,7 @@ public class SettingsFragment extends Fragment {
         //Set the age range
         minAge = user.getPreference().getMinAge();
         maxAge = user.getPreference().getMaxAge();
-        ageSlider.setValues((float)minAge, (float)maxAge);
+        ageSlider.setValues((float) minAge, (float) maxAge);
 
 
         //Save button listener
@@ -208,30 +208,28 @@ public class SettingsFragment extends Fragment {
                     // Modify the constraints as needed
                     layoutParams.startToEnd = R.id.glLeft2;
                     layoutParams.height = 200;
-                    layoutParams.width =  1000;
+                    layoutParams.width = 1000;
 
                     // Apply the modified constraints
                     deleteBtn.setLayoutParams(layoutParams);
 
                     // Set the new text
                     deleteBtn.setText("Are you sure?");
-                }
-                else if (deleteCount == 2)
+                } else if (deleteCount == 2)
                     deleteBtn.setText("Are you really sure?");
                 else if (deleteCount == 3) {
                     deleteBtn.setText("There is no going back!");
                     Toast.makeText(getContext(), "Last warning!", Toast.LENGTH_SHORT).show();
-                }
-                else if (deleteCount == 4)
+                } else if (deleteCount == 4)
                     deleteBtn.setText("DELETE ACCOUNT");
-                else{
+                else {
                     //TODO: Delete the current user from the database and go back to the login screen
                     Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
                     deleteCount = 0;
                     //Reset the constraints
                     layoutParams.startToEnd = ConstraintLayout.LayoutParams.UNSET;
                     layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                    layoutParams.width =  ConstraintLayout.LayoutParams.WRAP_CONTENT;
+                    layoutParams.width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
                     deleteBtn.setLayoutParams(layoutParams);
                     deleteBtn.setText("delete");
                 }

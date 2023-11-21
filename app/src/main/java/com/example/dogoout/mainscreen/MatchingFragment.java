@@ -277,6 +277,9 @@ public class MatchingFragment extends Fragment {
 
         // END TEST DATA
 
+        // Get the users from the intent
+        User userFromIntent = (User) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
+
         // TODO: Get users from DB here (list of idk... 5 users) and store them in the ArrayList
         // TODO: Firstly check if there are any users under interaction table
 
