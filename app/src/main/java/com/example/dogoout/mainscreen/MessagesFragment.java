@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dogoout.R;
 import com.example.dogoout.adapters.MatchItemAdapter;
+import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.dog.DogBuilder;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
@@ -159,6 +159,9 @@ public class MessagesFragment extends Fragment {
         users.add(userOneDog);
         users.add(userTwoDogs);
         // END TEST DATA
+
+        // Get user from intent
+        User userFromIntent = (User) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
 
         // TODO: get all matches from database of the current user and store them in the users ArrayList
 
