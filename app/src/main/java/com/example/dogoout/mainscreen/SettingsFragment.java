@@ -213,6 +213,18 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO: Clear the current user and go back to the login screen
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+
+                Intent intent = new Intent(requireContext(), LoginActivity.class);
+
+                // Add flags to clear the back stack
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                // Finish the hosting activity
+                requireActivity().finish();
+
                 Toast.makeText(getContext(), "Logged out", Toast.LENGTH_SHORT).show();
             }
         });
@@ -251,6 +263,8 @@ public class SettingsFragment extends Fragment {
                     layoutParams.width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
                     deleteBtn.setLayoutParams(layoutParams);
                     deleteBtn.setText("delete");
+
+                     */
                 }
 
             }
