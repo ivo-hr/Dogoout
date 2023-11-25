@@ -75,7 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //emailEditText.setText("faience.sifter0v@icloud.com");
-        //passEditText.setText("Dublin123!");
+        emailEditText.setText("rinses_mattes.0d@icloud.com");
+        passEditText.setText("Dublin123!");
 
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {
@@ -153,17 +154,18 @@ public class LoginActivity extends AppCompatActivity {
                                 .withPromptAnswer(promptAnswer)
                                 .withPreference(preference);
 
-                        for(HashMap dog: dogs)
-                        {
-                            DogBuilder dogBuilder = new DogBuilder()
-                                    .withPromptAnswer((String) dog.get("promptAnswer"))
-                                    .withCharacteristics((ArrayList<String>) dog.get("characteristics"))
-                                    .withPhotosDog((ArrayList<URI>) dog.get("photosDog"))
-                                    .withName((String) dog.get("name"))
-                                    .withPrompt((String) dog.get("prompt"))
-                                    .withBreed((String) dog.get("breed"));
+                        if (dogs != null) {
+                            for (HashMap dog : dogs) {
+                                DogBuilder dogBuilder = new DogBuilder()
+                                        .withPromptAnswer((String) dog.get("promptAnswer"))
+                                        .withCharacteristics((ArrayList<String>) dog.get("characteristics"))
+                                        .withPhotosDog((ArrayList<URI>) dog.get("photosDog"))
+                                        .withName((String) dog.get("name"))
+                                        .withPrompt((String) dog.get("prompt"))
+                                        .withBreed((String) dog.get("breed"));
 
-                            userBuilder.withDog(dogBuilder.build());
+                                userBuilder.withDog(dogBuilder.build());
+                            }
                         }
 
                         UserImpl user = userBuilder.build();
