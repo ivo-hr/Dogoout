@@ -1,6 +1,8 @@
 package com.example.dogoout.mainscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -16,12 +19,19 @@ import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
+import com.example.dogoout.domain.user.UserImpl;
+import com.example.dogoout.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hbb20.CountryCodePicker;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 
 public class SettingsFragment extends Fragment {
@@ -53,18 +63,16 @@ public class SettingsFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View settingsView = inflater.inflate(R.layout.fragment_settings, container, false);
 
 
         //Grab the current user from the intent
-        User userFromIntent = (User) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
+        UserImpl user = (UserImpl) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
 
-
+        /*
         // T E S T   D A T A
-
         Preference preference = new Preference();
         preference.setSexPreference(Constants.PREF_OTHER);
         preference.setDogBreedPreference(Constants.PREF_BREED_ALL);
@@ -87,8 +95,9 @@ public class SettingsFragment extends Fragment {
 
 
         User user = userBuilder.build();
-        // E N D   T E S T   D A T A
 
+        // E N D   T E S T   D A T A
+         */
 
         //Grab the settings fragments
         actxtVCountry = settingsView.findViewById(R.id.actxtVCountry);
@@ -107,14 +116,14 @@ public class SettingsFragment extends Fragment {
         humanPreference = user.getPreference().getSexPreference();
         //Search for the radio button that matches the human preference
         RadioButton humanPrefRadioButton;
-        if (humanPreference == Constants.PREF_MEN)
+
+        if (humanPreference.equals(Constants.PREF_MEN))
             humanPrefRadioButton = settingsView.findViewById(R.id.rbtnMen);
-        else if (humanPreference == Constants.PREF_WOMEN)
+        else if (humanPreference.equals(Constants.PREF_WOMEN))
             humanPrefRadioButton = settingsView.findViewById(R.id.rbtnWomen);
-        else if (humanPreference == Constants.PREF_OTHER)
+        else if (humanPreference.equals(Constants.PREF_OTHER))
             humanPrefRadioButton = settingsView.findViewById(R.id.rbtnOther);
-        else
-            humanPrefRadioButton = settingsView.findViewById(R.id.rbtnEveryoneSex);
+        else humanPrefRadioButton = settingsView.findViewById(R.id.rbtnEveryoneSex);
         //Set the radio button to checked
         humanPrefRadioButton.setChecked(true);
 
@@ -122,12 +131,11 @@ public class SettingsFragment extends Fragment {
         dogPreference = user.getPreference().getDogOwnerPreference();
         //Search for the radio button that matches the dog preference
         RadioButton dogPrefRadioButton;
-        if (dogPreference == Constants.PREF_DOG_OWNERS)
+        if (dogPreference.equals(Constants.PREF_DOG_OWNERS))
             dogPrefRadioButton = settingsView.findViewById(R.id.rbtnDogOwners);
-        else if (dogPreference == Constants.PREF_DOG_LOVERS)
+        else if (dogPreference.equals(Constants.PREF_DOG_LOVERS))
             dogPrefRadioButton = settingsView.findViewById(R.id.rbtnDogLovers);
-        else
-            dogPrefRadioButton = settingsView.findViewById(R.id.rbtnEveryoneDogOwnersLovers);
+        else dogPrefRadioButton = settingsView.findViewById(R.id.rbtnEveryoneDogOwnersLovers);
         //Set the radio button to checked
         dogPrefRadioButton.setChecked(true);
 
@@ -173,15 +181,28 @@ public class SettingsFragment extends Fragment {
                 user.getPreference().setMaxAge(maxAge);
 
                 //TODO: Update the user in the database
-                /*
-                HashMap<String, Object> userUpdate = new HashMap<>();
-                userUpdate.put("preference.sexPreference", humanPreference);
-                userUpdate.put("preference.dogOwnerPreference", dogPreference);
-                userUpdate.put("preference.minAge", minAge);
-                userUpdate.put("preference.maxAge", maxAge);
-                userUpdate.put("country", countryCode);
-                fStore.collection("users").document(userID).update(userUpdate);
-                */
+                currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (currentUser != null) {
+                    // User is signed in
+                    userID = currentUser.getUid();
+                    // Now 'userId' contains the user ID
+                    fStore = FirebaseFirestore.getInstance();
+
+                    HashMap<String, Object> userUpdate = new HashMap<>();
+                    userUpdate.put("userPreference.sexPreference", humanPreference);
+                    userUpdate.put("userPreference.dogOwnerPreference", dogPreference);
+                    userUpdate.put("userPreference.minAge", minAge);
+                    userUpdate.put("userPreference.maxAge", maxAge);
+                    userUpdate.put("country", countryCode);
+
+                    fStore.collection("users").document(userID).update(userUpdate);
+
+                } else {
+                    Toast.makeText(getContext(), "GetIdFail", Toast.LENGTH_SHORT).show();
+                    // No user is signed in
+                    // Handle the case where the user is not authenticated
+                }
 
                 Toast.makeText(getContext(), "Settings saved", Toast.LENGTH_SHORT).show();
             }
@@ -215,13 +236,11 @@ public class SettingsFragment extends Fragment {
 
                     // Set the new text
                     deleteBtn.setText("Are you sure?");
-                } else if (deleteCount == 2)
-                    deleteBtn.setText("Are you really sure?");
+                } else if (deleteCount == 2) deleteBtn.setText("Are you really sure?");
                 else if (deleteCount == 3) {
                     deleteBtn.setText("There is no going back!");
                     Toast.makeText(getContext(), "Last warning!", Toast.LENGTH_SHORT).show();
-                } else if (deleteCount == 4)
-                    deleteBtn.setText("DELETE ACCOUNT");
+                } else if (deleteCount == 4) deleteBtn.setText("DELETE ACCOUNT");
                 else {
                     //TODO: Delete the current user from the database and go back to the login screen
                     Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
@@ -236,7 +255,6 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-
 
         // Inflate the layout for this fragment
         return settingsView;
