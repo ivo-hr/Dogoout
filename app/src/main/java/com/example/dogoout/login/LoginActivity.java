@@ -15,6 +15,7 @@ import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserImpl;
+import com.example.dogoout.forgottenPassword.ForgottenPassword1Activity;
 import com.example.dogoout.mainscreen.MainActivity;
 import com.example.dogoout.registration.Register1Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     //Initialize login button and register textview
     Button loginButton;
     TextView registerTextView;
+    TextView txtVForgotPassword;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -46,9 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         passInput = findViewById(R.id.textInputLayout1);
         emailEditText = findViewById(R.id.txtInEmail);
         passEditText = findViewById(R.id.txtInPassword);
-        //Initialize login button and register textview
+        //Initialize login button, register textview and forgot password textview
         loginButton = findViewById(R.id.btnLogin);
         registerTextView = findViewById(R.id.txtVRegister);
+        txtVForgotPassword = findViewById(R.id.txtVForgotPassword);
 
         //Set on click listener for register textview
         registerTextView.setOnClickListener(v -> {
@@ -57,8 +60,12 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(nextIntent);
         });
 
-        emailEditText.setText("david.cadez89@gmail.com");
-        passEditText.setText("Dublin123?");
+        //Set on click listener for forgot password textview
+        txtVForgotPassword.setOnClickListener(v -> {
+            //Start forgot password activity
+            Intent nextIntent = new Intent(LoginActivity.this, ForgottenPassword1Activity.class);
+            startActivity(nextIntent);
+        });
 
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {
