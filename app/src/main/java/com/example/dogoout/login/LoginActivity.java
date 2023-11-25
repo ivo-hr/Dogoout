@@ -32,8 +32,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -71,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(nextIntent);
         });
 
-        emailEditText.setText("faience.sifter0v@icloud.com");
-        passEditText.setText("Dublin123!");
+        //emailEditText.setText("faience.sifter0v@icloud.com");
+        //passEditText.setText("Dublin123!");
 
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {
@@ -120,39 +123,48 @@ public class LoginActivity extends AppCompatActivity {
                         String birthDate = document.getString("birthDate");
                         String country = document.getString("country");
                         String description = document.getString("description");
-
-                        //ArrayList<Dog> dogs = document.get("dogs");
+                        ArrayList<HashMap> dogs = (ArrayList<HashMap>) document.get("dogs");
                         String email = document.getString("email");
                         String firstname = document.getString("firstname");
                         String gender = document.getString("gender");
-
-                        //ArrayList<String> photos = document.get("photos");
+                        ArrayList<URI> photos = (ArrayList<URI>) document.get("photos");
                         String prompt = document.getString("prompt");
                         String promptAnswer = document.getString("promptAnswer");
                         String surname = document.getString("surname");
+                        HashMap<String, Object> userPreference = (HashMap<String, Object>) document.get("userPreference");
 
-                        /*
-                        userPreference = document.getString("userPreference");
                         Preference preference = new Preference();
-                        preference.setSexPreference(Constants.PREF_OTHER);
-                        preference.setDogBreedPreference(Constants.PREF_BREED_ALL);
-                        preference.setDogOwnerPreference(Constants.PREF_DOG_OWNERS);
-                        preference.setMinAge(18);
-                        preference.setMaxAge(29);
-                         */
+                        preference.setSexPreference((String) userPreference.get("sexPreference"));
+                        preference.setDogBreedPreference((String) userPreference.get("dogBreedPreference"));
+                        preference.setDogOwnerPreference((String) userPreference.get("dogOwnerPreference"));
+                        preference.setMinAge(Math.toIntExact((long) userPreference.get("minAge")));
+                        preference.setMaxAge(Math.toIntExact((long) userPreference.get("maxAge")));
 
-                        UserBuilder userBuilder = new UserBuilder().withBirthDate(LocalDate.parse(birthDate))
+                        UserBuilder userBuilder = new UserBuilder()
+                                .withBirthDate(LocalDate.parse(birthDate))
                                 .withCountry(country)
                                 .withDescription(description)
-                                //.withDog(dogBuilder.build())
                                 .withEmail(email)
                                 .withFirstname(firstname)
                                 .withGender(gender)
-                                //.withPhotosUser(photos)
+                                .withPhotosUser(photos)
                                 .withSurname(surname)
                                 .withPrompt(prompt)
-                                .withPromptAnswer(promptAnswer);
-                                //.withPreference(userPreference);
+                                .withPromptAnswer(promptAnswer)
+                                .withPreference(preference);
+
+                        for(HashMap dog: dogs)
+                        {
+                            DogBuilder dogBuilder = new DogBuilder()
+                                    .withPromptAnswer((String) dog.get("promptAnswer"))
+                                    .withCharacteristics((ArrayList<String>) dog.get("characteristics"))
+                                    .withPhotosDog((ArrayList<URI>) dog.get("photosDog"))
+                                    .withName((String) dog.get("name"))
+                                    .withPrompt((String) dog.get("prompt"))
+                                    .withBreed((String) dog.get("breed"));
+
+                            userBuilder.withDog(dogBuilder.build());
+                        }
 
                         UserImpl user = userBuilder.build();
 
