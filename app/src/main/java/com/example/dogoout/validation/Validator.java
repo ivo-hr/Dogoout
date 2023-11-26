@@ -39,6 +39,8 @@ public class Validator {
                 if (!DogValidation(dog)) dogValid = false;
             }
         }
+
+        //Check if the user and the dog(s) are valid
         boolean toReturn = (userValid && dogValid);
         //Log if the user is valid or not
         Log.d("VALIDATION", "UserValidation: " + toReturn + " ( with userValid: " + userValid + " and dogValid: " + dogValid + " )");
