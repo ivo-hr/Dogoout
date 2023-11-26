@@ -1,6 +1,7 @@
 package com.example.dogoout.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,8 +77,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //emailEditText.setText("faience.sifter0v@icloud.com");
-        emailEditText.setText("rinses_mattes.0d@icloud.com");
-        passEditText.setText("Dublin123!");
+        //emailEditText.setText("rinses_mattes.0d@icloud.com");
+        //passEditText.setText("Dublin123!");
 
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {
@@ -124,16 +126,28 @@ public class LoginActivity extends AppCompatActivity {
                         String birthDate = document.getString("birthDate");
                         String country = document.getString("country");
                         String description = document.getString("description");
-                        ArrayList<HashMap> dogs = (ArrayList<HashMap>) document.get("dogs");
                         String email = document.getString("email");
                         String firstname = document.getString("firstname");
                         String gender = document.getString("gender");
-                        ArrayList<URI> photos = (ArrayList<URI>) document.get("photos");
+
+                        //Save user photos with URI
+                        ArrayList<String> uriStrings = (ArrayList<String>) document.get("photos");
+                        ArrayList<URI> photos = new ArrayList<>();
+                        for (String uriString : uriStrings) {
+                            try {
+                                URI uri = new URI(uriString);
+                                photos.add(uri);
+                            } catch (URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
                         String prompt = document.getString("prompt");
                         String promptAnswer = document.getString("promptAnswer");
                         String surname = document.getString("surname");
-                        HashMap<String, Object> userPreference = (HashMap<String, Object>) document.get("userPreference");
 
+                        //Save user preference class
+                        HashMap<String, Object> userPreference = (HashMap<String, Object>) document.get("userPreference");
                         Preference preference = new Preference();
                         preference.setSexPreference((String) userPreference.get("sexPreference"));
                         preference.setDogBreedPreference((String) userPreference.get("dogBreedPreference"));
@@ -154,15 +168,28 @@ public class LoginActivity extends AppCompatActivity {
                                 .withPromptAnswer(promptAnswer)
                                 .withPreference(preference);
 
+                        //Save dogs with dog class
+                        ArrayList<HashMap> dogs = (ArrayList<HashMap>) document.get("dogs");
                         if (dogs != null) {
                             for (HashMap dog : dogs) {
                                 DogBuilder dogBuilder = new DogBuilder()
                                         .withPromptAnswer((String) dog.get("promptAnswer"))
                                         .withCharacteristics((ArrayList<String>) dog.get("characteristics"))
-                                        .withPhotosDog((ArrayList<URI>) dog.get("photosDog"))
                                         .withName((String) dog.get("name"))
                                         .withPrompt((String) dog.get("prompt"))
                                         .withBreed((String) dog.get("breed"));
+
+                                ArrayList<String> uriDogStrings = (ArrayList<String>) dog.get("photosDog");
+                                ArrayList<URI> photosDog = new ArrayList<>();
+                                for (String uriString : uriDogStrings) {
+                                    try {
+                                        URI uri = new URI(uriString);
+                                        photosDog.add(uri);
+                                    } catch (URISyntaxException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                                dogBuilder = dogBuilder.withPhotosDog(photosDog);
 
                                 userBuilder.withDog(dogBuilder.build());
                             }
