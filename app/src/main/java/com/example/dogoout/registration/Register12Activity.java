@@ -31,7 +31,7 @@ public class Register12Activity extends AppCompatActivity {
                 finish();
             }
         });
-        nextScreenBtn.setOnClickListener(new View.OnClickListener(){
+        nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -69,6 +69,8 @@ public class Register12Activity extends AppCompatActivity {
                 preference.setSexPreference(humanPreference);
                 preference.setDogOwnerPreference(dogPreference);
                 preference.setDogBreedPreference(Constants.PREF_BREED_ALL);
+                preference.setMaxAge(65);
+                preference.setMinAge(18);
 
                 //Add the human preference to the user builder
                 userBuilder = userBuilder.withPreference(preference);
