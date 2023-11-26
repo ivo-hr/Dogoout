@@ -1,5 +1,6 @@
 package com.example.dogoout.login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.example.dogoout.domain.user.UserImpl;
+import com.example.dogoout.forgottenPassword.ForgottenPassword1Activity;
 import com.example.dogoout.mainscreen.MainActivity;
 import com.example.dogoout.registration.Register1Activity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +34,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -54,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     FirebaseFirestore fStore;
 
+    TextView forgotPassword;
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +75,17 @@ public class LoginActivity extends AppCompatActivity {
         //Initialize login button and register textview
         loginButton = findViewById(R.id.btnLogin);
         registerTextView = findViewById(R.id.txtVRegister);
+        forgotPassword = findViewById(R.id.txtVForgotPassword);
 
         //Set on click listener for register textview
         registerTextView.setOnClickListener(v -> {
             //Start register activity
             Intent nextIntent = new Intent(LoginActivity.this, Register1Activity.class);
+            startActivity(nextIntent);
+        });
+
+        forgotPassword.setOnClickListener(v -> {
+            Intent nextIntent = new Intent(LoginActivity.this, ForgottenPassword1Activity.class);
             startActivity(nextIntent);
         });
 
