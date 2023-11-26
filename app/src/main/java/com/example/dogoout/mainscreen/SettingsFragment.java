@@ -1,6 +1,9 @@
 package com.example.dogoout.mainscreen;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
+import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
@@ -28,9 +32,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.hbb20.CountryCodePicker;
 
+import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -41,7 +49,7 @@ public class SettingsFragment extends Fragment {
     FirebaseFirestore fStore;
     String userID;
     FirebaseUser currentUser;
-    User userGet;
+    UserImpl user;
 
     CountryCodePicker actxtVCountry;
     RadioGroup humanPref;
@@ -67,37 +75,8 @@ public class SettingsFragment extends Fragment {
 
         View settingsView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-
         //Grab the current user from the intent
-        UserImpl user = (UserImpl) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
-
-        /*
-        // T E S T   D A T A
-        Preference preference = new Preference();
-        preference.setSexPreference(Constants.PREF_OTHER);
-        preference.setDogBreedPreference(Constants.PREF_BREED_ALL);
-        preference.setDogOwnerPreference(Constants.PREF_DOG_OWNERS);
-        preference.setMinAge(18);
-        preference.setMaxAge(29);
-        UserBuilder userBuilder = new UserBuilder()
-                .withBirthDate(LocalDate.of(1998, 1, 1))
-                .withCountry("US")
-                .withDescription("I am an actor")
-                //.withDog(dogBuilder1.build())
-                .withEmail("tanguyvdvd@gmail.com")
-                .withFirstname("Brad")
-                .withGender("MALE")
-                //.withPhotosUser(photos)
-                .withSurname("Pitt")
-                .withPrompt("Describe the perfect day with your dog.")
-                .withPromptAnswer("going to the park")
-                .withPreference(preference);
-
-
-        User user = userBuilder.build();
-
-        // E N D   T E S T   D A T A
-         */
+        user = (UserImpl) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
 
         //Grab the settings fragments
         actxtVCountry = settingsView.findViewById(R.id.actxtVCountry);
@@ -144,6 +123,11 @@ public class SettingsFragment extends Fragment {
         maxAge = user.getPreference().getMaxAge();
         ageSlider.setValues((float) minAge, (float) maxAge);
 
+        //Firebase Variables settings
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        fStore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        userID = currentUser.getUid();
 
         //Save button listener
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -181,14 +165,7 @@ public class SettingsFragment extends Fragment {
                 user.getPreference().setMaxAge(maxAge);
 
                 //TODO: Update the user in the database
-                currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
                 if (currentUser != null) {
-                    // User is signed in
-                    userID = currentUser.getUid();
-                    // Now 'userId' contains the user ID
-                    fStore = FirebaseFirestore.getInstance();
-
                     HashMap<String, Object> userUpdate = new HashMap<>();
                     userUpdate.put("userPreference.sexPreference", humanPreference);
                     userUpdate.put("userPreference.dogOwnerPreference", dogPreference);
@@ -213,11 +190,10 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO: Clear the current user and go back to the login screen
-                firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.signOut();
 
+                //Move to Login Screen
                 Intent intent = new Intent(requireContext(), LoginActivity.class);
-
                 // Add flags to clear the back stack
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -248,30 +224,97 @@ public class SettingsFragment extends Fragment {
 
                     // Set the new text
                     deleteBtn.setText("Are you sure?");
-                } else if (deleteCount == 2) deleteBtn.setText("Are you really sure?");
-                else if (deleteCount == 3) {
+                } else if (deleteCount == 2) {
+                    deleteBtn.setText("Are you really sure?");
+                } else if (deleteCount == 3) {
                     deleteBtn.setText("There is no going back!");
                     Toast.makeText(getContext(), "Last warning!", Toast.LENGTH_SHORT).show();
-                } else if (deleteCount == 4) deleteBtn.setText("DELETE ACCOUNT");
-                else {
+                } else if (deleteCount == 4) {
+                    deleteBtn.setText("DELETE ACCOUNT");
+                } else {
                     //TODO: Delete the current user from the database and go back to the login screen
-                    Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
-                    deleteCount = 0;
-                    //Reset the constraints
-                    layoutParams.startToEnd = ConstraintLayout.LayoutParams.UNSET;
-                    layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                    layoutParams.width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                    deleteBtn.setLayoutParams(layoutParams);
-                    deleteBtn.setText("delete");
+                    //delete authorization from firebase
+                    if (currentUser != null) {
+                        //deletion complete. now delete photos from firebase storage
+                        if (user.getDogs() != null) {
+                            for (Dog dog : user.getDogs()) {
+                                deletePhotosFromDB(dog.getPhotosDog());
+                            }
+                        }
+                        deletePhotosFromDB(user.getPhotosUser());
 
-                     */
+                        fStore.collection("users")
+                                .document(userID)
+                                .delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // User deleted successfully from Firebase Authentication
+                                                        // Now, delete user data from Firestore
+                                                        Log.d("DeleteAccountActivity", "User data deleted from Firestore");
+
+                                                        Toast.makeText(getContext(), "Account deleted", Toast.LENGTH_SHORT).show();
+                                                        deleteCount = 0;
+
+                                                        //Reset the constraints
+                                                        layoutParams.startToEnd = ConstraintLayout.LayoutParams.UNSET;
+                                                        layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+                                                        layoutParams.width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+                                                        deleteBtn.setLayoutParams(layoutParams);
+                                                        deleteBtn.setText("delete");
+
+                                                        //Go to Login screen
+                                                        Intent intent = new Intent(requireContext(), LoginActivity.class);
+
+                                                        // Add flags to clear the back stack
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                        startActivity(intent);
+
+                                                        // Finish the hosting activity
+                                                        requireActivity().finish();
+                                                    } else {
+                                                        Log.e("DeleteAccountActivity", "Failed to delete user account");
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            Log.e("DeleteAccountActivity", "Failed to delete user data from Firestore");
+                                        }
+                                    }
+                                });
+                    }
                 }
-
             }
         });
 
         // Inflate the layout for this fragment
         return settingsView;
 
+    }
+
+    protected void deletePhotosFromDB(ArrayList<URI> arrayListPhotos) {
+        for (int i = 0; i < arrayListPhotos.size(); ++i) {
+            String uriString = arrayListPhotos.get(i).toString();
+            StorageReference fileRef = FirebaseStorage.getInstance().getReferenceFromUrl(uriString);
+            // Delete the storage file
+            fileRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // File deleted successfully. Add  success handling code here
+                    Log.d(TAG, "delete complete: " + uriString);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Add error handling code here
+                    Log.d(TAG, "delete failed: " + uriString);
+                }
+            });
+        }
     }
 }
