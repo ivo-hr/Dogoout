@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hbb20.CountryCodePicker;
 
+import com.example.dogoout.validation.Validator;
+
 import java.time.LocalDate;
 
 
@@ -141,6 +143,10 @@ public class SettingsFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Grab the age range
+                minAge = Math.round(ageSlider.getValues().get(0));
+                maxAge = Math.round(ageSlider.getValues().get(1));
+                if (Validator.isValidAge(minAge, maxAge)) {
                 //Grab the human preference from the radioGroup
                 if (humanPref.getCheckedRadioButtonId() == R.id.rbtnMen)
                     humanPreference = Constants.PREF_MEN;
@@ -158,9 +164,6 @@ public class SettingsFragment extends Fragment {
                 else if (dogPref.getCheckedRadioButtonId() == R.id.rbtnEveryoneDogOwnersLovers)
                     dogPreference = Constants.PREF_D_EVERYONE;
 
-                //Grab the age range
-                minAge = Math.round(ageSlider.getValues().get(0));
-                maxAge = Math.round(ageSlider.getValues().get(1));
 
                 //Grab the country code
                 countryCode = actxtVCountry.getSelectedCountryNameCode();
@@ -173,18 +176,20 @@ public class SettingsFragment extends Fragment {
                 user.getPreference().setMaxAge(maxAge);
 
                 //TODO: Update the user in the database
-                /*
-                HashMap<String, Object> userUpdate = new HashMap<>();
-                userUpdate.put("preference.sexPreference", humanPreference);
-                userUpdate.put("preference.dogOwnerPreference", dogPreference);
-                userUpdate.put("preference.minAge", minAge);
-                userUpdate.put("preference.maxAge", maxAge);
-                userUpdate.put("country", countryCode);
-                fStore.collection("users").document(userID).update(userUpdate);
-                */
+                    /*
+                    HashMap<String, Object> userUpdate = new HashMap<>();
+                    userUpdate.put("preference.sexPreference", humanPreference);
+                    userUpdate.put("preference.dogOwnerPreference", dogPreference);
+                    userUpdate.put("preference.minAge", minAge);
+                    userUpdate.put("preference.maxAge", maxAge);
+                    userUpdate.put("country", countryCode);
+                    fStore.collection("users").document(userID).update(userUpdate);
+                    */
 
                 Toast.makeText(getContext(), "Settings saved", Toast.LENGTH_SHORT).show();
-            }
+            } else
+                    Toast.makeText(getContext(), "Invalid age range!", Toast.LENGTH_SHORT).show();
+        }
         });
 
         //Logout button listener
