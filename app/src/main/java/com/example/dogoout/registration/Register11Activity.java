@@ -16,6 +16,7 @@ import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.dog.DogBuilder;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.dogoout.validation.Validator;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,10 @@ public class Register11Activity extends AppCompatActivity {
 
         previousScreenBtn.setOnClickListener(view -> finish());
         nextScreenBtn.setOnClickListener(view -> {
-            if (isValidAnswerTxtPromptDog() & isValidTxtPromptDog()) {
+            // check if the prompt and the answer are valid
+            boolean validPrompt = Validator.isValidTextLength(promptTxtDog.getText().toString());
+            boolean validAnswer = Validator.isValidTextLength(textPromptDogAnswer.getText().toString(), 5, 150);
+            if (validPrompt && validAnswer) {
 
                 //Save the prompt and the answer
                 String prompt = promptTxtDog.getText().toString().trim();
@@ -95,10 +99,34 @@ public class Register11Activity extends AppCompatActivity {
                     startActivity(intentNextActivity);
                 }
             }
+            else{
+                if (!validPrompt) {
+                    // Get the text input layout
+                    TextInputLayout textInputLayout = findViewById(R.id.cbxLayout);
+                    // set the error and error message
+                    promptTxtDog.setText("");
+                    textInputLayout.setError("Please choose a prompt for your dog.");
+                }
+                else {
+                    TextInputLayout textInputLayout = findViewById(R.id.cbxLayout);
+                    textInputLayout.setError(null);
+                }
+                if (!validAnswer) {
+                    // Get the text input layout
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                    // set the error and error message
+                    textInputLayout.setError("Please fill out this field with 5-150 characters.");
+                }
+                else {
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                    textInputLayout.setError(null);
+                }
+                return;
+            }
         });
     }
 
-    protected boolean isValidAnswerTxtPromptDog() {
+    /*protected boolean isValidAnswerTxtPromptDog() {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
@@ -126,5 +154,5 @@ public class Register11Activity extends AppCompatActivity {
         promptTxtDog.setText("");
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
-    }
+    }*/
 }

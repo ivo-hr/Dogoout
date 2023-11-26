@@ -14,6 +14,7 @@ import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.dog.DogBuilder;
 import com.example.dogoout.domain.user.UserBuilder;
+import com.example.dogoout.validation.Validator;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.net.URI;
@@ -127,10 +128,13 @@ public class Register9Activity extends AppCompatActivity {
 
         if (resultCode != RESULT_OK)
             return;
-
+        Uri uri = data.getData();
+        // Check if the image is in the right format
+        if (!Validator.isValidPhoto(uri)) {
+            displayErrorMessage("Error", "Your images must be in the right format.");
+            return;
+        }
         try {
-
-            Uri uri = data.getData();
             switch (requestCode) {
                 case 1:
                     // Set the image in ImageView and replace the add button with a remove button
@@ -154,6 +158,13 @@ public class Register9Activity extends AppCompatActivity {
 
         } catch (Exception e) {
             displayErrorMessage("Error", "Something went wrong. Try again.");
+            //Clear the image view
+            ImageView imageView = findViewById(R.id.imgVDogImage1);
+            imageView.setImageResource(0);
+            ImageView imageView1 = findViewById(R.id.imgVDogImage2);
+            imageView1.setImageResource(0);
+            ImageView imageView2 = findViewById(R.id.imgVDogImage3);
+            imageView2.setImageResource(0);
         }
 
     }

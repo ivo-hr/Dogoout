@@ -15,6 +15,8 @@ import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
+import com.example.dogoout.validation.Validator;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +83,6 @@ public class Register4Activity extends AppCompatActivity {
                 displayErrorMessage("Error", "You must upload at least 2 images.");
                 return;
             }
-
             // Get the builder from the previous activity
             Intent intent = getIntent();
             UserBuilder userBuilder = (UserBuilder) intent.getSerializableExtra(Constants.USER_BUILDER_TAG);
@@ -103,8 +104,9 @@ public class Register4Activity extends AppCompatActivity {
                     .with(Register4Activity.this)
                     .crop(4f, 5f)                            //Crop image,
                     .compress(1024)                        //Final image size will be less than 0,5 MB
-                    .maxResultSize(1080, 1080)         //Final image resolution will be less than 1080 x 1080
+                    .maxResultSize(1080, 1080)        //Final image resolution will be less than 1080 x 1080
                     .start(requestCode);
+
         } else {
             // Remove the image from the image view and replace the remove button with an add button
             imagesUri[requestCode - 1] = null;
@@ -119,10 +121,13 @@ public class Register4Activity extends AppCompatActivity {
 
         if (resultCode != RESULT_OK)
             return;
-
+        Uri uri = data.getData();
+        // Check if the image is in the right format
+        if (!Validator.isValidPhoto(uri)) {
+            displayErrorMessage("Error", "Your images must be in the right format.");
+            return;
+        }
         try {
-
-            Uri uri = data.getData();
             switch (requestCode) {
                 case 1:
                     // Set the image in ImageView and replace the add button with a remove button

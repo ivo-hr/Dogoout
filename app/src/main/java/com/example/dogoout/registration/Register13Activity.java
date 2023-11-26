@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
+import com.example.dogoout.validation.Validator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,8 +40,7 @@ public class Register13Activity extends AppCompatActivity {
     EditText txtInConfirmPassword;
     Pattern pattern;
     Matcher matcher;
-    static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\\?!@#\\$%\\^&\\*]).{8,}";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,12 @@ public class Register13Activity extends AppCompatActivity {
         previousScreenBtn.setOnClickListener(view -> finish());
 
         nextScreenBtn.setOnClickListener(view -> {
-            if (isValidTextInputEmail() && isValidTextInputPassword() && isValidTextInputConfirmPassword()) {
+            // Check if the email and password are valid
+            boolean isValidEmail = Validator.isValidEmail(txtInEmail.getText().toString());
+            boolean isValidPassword = Validator.isValidPassword(txtInPassword.getText().toString());
+
+            boolean passAndConfirmPassMatch = txtInPassword.getText().toString().equals(txtInConfirmPassword.getText().toString());
+            if (isValidEmail && isValidPassword && passAndConfirmPassMatch) {
                 // Get the email and password
                 String email = txtInEmail.getText().toString().trim();
                 String password = txtInPassword.getText().toString().trim();
@@ -103,10 +108,46 @@ public class Register13Activity extends AppCompatActivity {
                         });
 
             }
+
+            else {
+                if (!isValidEmail) {
+                    // Get the text input layout
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                    // set the error and error message
+                    textInputLayout.setError("Please choose a valid email.");
+                }
+                else{
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                    textInputLayout.setError(null);
+                }
+                if (!isValidPassword) {
+                    // Get the text input layout
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout1);
+                    // set the error and error message
+                    txtInPassword.setText("");
+                    textInputLayout.setError("Please choose a valid password. (at least 8 characters long, has at least one uppercase letter, one lowercase letter and one number)");
+                }
+                else{
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout1);
+                    textInputLayout.setError(null);
+                }
+                if (!passAndConfirmPassMatch) {
+                    // Get the text input layout
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout2);
+                    // set the error and error message
+                    txtInConfirmPassword.setText("");
+                    textInputLayout.setError("Password and Confirm Password do not match.");
+                }
+                else{
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout2);
+                    textInputLayout.setError(null);
+                }
+                return;
+            }
         });
     }
 
-    protected boolean isValidTextInputEmail() {
+    /*protected boolean isValidTextInputEmail() {
 
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
@@ -182,6 +223,6 @@ public class Register13Activity extends AppCompatActivity {
         txtInConfirmPassword.getText().clear();
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
-    }
+    }*/
 
 }

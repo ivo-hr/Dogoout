@@ -1,6 +1,9 @@
 package com.example.dogoout.validation;
 
+import android.media.Image;
+import android.net.Uri;
 import android.util.Log;
+import android.util.Patterns;
 
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.user.User;
@@ -9,8 +12,13 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Validator {
+    static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}";
 
     //Full user validation (user)
     public static boolean UserValidation (User user) {
@@ -70,9 +78,14 @@ public class Validator {
     public static boolean isValidEmail(String email) {
         //Check if it is a valid email address
         if (email == null) return false;
-        boolean toReturn = (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches());
+        //trim the email
+        email = email.trim();
+        Pattern p = Patterns.EMAIL_ADDRESS;
+        CharSequence cs = (CharSequence) email;
+        Matcher m = p.matcher(cs);
+        boolean toReturn = m.matches();
         //Log if the email is valid or not
-        Log.d("VALIDATION", "isValidEmail: " + toReturn);
+        Log.d("VALIDATION", "isValidEmail " + email + ": " + toReturn);
 
         return toReturn;
     }
@@ -80,11 +93,11 @@ public class Validator {
     public static boolean isValidPassword(String password) {
         //Check if it is at least 6 characters long, has at least one uppercase letter, one lowercase letter and one number
         if (password == null) return false;
-
-        boolean toReturn = (password.length() >= 6 &&
-                password.matches(".*[A-Z].*") &&
-                password.matches(".*[a-z].*") &&
-                password.matches(".*\\d.*"));
+        //trim the password
+        Pattern p = Pattern.compile(PASSWORD_PATTERN);
+        CharSequence cs = (CharSequence) password;
+        Matcher m = p.matcher(cs);
+        boolean toReturn = m.matches();
 
         //Log if the password is valid or not
         Log.d("VALIDATION", "isValidPassword: " + toReturn);
@@ -94,11 +107,13 @@ public class Validator {
 
     //Name and Surname validation (user name and dog name)
     public static boolean isValidName(String name) {
-        //Check if it is at least 2 characters long and doesn't contain any numbers
+        //Check if it is at least 2 characters long and doesn't contain any numbers or special characters
         if (name == null) return false;
-
+        //trim the name
+        name = name.trim();
         boolean toReturn = (name.length() >= 2 &&
-                !name.matches(".*\\d.*"));
+                !name.matches(".*\\d.*" ) &&
+                !name.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*"));
 
         //Log if the name is valid or not
         Log.d("VALIDATION", "isValidName: " + toReturn);
@@ -115,8 +130,7 @@ public class Validator {
             Iterator<URI> iterator = photos.iterator();
             while (iterator.hasNext() && toReturn) {
                 URI photo = iterator.next();
-                if (!photo.toString().matches(".*\\.(jpg|jpeg|png|gif|bmp|webp)"))
-                    toReturn = false;
+                toReturn = isValidPhoto(Uri.parse(photo.toString()));
             }
         }
         else toReturn = false;
@@ -126,13 +140,28 @@ public class Validator {
 
         return toReturn;
     }
+    public static boolean isValidPhoto(Uri photo ) {
+        //Check if it is at least 1 photo and its the right format
+        if (photo == null) return false;
+        boolean toReturn =  true;
+        if (photo.toString().matches(".*\\.(jpg|jpeg|png|bmp|webp)$")) {
+            toReturn = true;
+        }
+        else toReturn = false;
+
+        //Log if the photo is valid or not
+        Log.d("VALIDATION", "isValidPhoto " + photo + ": " + toReturn);
+
+        return toReturn;
+    }
 
     //Any type of text validation (for long texts like description, prompt, promptAnswer, etc. and multiple choice answers)
     //min and max are the minimum and maximum length of the text
     public static boolean isValidTextLength(String text, int min, int max) {
         //Check if it is at least min characters long and at most max characters long
         if (text == null) return false;
-
+        //trim the text
+        text = text.trim();
         boolean toReturn = (text.length() >= min &&
                 text.length() <= max);
 
@@ -144,7 +173,8 @@ public class Validator {
     public static boolean isValidTextLength(String text) {
         //Check if it is at least min characters long and at most max characters long
         if (text == null) return false;
-
+        //trim the text
+        text = text.trim();
         boolean toReturn = (text.length() > 0 &&
                 text.length() <= 10000);
 
@@ -198,4 +228,5 @@ public class Validator {
         Log.d("VALIDATION", "isValidCharacteristics: " + toReturn + " ( with min: " + min + "  and max: " + max + " )");
         return toReturn;
     }
+
 }
