@@ -1,6 +1,5 @@
 package com.example.dogoout.validation;
 
-import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Patterns;
@@ -17,7 +16,6 @@ import java.util.regex.Pattern;
 
 
 public class Validator {
-    static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}";
 
     //Full user validation (user)
