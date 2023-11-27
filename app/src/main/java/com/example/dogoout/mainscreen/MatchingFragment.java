@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.dogoout.R;
@@ -16,6 +17,11 @@ import com.example.dogoout.domain.dog.DogBuilder;
 import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserBuilder;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.net.URI;
@@ -26,6 +32,8 @@ import java.util.ArrayList;
 
 public class MatchingFragment extends Fragment {
 
+    private FirebaseFirestore db;
+
 
     public MatchingFragment() {
         // Required empty public constructor
@@ -34,6 +42,8 @@ public class MatchingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        db = FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_matching, container, false);
 
@@ -270,10 +280,15 @@ public class MatchingFragment extends Fragment {
 
 
 // Adding users to the ArrayList
+        /*
         ArrayList<User> users = new ArrayList<>();
         users.add(userNoDogs);
         users.add(userOneDog);
         users.add(userTwoDogs);
+
+         */
+
+        ArrayList<User> users = extractUsersBasedOnPreferences("BREED_EVERYTHING", "LOVERS", 18, 35, "EVERYONE");
 
         // END TEST DATA
 
@@ -331,5 +346,38 @@ public class MatchingFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public ArrayList<User> extractUsersBasedOnPreferences(String dogBreedPreference, String dogOwnerPreference, int maxAge, int minAge, String sexPreference ) {
+
+        ArrayList<User> userArrayList = new ArrayList<>();
+
+        db.collection("users")
+                .whereEqualTo("userPreference.dogBreedPreference", dogBreedPreference)
+                .whereEqualTo("userPreference.dogOwnerPreference", dogOwnerPreference)
+                .whereGreaterThanOrEqualTo("birthDate", "1988-10-14") // Replace with minAge logic
+                .whereLessThanOrEqualTo("birthDate", "2005-10-14") // Replace with maxAge logic
+                .whereEqualTo("country", "US")
+                .whereEqualTo("gender", sexPreference)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                User user = document.toObject(User.class);
+                                userArrayList.add(user);
+                                // Process each user document here
+                                // Access data using document.toObject(YourUserClass.class)
+                                // YourUserClass user = document.toObject(YourUserClass.class);
+                                // Add user to a list or perform operations as needed
+                            }
+                        } else {
+                            // Handle errors while fetching user data
+                        }
+                    }
+                });
+
+        return userArrayList;
     }
 }
