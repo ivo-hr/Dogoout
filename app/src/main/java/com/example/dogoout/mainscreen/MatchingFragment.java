@@ -91,6 +91,7 @@ public class MatchingFragment extends Fragment {
 
                 Log.d("DOGS1", users.get(1).toString());
 
+
             }
 
             @Override
