@@ -1,49 +1,31 @@
 package com.example.dogoout.mainscreen;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.dogoout.R;
 import com.example.dogoout.adapters.CardAdapter;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.dog.Dog;
-import com.example.dogoout.domain.dog.DogBuilder;
 import com.example.dogoout.domain.dog.DogImpl;
 import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
-import com.example.dogoout.domain.user.UserBuilder;
 import com.example.dogoout.domain.user.UserImpl;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MatchingFragment extends Fragment {
@@ -51,6 +33,9 @@ public class MatchingFragment extends Fragment {
     private FirebaseFirestore db;
     private ArrayList<User> users = new ArrayList<>();
 
+    final CardAdapter[] cardAdapter = new CardAdapter[]{new CardAdapter(getActivity(), users)};
+
+    SwipeFlingAdapterView flingContainer;
 
     public MatchingFragment() {
         // Required empty public constructor
@@ -65,52 +50,21 @@ public class MatchingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_matching, container, false);
 
         //add the view via xml or programmatically
-        SwipeFlingAdapterView flingContainer = view.findViewById(R.id.swpCrdAdapter);
+        flingContainer = view.findViewById(R.id.swpCrdAdapter);
 
         User userFromIntent = (User) getActivity().getIntent().getSerializableExtra(Constants.USER_TAG);
 
         final CardAdapter[] cardAdapter = new CardAdapter[1];
-
         cardAdapter[0] = new CardAdapter(getActivity(), new ArrayList<>());
-
-        extractUsersBasedOnPreferences(userFromIntent.getPreference().getDogBreedPreference(), userFromIntent.getPreference().getDogOwnerPreference(), userFromIntent.getPreference().getMaxAge(), userFromIntent.getPreference().getMinAge(), userFromIntent.getPreference().getSexPreference(), new OnUsersExtractedListener() {
-
-
-            @Override
-            public void onUsersExtracted(ArrayList<User> users) {
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        cardAdapter[0] = new CardAdapter(getActivity(), users);
-                        cardAdapter[0].notifyDataSetChanged();
-
-                    }
-                });
-
-                Log.d("DOGS1", users.get(1).toString());
-
-
-            }
-
-            @Override
-            public void onErrorFetchingUsers(Exception e) {
-                Log.d("ERRO", e.getMessage());
-            }
-        });
-
-
-        //set the listener and the adapter
         flingContainer.setAdapter(cardAdapter[0]);
+
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // TODO: remove user from the ArrayList (from index 0)
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
-                Log.d("DOGS1", users.remove(0).getDogs().toString());
+                users.remove(0);
                 cardAdapter[0].notifyDataSetChanged();
             }
 
@@ -120,6 +74,7 @@ public class MatchingFragment extends Fragment {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
+
                 Toast.makeText(getActivity(), "Left!", Toast.LENGTH_SHORT).show();
             }
 
@@ -132,11 +87,23 @@ public class MatchingFragment extends Fragment {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // TODO:  Ask for more data from DB (another 5 users) here and store it in the ArrayList
-                //users.add(user);
+                extractUsersBasedOnPreferences(userFromIntent.getPreference().getDogBreedPreference(), userFromIntent.getPreference().getDogOwnerPreference(), userFromIntent.getPreference().getMaxAge(), userFromIntent.getPreference().getMinAge(), userFromIntent.getPreference().getSexPreference(), new OnUsersExtractedListener() {
+                    @Override
+                    public void onUsersExtracted(ArrayList<User> users) {
+                        // Display the users into the cardAdapter
+                        MatchingFragment.this.users.addAll(users);
+                        cardAdapter[0] = new CardAdapter(getActivity(), MatchingFragment.this.users);
+                        flingContainer.setAdapter(cardAdapter[0]);
+                        cardAdapter[0].notifyDataSetChanged();
+                    }
 
-                cardAdapter[0].notifyDataSetChanged();
+                    @Override
+                    public void onErrorFetchingUsers(Exception e) {
+                        Log.d("ERRO", e.getMessage());
+                    }
+                });
+
                 Log.d("LIST", "notified");
-                itemsInAdapter += 4;
             }
 
             @Override
@@ -269,25 +236,21 @@ public class MatchingFragment extends Fragment {
             }
         }
 
-            return user;
+        return user;
     }
 
 
     public interface OnUsersExtractedListener {
         void onUsersExtracted(ArrayList<User> users);
+
         void onErrorFetchingUsers(Exception e);
     }
 
     public interface OnUserCreatedListener {
         void onUserCreated(User user);
+
         void onErrorDownloadingImages();
     }
-
-    private void setUsersArray(ArrayList<User> users) {
-        this.users = users;
-    }
-
-
 
 
 }

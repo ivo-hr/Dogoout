@@ -90,8 +90,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //emailEditText.setText("faience.sifter0v@icloud.com");
-        //emailEditText.setText("rinses_mattes.0d@icloud.com");
-        //passEditText.setText("Dublin123!");
+        emailEditText.setText("rinses_mattes.0d@icloud.com");
+        passEditText.setText("Dublin123!");
 
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {
