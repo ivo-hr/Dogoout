@@ -1,5 +1,6 @@
 package com.example.dogoout.login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
@@ -51,11 +54,13 @@ public class LoginActivity extends AppCompatActivity {
     //Initialize login button and register textview
     Button loginButton;
     TextView registerTextView;
-    TextView txtVForgotPassword;
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
     FirebaseFirestore fStore;
 
+    TextView forgotPassword;
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +72,10 @@ public class LoginActivity extends AppCompatActivity {
         passInput = findViewById(R.id.textInputLayout1);
         emailEditText = findViewById(R.id.txtInEmail);
         passEditText = findViewById(R.id.txtInPassword);
-        //Initialize login button, register textview and forgot password textview
+        //Initialize login button and register textview
         loginButton = findViewById(R.id.btnLogin);
         registerTextView = findViewById(R.id.txtVRegister);
-        txtVForgotPassword = findViewById(R.id.txtVForgotPassword);
+        forgotPassword = findViewById(R.id.txtVForgotPassword);
 
         //Set on click listener for register textview
         registerTextView.setOnClickListener(v -> {
@@ -79,18 +84,14 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(nextIntent);
         });
 
-
-        //Set on click listener for forgot password textview
-        txtVForgotPassword.setOnClickListener(v -> {
-            //Start forgot password activity
+        forgotPassword.setOnClickListener(v -> {
             Intent nextIntent = new Intent(LoginActivity.this, ForgottenPassword1Activity.class);
             startActivity(nextIntent);
         });
 
-        emailEditText.setText("faience.sifter0v@icloud.com");
+        //emailEditText.setText("faience.sifter0v@icloud.com");
         emailEditText.setText("rinses_mattes.0d@icloud.com");
         passEditText.setText("Dublin123!");
-
 
         //Set on click listener for login button
         loginButton.setOnClickListener(v -> {

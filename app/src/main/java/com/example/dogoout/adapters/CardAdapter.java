@@ -105,7 +105,6 @@ public class CardAdapter extends BaseAdapter {
         txtVUserPrompt.setText(user.getPrompt());
         txtVUserPromptAnswer.setText(user.getPromptAnswer());
 
-        Log.d("DOGS", user.getDogs().toString());
 
         displayUsersDogs(user.getDogs(), linLayoutContent);
 
@@ -119,6 +118,9 @@ public class CardAdapter extends BaseAdapter {
         LinearLayout.LayoutParams borderParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         borderParams.setMargins(0, 150, 0, 0);
 
+        if (dogs == null || dogs.size() == 0) {
+            return;
+        }
 
         for (Dog dog : dogs) {
 
