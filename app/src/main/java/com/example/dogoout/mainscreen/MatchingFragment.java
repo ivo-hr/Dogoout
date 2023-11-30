@@ -224,7 +224,7 @@ public class MatchingFragment extends Fragment {
             Map<String, Object> data = document.getData();
 
             if (data != null) {
-                // Assigner les valeurs aux attributs correspondants en utilisant les setters
+
                 user.setFirstname((String) data.get("firstname"));
                 user.setSurname((String) data.get("surname"));
                 user.setEmail((String) data.get("email"));
@@ -234,14 +234,12 @@ public class MatchingFragment extends Fragment {
                 user.setPrompt((String) data.get("prompt"));
                 user.setPromptAnswer((String) data.get("promptAnswer"));
 
-                // Convertir la date de naissance de String à LocalDate
                 String birthDateString = (String) data.get("birthDate");
                 if (birthDateString != null) {
                     LocalDate birthDate = LocalDate.parse(birthDateString);
                     user.setBirthDate(birthDate);
                 }
 
-                // Récupérer et définir la préférence utilisateur
                 Map<String, Object> preferenceMap = (Map<String, Object>) data.get("userPreference");
                 if (preferenceMap != null) {
                     Preference preferenceUser = new Preference(
@@ -287,7 +285,7 @@ public class MatchingFragment extends Fragment {
 
                         ArrayList<String> characteristics = (ArrayList<String>) dogMap.get("characteristics");
 
-                        // Assuming 'photosDog' is an ArrayList<String> containing photo URLs
+
                         ArrayList<String> photosDog = (ArrayList<String>) dogMap.get("photosDog");
 
                         ArrayList<URI> userDogsURI = new ArrayList<>();
