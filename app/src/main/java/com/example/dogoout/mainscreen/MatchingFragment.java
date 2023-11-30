@@ -17,6 +17,7 @@ import com.example.dogoout.domain.dog.DogImpl;
 import com.example.dogoout.domain.preference.Preference;
 import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserImpl;
+import com.example.dogoout.matches.Matches;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -80,6 +81,8 @@ public class MatchingFragment extends Fragment {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
+
+                Matches.addMatch((User) dataObject);
 
                 Toast.makeText(getActivity(), "Left!", Toast.LENGTH_SHORT).show();
             }
