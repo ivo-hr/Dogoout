@@ -19,12 +19,18 @@ import com.example.dogoout.domain.user.User;
 import com.example.dogoout.domain.user.UserImpl;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -87,7 +93,7 @@ public class MatchingFragment extends Fragment {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // TODO:  Ask for more data from DB (another 5 users) here and store it in the ArrayList
-                extractUsersBasedOnPreferences(userFromIntent.getPreference().getDogBreedPreference(), userFromIntent.getPreference().getDogOwnerPreference(), userFromIntent.getPreference().getMaxAge(), userFromIntent.getPreference().getMinAge(), userFromIntent.getPreference().getSexPreference(), new OnUsersExtractedListener() {
+                extractUsersBasedOnPreferences(userFromIntent.getPreference().getDogOwnerPreference(), userFromIntent.getPreference().getMaxAge(), userFromIntent.getPreference().getMinAge(), userFromIntent.getPreference().getSexPreference(), new OnUsersExtractedListener() {
                     @Override
                     public void onUsersExtracted(ArrayList<User> users) {
                         // Display the users into the cardAdapter
@@ -114,33 +120,78 @@ public class MatchingFragment extends Fragment {
         return view;
     }
 
-    public void extractUsersBasedOnPreferences(String dogBreedPreference, String dogOwnerPreference, int maxAge, int minAge, String sexPreference, OnUsersExtractedListener listener) {
-        db.collection("users")
-                .whereEqualTo("userPreference.dogBreedPreference", dogBreedPreference)
-                .whereEqualTo("userPreference.dogOwnerPreference", dogOwnerPreference)
-                .get()
+    public void extractUsersBasedOnPreferences(String dogOwnerPreference, int maxAge, int minAge, String sexPreference, OnUsersExtractedListener listener) {
+        Date currentDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.YEAR, -maxAge);
+        Date maxBirthDate = calendar.getTime();
+        String maxBirthDateString = sdf.format(maxBirthDate);
+
+        Log.d("max", String.valueOf(maxAge) + "   " + maxBirthDateString);
+
+        calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.YEAR, -minAge);
+        Date minBirthDate = calendar.getTime();
+        String minBirthDateString = sdf.format(minBirthDate);
+
+        Log.d("min", String.valueOf(minAge) + "   " + minBirthDateString);
+
+        Query query = db.collection("users");
+
+        if (sexPreference.equals("FEMALE")) {
+            query = query.whereEqualTo("gender","FEMALE");
+
+        }
+        if (sexPreference.equals("MALE")) {
+            query = query.whereEqualTo("gender","MALE");
+        }
+
+
+        if (dogOwnerPreference.equals("LOVERS")) {
+            query = query.whereEqualTo("dogs",false);
+        }
+        if (dogOwnerPreference.equals("OWNERS")) {
+            query = query.whereNotEqualTo("dogs",false);
+        }
+
+                query.get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         ArrayList<User> userArrayList = new ArrayList<>();
                         for (DocumentSnapshot document : task.getResult()) {
-                            User user = createUserFromDocument(document, new OnUserCreatedListener() {
-                                @Override
-                                public void onUserCreated(User user) {
+                            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-                                }
+                            LocalDate date1 = LocalDate.parse(document.get("birthDate").toString(), dateFormatter);
+                            LocalDate max = LocalDate.parse(maxBirthDateString, dateFormatter);
+                            LocalDate min = LocalDate.parse(minBirthDateString, dateFormatter);
 
-                                @Override
-                                public void onErrorDownloadingImages() {
+                            if (date1.isAfter(max) && date1.isBefore(min)) {
 
-                                }
-                            });
-                            userArrayList.add(user);
+
+                                User user = createUserFromDocument(document, new OnUserCreatedListener() {
+                                    @Override
+                                    public void onUserCreated(User user) {
+
+                                    }
+
+                                    @Override
+                                    public void onErrorDownloadingImages() {
+
+                                    }
+                                });
+                                userArrayList.add(user);
+                            }
                         }
                         listener.onUsersExtracted(userArrayList);
                     } else {
                         listener.onErrorFetchingUsers(task.getException());
                     }
                 });
+
     }
 
     private UserImpl createUserFromDocument(DocumentSnapshot document, OnUserCreatedListener listener) {
