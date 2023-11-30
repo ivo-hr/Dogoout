@@ -150,10 +150,10 @@ public class MatchingFragment extends Fragment {
             query = query.whereEqualTo("gender","MALE");
         }
 
-
-        if (dogOwnerPreference.equals("LOVERS")) {
-            query = query.whereEqualTo("dogs",false);
+        if (sexPreference.equals("OTHERS")) {
+            query = query.whereEqualTo("gender","OTHER");
         }
+
         if (dogOwnerPreference.equals("OWNERS")) {
             query = query.whereNotEqualTo("dogs",false);
         }
@@ -169,21 +169,44 @@ public class MatchingFragment extends Fragment {
                             LocalDate max = LocalDate.parse(maxBirthDateString, dateFormatter);
                             LocalDate min = LocalDate.parse(minBirthDateString, dateFormatter);
 
-                            if (date1.isAfter(max) && date1.isBefore(min)) {
+                            if (dogOwnerPreference.equals("LOVERS")) {
+                                if (!document.contains("dogs")) {
+                                    if (date1.isAfter(max) && date1.isBefore(min)) {
 
 
-                                User user = createUserFromDocument(document, new OnUserCreatedListener() {
-                                    @Override
-                                    public void onUserCreated(User user) {
+                                        User user = createUserFromDocument(document, new OnUserCreatedListener() {
+                                            @Override
+                                            public void onUserCreated(User user) {
 
+                                            }
+
+                                            @Override
+                                            public void onErrorDownloadingImages() {
+
+                                            }
+                                        });
+                                        userArrayList.add(user);
                                     }
+                                }
+                            } else {
 
-                                    @Override
-                                    public void onErrorDownloadingImages() {
 
-                                    }
-                                });
-                                userArrayList.add(user);
+                                if (date1.isAfter(max) && date1.isBefore(min)) {
+
+
+                                    User user = createUserFromDocument(document, new OnUserCreatedListener() {
+                                        @Override
+                                        public void onUserCreated(User user) {
+
+                                        }
+
+                                        @Override
+                                        public void onErrorDownloadingImages() {
+
+                                        }
+                                    });
+                                    userArrayList.add(user);
+                                }
                             }
                         }
                         listener.onUsersExtracted(userArrayList);
