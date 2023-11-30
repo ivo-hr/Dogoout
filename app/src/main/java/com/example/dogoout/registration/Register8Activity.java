@@ -16,6 +16,7 @@ import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.example.dogoout.domain.dog.DogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.dogoout.validation.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +81,10 @@ public class Register8Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (isValidDogName() & isValidDogBreed()) {
+                //Validate name and breed
+                boolean isValidName = Validator.isValidName(txtInDogName.getText().toString());
+                boolean isValidBreed = Validator.isValidTextLength(acTxtVBreed.getText().toString());
+                if (isValidName && isValidBreed) {
 
                     //Save prompt and answer
                     String dogName = txtInDogName.getText().toString().trim();
@@ -104,11 +108,36 @@ public class Register8Activity extends AppCompatActivity {
                     nextIntent.putExtra(Constants.NUMBER_OF_DOGS_TAG, numberOfDogs);
                     startActivity(nextIntent);
                 }
+                else {
+                    if (!isValidName) {
+                        // Get the text input layout
+                        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                        // set the error and error message
+                        txtInDogName.setText("");
+                        textInputLayout.setError("Please choose a valid name for your dog.");
+                    }
+                    else {
+                        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                        textInputLayout.setError(null);
+                    }
+                    if (!isValidBreed) {
+                        // Get the text input layout
+                        TextInputLayout textInputLayout = findViewById(R.id.cbxBreed);
+                        // set the error and error message
+                        acTxtVBreed.setText("");
+                        textInputLayout.setError("Please choose a breed for your dog.");
+                    }
+                    else {
+                        TextInputLayout textInputLayout = findViewById(R.id.cbxBreed);
+                        textInputLayout.setError(null);
+                    }
+                    return;
+                }
             }
         });
     }
 
-    protected boolean isValidDogName() {
+    /*protected boolean isValidDogName() {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
@@ -136,5 +165,5 @@ public class Register8Activity extends AppCompatActivity {
         acTxtVBreed.setText("");
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
-    }
+    }*/
 }

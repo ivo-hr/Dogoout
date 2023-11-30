@@ -14,6 +14,8 @@ import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
+import com.example.dogoout.validation.Validator;
+
 public class Register1Activity extends AppCompatActivity {
 
     ImageView previousScreenBtn;
@@ -39,7 +41,10 @@ public class Register1Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isValidTextInputLayout() & isValidTextInputLayout1()) {
+                //Validate name and surname
+                boolean isValidName = Validator.isValidName(txtInFirstName.getText().toString());
+                boolean isValidSurname = Validator.isValidName(txtInLastName.getText().toString());
+                if (isValidSurname && isValidName) {
                     // Get the text from the edit text
                     String firstName = txtInFirstName.getText().toString().trim();
                     String lastName = txtInLastName.getText().toString().trim();
@@ -55,11 +60,24 @@ public class Register1Activity extends AppCompatActivity {
                     intent.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
                     startActivity(intent);
                 }
+                else {
+                    // Show error message
+                    if (!Validator.isValidName(txtInFirstName.getText().toString())) {
+                        txtInFirstName.getText().clear();
+                        txtInFirstName.setError("Please put your Name.");
+                    }
+                    else txtInFirstName.setError(null);
+                    if (!Validator.isValidName(txtInLastName.getText().toString())) {
+                        txtInLastName.getText().clear();
+                        txtInLastName.setError("Please put your Surname.");
+                    }
+                    else txtInLastName.setError(null);
+                }
             }
         });
     }
 
-    protected boolean isValidTextInputLayout() {
+    /*protected boolean isValidTextInputLayout() {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
@@ -87,5 +105,5 @@ public class Register1Activity extends AppCompatActivity {
         txtInLastName.getText().clear();
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
-    }
+    }*/
 }

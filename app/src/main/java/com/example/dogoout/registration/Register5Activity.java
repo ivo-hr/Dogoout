@@ -13,7 +13,7 @@ import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
-
+import com.example.dogoout.validation.Validator;
 public class Register5Activity extends AppCompatActivity {
     ImageView previousScreenBtn;
     Button nextScreenBtn;
@@ -39,7 +39,7 @@ public class Register5Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // check if user filled out the description field
-                if (isValidTextInputLayout()) {
+                if (Validator.isValidTextLength(txtInDescription.getText().toString().trim(), 50, 10000000)) {
 
                     // get the description from the edit text
                     String description = txtInDescription.getText().toString().trim();
@@ -58,11 +58,16 @@ public class Register5Activity extends AppCompatActivity {
                     // go to the next activity
                     startActivity(intentNextActivity);
                 }
+                else{
+                    TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                    textInputLayout.setError("Please Fill Out this Field with 50 characters at least.");
+                    return;
+                }
             }
         });
     }
 
-    protected boolean isValidTextInputLayout() {
+    /*protected boolean isValidTextInputLayout() {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
@@ -75,5 +80,5 @@ public class Register5Activity extends AppCompatActivity {
         txtInDescription.getText().clear();
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
-    }
+    }*/
 }

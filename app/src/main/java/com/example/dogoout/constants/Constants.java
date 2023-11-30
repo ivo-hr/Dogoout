@@ -5,6 +5,7 @@ import java.sql.Struct;
 public class Constants {
 
     public static final String USER_BUILDER_TAG = "USER_BUILDER";
+    public static final String USER_TAG = "USER";
     public static final String DOG_BUILDER_TAG = "DOG_BUILDER";
 
     public static final String EMAIL_TAG = "EMAIL";

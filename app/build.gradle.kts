@@ -38,6 +38,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -45,6 +46,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-database:20.3.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:5.1.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
@@ -66,5 +68,6 @@ dependencies {
     // Image Picker Library
     implementation("com.github.dhaval2404:imagepicker:2.1")
 
-
+    // Swiping Cards Library
+    implementation("com.lorentzos.swipecards:library:1.0.9")
 }

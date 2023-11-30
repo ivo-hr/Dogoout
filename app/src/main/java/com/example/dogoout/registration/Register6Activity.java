@@ -15,6 +15,7 @@ import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.user.UserBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.dogoout.validation.Validator;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,10 @@ public class Register6Activity extends AppCompatActivity {
         nextScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isValidAnswerTxtPrompt() && isValidTxtPrompt()) {
+                //Validate prompt and answer
+                boolean validPrompt = Validator.isValidTextLength(promptTxt.getText().toString());
+                boolean validAnswer = Validator.isValidTextLength(answerTxtPrompt.getText().toString(), 5,150);
+                if (validPrompt && validAnswer) {
 
                     //Save the prompt
                     String prompt = promptTxt.getText().toString().trim();
@@ -86,11 +90,35 @@ public class Register6Activity extends AppCompatActivity {
                     nextIntent.putExtra(Constants.USER_BUILDER_TAG, userBuilder);
                     startActivity(nextIntent);
                 }
+                else {
+                    if (!validPrompt) {
+                        // Get the text input layout
+                        TextInputLayout textInputLayout = findViewById(R.id.cbxLayout);
+                        // set the error and error message
+                        promptTxt.setText("");
+                        textInputLayout.setError("Please select a prompt.");
+                    }
+                    else {
+                        TextInputLayout textInputLayout = findViewById(R.id.cbxLayout);
+                        textInputLayout.setError(null);
+                    }
+                    if (!validAnswer) {
+                        // Get the text input layout
+                        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                        // set the error and error message
+                        textInputLayout.setError("Please fill out this field with 5-150 characters.");
+                    }
+                    else {
+                        TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+                        textInputLayout.setError(null);
+                    }
+                    return;
+                }
             }
         });
     }
 
-    protected boolean isValidAnswerTxtPrompt() {
+    /*protected boolean isValidAnswerTxtPrompt() {
         // Get the text input layout
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
         // Check if the edit text is empty
@@ -118,7 +146,7 @@ public class Register6Activity extends AppCompatActivity {
         promptTxt.setText("");
         textInputLayout.setError("Please Fill Out this Field.");
         return false;
-    }
+    }*/
 
 
 }

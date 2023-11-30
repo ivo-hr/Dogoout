@@ -14,6 +14,7 @@ import com.example.dogoout.R;
 import com.example.dogoout.constants.Constants;
 import com.example.dogoout.domain.dog.DogBuilder;
 import com.example.dogoout.domain.user.UserBuilder;
+import com.example.dogoout.validation.Validator;
 
 import java.util.ArrayList;
 
@@ -100,7 +101,9 @@ public class Register10Activity extends AppCompatActivity {
 
         previousScreenBtn.setOnClickListener(view -> finish());
         nextScreenBtn.setOnClickListener(view -> {
-            if (isEnoughCheckedBoxe()) {
+            //Validate the number of checked checkboxes
+            boolean isValidCharacteristics = Validator.isValidCharacteristics(dogCharacteristics, 3, 5);
+            if (isValidCharacteristics) {
                 // get the intent from the previous activity
                 Intent intent = getIntent();
 
@@ -120,6 +123,14 @@ public class Register10Activity extends AppCompatActivity {
                 intentNextActivity.putExtra(Constants.DOG_BUILDER_TAG, dogBuilder);
                 intentNextActivity.putExtra(Constants.NUMBER_OF_DOGS_TAG, numberOfDogs);
                 startActivity(intentNextActivity);
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Register10Activity.this);
+                builder.setTitle("Error");
+                builder.setMessage("You have to choose between 3 and 5 characteristics");
+                builder.setPositiveButton("OK", null);
+                builder.show();
+                return;
             }
         });
     }
