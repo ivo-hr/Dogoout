@@ -1,6 +1,5 @@
 package com.example.dogoout.userInfo;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -89,7 +88,8 @@ public class UserInfoActivity extends AppCompatActivity {
         txtVUserPromptAnswer.setText(user.getPromptAnswer());
 
         // Display the user's dogs
-        displayUsersDogs(user.getDogs(), linLayoutContent);
+        if (user.getDogs() != null)
+            displayUsersDogs(user.getDogs(), linLayoutContent);
 
 
         // SETTING ONCLICK LISTENERS
