@@ -1,8 +1,5 @@
 package com.example.dogoout.domain.user;
 
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-
 import com.example.dogoout.domain.dog.Dog;
 import com.example.dogoout.domain.preference.Preference;
 
@@ -307,6 +304,31 @@ public class UserImpl implements User, Serializable {
     @Override
     public void setPhotosUser(ArrayList<URI> photosUser) {
         this.photosUser = photosUser;
+    }
+
+
+    /**
+     * Checks if the user is equal to another user.
+     *
+     * @param o The other user to compare to.
+     * @return True if the users are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserImpl)) return false;
+        UserImpl user = (UserImpl) o;
+        return getEmail().equals(user.getEmail());
+    }
+
+    /**
+     * Generates a hashcode for the user.
+     *
+     * @return The hashcode for the user.
+     */
+    @Override
+    public int hashCode() {
+        return getEmail().hashCode();
     }
 
     @Override

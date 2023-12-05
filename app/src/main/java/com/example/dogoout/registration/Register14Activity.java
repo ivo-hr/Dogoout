@@ -107,48 +107,74 @@ public class Register14Activity extends AppCompatActivity {
                 uploadPhotoAndGetID(userCreate.getPhotosUser(), new UploadCallback() {
                     @Override
                     public void onUploadComplete(ArrayList<String> arrayListIDPhotos) {
-                        user.put("photos",arrayListIDPhotos);
+                        user.put("photos", arrayListIDPhotos);
                         Log.d(TAG, "Uploads complete: " + arrayListIDPhotos.toString());
 
-                        for (Dog dog:userCreate.getDogs()) {
-                            uploadPhotoAndGetID(dog.getPhotosDog(), new UploadCallback() {
+                        ArrayList<Dog> dogs = userCreate.getDogs();
+                        if (dogs.size() == 0) {
+                            Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onUploadComplete(ArrayList<String> arrayListIDPhotosDogs) {
-                                    dog.setPhotosDogString(arrayListIDPhotosDogs);
-                                    Log.d(TAG, "Uploads complete: " + arrayListIDPhotosDogs.toString());
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
 
-                                    user.put("dogs", userCreate.getDogs());
-
-                                    DocumentReference documentReference = fStore.collection("users").document(userID);
-
-                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "onSuccess: user Profile is created for " + userID);
-
-                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                            startActivity(intent);
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d(TAG, "onFailure: " + e.toString());
-                                        }
-                                    });
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
 
                                 }
-
+                            }).addOnFailureListener(new OnFailureListener() {
                                 @Override
-                                public void onUploadFailure(Exception exception) {
-                                    // Handle upload failure
-                                    Log.d(TAG, "Upload failed: " + exception.toString());
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: " + e.toString());
                                 }
                             });
 
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        } else {
+                            for (Dog dog : dogs) {
+                                uploadPhotoAndGetID(dog.getPhotosDog(), new UploadCallback() {
+                                    @Override
+                                    public void onUploadComplete(ArrayList<String> arrayListIDPhotosDogs) {
+                                        dog.setPhotosDogString(arrayListIDPhotosDogs);
+                                        Log.d(TAG, "Uploads complete: " + arrayListIDPhotosDogs.toString());
+
+                                        user.put("dogs", userCreate.getDogs());
+
+                                        DocumentReference documentReference = fStore.collection("users").document(userID);
+
+                                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+
+                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                startActivity(intent);
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "onFailure: " + e.toString());
+                                            }
+                                        });
+
+                                    }
+
+                                    @Override
+                                    public void onUploadFailure(Exception exception) {
+                                        // Handle upload failure
+                                        Log.d(TAG, "Upload failed: " + exception.toString());
+                                    }
+                                });
+
+                            }
                         }
 
                     }
+
                     @Override
                     public void onUploadFailure(Exception exception) {
                         Log.d(TAG, "Upload failed: " + exception.toString());
@@ -215,7 +241,6 @@ public class Register14Activity extends AppCompatActivity {
             });
         }
     }
-
 
 
 }
